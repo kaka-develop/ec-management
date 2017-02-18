@@ -10,5 +10,7 @@ package com.team5.ecmanagement;
  * @author dfChicken
  */
 public class Coincard {
-    
+	public static void main(String[] args) {
+		System.out.println("Hello world");
+	}
 }
