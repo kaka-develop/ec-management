@@ -16,5 +16,8 @@ public class Coincard {
 		
 		
 		System.out.println("Sua");
+		System.out.println("Sua");
+		System.out.println("Sua");
+		System.out.println("Sua");
 	}
 }
