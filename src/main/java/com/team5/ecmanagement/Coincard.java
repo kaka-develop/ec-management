@@ -12,12 +12,5 @@ package com.team5.ecmanagement;
 public class Coincard {
 	public static void main(String[] args) {
 		System.out.println("Hello world");
-		
-		
-		
-		System.out.println("Sua");
-		System.out.println("Sua");
-		System.out.println("Sua");
-		System.out.println("Sua");
 	}
 }
