@@ -8,6 +8,10 @@
  	- Nguyễn Hải Nam
 	- Phan Tiến Tùng
 	- Nguyễn Văn Ái
+
+## Project Management
+https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_dashboards
+
 ## User Stories
 - As a user, I want to login and logout the system
 - As a EC Manager, I want to view all EC claims
@@ -18,6 +22,3 @@
 - As a student, i can receive an email containing the decision, once the claim is processed
 
 ## Product backlog
-
-## Project Management
-https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_dashboards
