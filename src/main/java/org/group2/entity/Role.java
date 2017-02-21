@@ -8,6 +8,6 @@ package org.group2.entity;
  * @Contact kunedo1104@gmail.com
  *
  */
-public class Student {
-	
+public enum Role {
+	ADMIN, MANAGER, STUDENT
 }
