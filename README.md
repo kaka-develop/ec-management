@@ -2,12 +2,12 @@
 
 ## Developed by Scrum team (team5)
 ###### Scrum master:
-	- Nguyễn Đức Anh
+	- Nguyễn Đức Anh (ducanhz135)
 ###### Scrum members:
-	- Đàm Cao Sơn
- 	- Nguyễn Hải Nam
-	- Phan Tiến Tùng
-	- Nguyễn Văn Ái
+	- Đàm Cao Sơn (DamCaoSon)
+ 	- Nguyễn Hải Nam (dfChicken)
+	- Phan Tiến Tùng (tungptseven)
+	- Nguyễn Văn Ái (ainguyenkaka)
 
 ## Project Management
 https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_dashboards
@@ -28,4 +28,5 @@ https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_dash
 - Exception for student, every one can view statistic analysis such as 
 number of claims per Faculty
 - The interface must be suitable for all devices 
+
 ## Product backlog
