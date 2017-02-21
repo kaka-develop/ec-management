@@ -1,4 +1,3 @@
-/target/
 
 ######################
 # Eclipse
@@ -15,7 +14,9 @@ tmp/**/*
 local.properties
 .classpath
 .settings/
-.loadpath
+
+# External tool builders
+.externalToolBuilders/**
 
 
 
@@ -67,4 +68,3 @@ Desktop.ini
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
-
