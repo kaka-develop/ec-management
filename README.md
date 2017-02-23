@@ -30,3 +30,7 @@ number of claims per Faculty
 - The interface must be suitable for all devices 
 
 ## Product backlog
+https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_backlogs?level=Backlog%20items&showParents=false&_a=backlog
+
+### Sprint 1
+https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_backlogs/Iteration/Sprint%201
