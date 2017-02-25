@@ -1,6 +1,6 @@
 # EC-management project
 
-## Developed by Scrum team (team5)
+## Developed by Scrum team (group2)
 ###### Scrum master:
 	- Nguyễn Đức Anh (ducanhz135)
 ###### Scrum members:
