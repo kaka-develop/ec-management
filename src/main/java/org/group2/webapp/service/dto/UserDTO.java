@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class UserDTO {
 
+    private Long id;
 
     @Size(min = 1, max = 100)
     private String username;
@@ -29,8 +30,11 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    public UserDTO() {
+    }
 
     public UserDTO(User user) {
+        this.id = user.getId();
         this.username = user.getUsername();
         this.firstName = user.getFirstName();
         this.email = user.getEmail();
@@ -46,6 +50,14 @@ public class UserDTO {
         this.email = email;
         this.createdDate = createdDate;
         this.authorities = authorities;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Set<String> getAuthorities() {

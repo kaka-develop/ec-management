@@ -17,8 +17,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -101,8 +103,8 @@ public class UserService {
     }
 
     @Transactional
-    public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAllByUsernameNot(pageable, ANONYMOUS_USER).map(UserDTO::new);
+    public List<UserDTO> getAllManagedUsers() {
+        return userRepository.findAll().stream().map(UserDTO::new).collect(Collectors.toList());
     }
 
     @Transactional
