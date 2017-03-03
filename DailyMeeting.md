@@ -5,7 +5,7 @@ Ducanh:
 - problems: product backlog chua ro rang va cu the
 Son: 	
 - nghien cuu bootstrap de design responsive
-- design login va logout cua website
+- design login cua website
 - problems: product backlog chua ro rang va cu the
 Ai: 	
 - nhan user story
