@@ -55,6 +55,7 @@ public class UserService {
         newUser.setEmail(email);
         authorities.add(authority);
         newUser.setAuthorities(authorities);
+        System.out.println(newUser.getCreatedDate());
         userRepository.save(newUser);
         return newUser;
     }

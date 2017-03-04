@@ -6,6 +6,8 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
@@ -15,13 +17,13 @@ public abstract class AbstractEntity {
     @CreatedDate
     @Column(name = "created_date", nullable = false)
     @JsonIgnore
-    private ZonedDateTime createdDate = ZonedDateTime.now();
+    private Date createdDate = Calendar.getInstance().getTime();
 
-    public ZonedDateTime getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(ZonedDateTime createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 }

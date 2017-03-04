@@ -52,6 +52,16 @@ public class User extends AbstractEntity implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
 
+    public User() {
+    }
+
+    public User(String username, String password, String firstName, String lastName, String email) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
     public Long getId() {
         return id;

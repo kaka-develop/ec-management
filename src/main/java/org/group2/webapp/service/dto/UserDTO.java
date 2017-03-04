@@ -6,12 +6,12 @@ import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserDTO {
 
-    private Long id;
 
     @Size(min = 1, max = 100)
     private String username;
@@ -26,7 +26,7 @@ public class UserDTO {
     @Size(min = 5, max = 100)
     private String email;
 
-    private ZonedDateTime createdDate;
+    private Date createdDate;
 
     private Set<String> authorities;
 
@@ -34,7 +34,6 @@ public class UserDTO {
     }
 
     public UserDTO(User user) {
-        this.id = user.getId();
         this.username = user.getUsername();
         this.firstName = user.getFirstName();
         this.email = user.getEmail();
@@ -43,7 +42,14 @@ public class UserDTO {
                 .collect(Collectors.toSet());
     }
 
-    public UserDTO(String username, String firstName, String lastName, String email, ZonedDateTime createdDate, Set<String> authorities) {
+    public UserDTO(String username, String firstName, String lastName, String email) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public UserDTO(String username, String firstName, String lastName, String email, Date createdDate, Set<String> authorities) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,13 +58,6 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Set<String> getAuthorities() {
         return authorities;
@@ -101,11 +100,11 @@ public class UserDTO {
     }
 
 
-    public ZonedDateTime getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(ZonedDateTime createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 }
