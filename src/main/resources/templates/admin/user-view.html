@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css" />
+<script src="lib/jquery/jquery.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<title>Title</title>
+</head>
+<body>
+	<h1>View user</h1>
+	<table class="table-striped">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>username</th>
+				<th>password</th>
+				<th>firstName</th>
+				<th>lastName</th>
+				<th>email</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tr th:each="user : ${users}">
+			<td th:text="${user.id}">1</td>
+			<td th:text="${user.firstName}">Anh</td>
+			<td th:text="${user.lastName}">Nguyen</td>
+			<td th:text="${user.password">1232141</td>
+			<td th:text="${user.email">email@yahoo.com</td>
+		</tr>
+
+		<tr>
+
+		</tr>
+
+	</table>
+	<!-- 	<a href="login.html">Login page</a> -->
+
+	<!-- 	<a href="manage-account.html">manage-account page</a> -->
+
+	<!-- 	<img alt="" src="../static/imgs/img.png" th:src="@{imgs/img.png}"> -->
+
+</body>
+</html>
