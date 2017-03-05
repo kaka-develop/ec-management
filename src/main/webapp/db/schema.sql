@@ -56,6 +56,7 @@ create table assessment(
 create table claim(
     id int not null auto_increment,
     user_id int,
+    evidence text,
     date_started datetime,
     date_ended datetime,
     primary key(id),
