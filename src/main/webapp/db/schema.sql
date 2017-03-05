@@ -122,7 +122,7 @@ insert into circumstances(title) values ('Accident'),('Bereavement'),('Harassmen
 
 insert into course(`code`, title) values ('COMP-1108','Project'),('COMP-1639','Database Engineering'),
 ('COMP-1640','Enterprise Web Software Dev'),('COMP-1661','Application Dev for Mobile Dev'),('COMP-1649','Interaction Design'),
-('COMP-1714','Software Engineeing Mgmnt')
+('COMP-1714','Software Engineeing Mgmnt'), ('COMP-1648','Dev Framework & Methods')
 
 insert into assessment(crn,course_code,title) values ('23718','COMP-1108','COMP 1108 Demonstration'),
 ('23717','COMP-1108','COMP 1108 Final Report'),('24761','COMP-1639','COMP 1639 Exam'),
