@@ -57,8 +57,10 @@ create table claim(
     id int not null auto_increment,
     user_id int,
     evidence text,
-    date_started datetime,
-    date_ended datetime,
+    content text,
+    created_time datetime,
+    processed_time datetime,
+    status int,
     primary key(id),
     foreign key (user_id) references `user`(id)
 )
