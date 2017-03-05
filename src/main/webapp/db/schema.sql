@@ -37,7 +37,7 @@ CREATE TABLE user_authority (
 -- INIT CLAIM, COURSE, ASSESSMENT TABLE --
 create table course(
     `code` varchar(50) not null,
-    username varchar(100) not null,
+    title varchar(100) not null,
     primary key (`code`)
 )
     engine = InnoDB
@@ -48,7 +48,7 @@ create table assessment(
     course_code varchar(50) not null,
     title varchar(100) not null,
     primary key(crn),
-    foreign key (course_code) references course(code)
+    foreign key (course_code) references course(`code`)
 )
     engine = InnoDB
     default character set = utf8;
