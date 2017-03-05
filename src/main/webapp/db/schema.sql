@@ -65,6 +65,14 @@ create table claim(
     engine = InnoDB
     default character set = utf8;
 
+create table circumstances(
+    id int not null auto_increment,
+    title text,
+    primary key(id)
+)
+    engine = InnoDB
+    default character set = utf8;
+
 create table assessment_claim(
     claim_id int not null,
     assessment_crn varchar(50) not null,
@@ -107,7 +115,7 @@ INSERT INTO user_authority (user_id, authority_name) VALUES
   (1, 'ROLE_USER'), (2, 'ROLE_STUDENT'), (3, 'ROLE_COORDINATOR'), (4, 'ROLE_ADMIN');
 
 -- INSERT SAMPLE DATA FOR CLAIMS --
-
+insert into 
 
 
 
