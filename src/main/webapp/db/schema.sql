@@ -36,9 +36,9 @@ CREATE TABLE user_authority (
 
 -- INIT CLAIM, COURSE, ASSESSMENT TABLE --
 create table course(
-    `code` varchar(50) not null,
+    code varchar(50) not null,
     title varchar(100) not null,
-    primary key (`code`)
+    primary key (code)
 )
     engine = InnoDB
     default character set = utf8;
@@ -48,7 +48,7 @@ create table assessment(
     course_code varchar(50) not null,
     title varchar(100) not null,
     primary key(crn),
-    foreign key (course_code) references course(`code`)
+    foreign key (course_code) references course(code)
 )
     engine = InnoDB
     default character set = utf8;
@@ -120,7 +120,7 @@ insert into circumstances(title) values ('Accident'),('Bereavement'),('Harassmen
 ('Organisational maladministration'),('Unexpected personal or family difficulties'),
 ('Work (part-time and placement studends only)'),('Other')
 
-insert into course(`code`, title) values ('COMP-1108','Project'),('COMP-1639','Database Engineering'),
+insert into course(code, title) values ('COMP-1108','Project'),('COMP-1639','Database Engineering'),
 ('COMP-1640','Enterprise Web Software Dev'),('COMP-1661','Application Dev for Mobile Dev'),('COMP-1649','Interaction Design'),
 ('COMP-1714','Software Engineeing Mgmnt'), ('COMP-1648','Dev Framework & Methods')
 
