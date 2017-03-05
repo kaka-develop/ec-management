@@ -116,20 +116,20 @@ INSERT INTO user_authority (user_id, authority_name) VALUES
   (1, 'ROLE_USER'), (2, 'ROLE_STUDENT'), (3, 'ROLE_COORDINATOR'), (4, 'ROLE_ADMIN');
 
 -- INSERT SAMPLE DATA FOR CLAIMS --
-insert into circumstances(title) values ('Accident'),('Bereavement'),('Harassment or Assault'),('Jury Service'),('Medical'),
+insert into circumstances (title) values ('Accident'),('Bereavement'),('Harassment or Assault'),('Jury Service'),('Medical'),
 ('Organisational maladministration'),('Unexpected personal or family difficulties'),
-('Work (part-time and placement studends only)'),('Other')
+('Work (part-time and placement studends only)'),('Other');
 
-insert into course(code, title) values ('COMP-1108','Project'),('COMP-1639','Database Engineering'),
+insert into course (code, title) values ('COMP-1108','Project'),('COMP-1639','Database Engineering'),
 ('COMP-1640','Enterprise Web Software Dev'),('COMP-1661','Application Dev for Mobile Dev'),('COMP-1649','Interaction Design'),
-('COMP-1714','Software Engineeing Mgmnt'), ('COMP-1648','Dev Framework & Methods')
+('COMP-1714','Software Engineeing Mgmnt'), ('COMP-1648','Dev Framework & Methods');
 
-insert into assessment(crn,course_code,title) values ('23718','COMP-1108','COMP 1108 Demonstration'),
+insert into assessment (crn,course_code,title) values ('23718','COMP-1108','COMP 1108 Demonstration'),
 ('23717','COMP-1108','COMP 1108 Final Report'),('24761','COMP-1639','COMP 1639 Exam'),
 ('24760','COMP-1639','COMP 1639 Practical Coursework'), ('24767','COMP-1640','COMP 1640 Coureswork'),
 ('25042','COMP-1648','COMP 1648 Coursework'),('25045','COMP-1649','COMP 1649 Coursework'),
 ('25066','COMP-1661','COMP 1661 Coursework'),('25067','COMP-1661','COMP 1661 Logbook'),
-('25391','COMP-1714','COMP 1714 Coursework'),('25392','COMP-1714','COMP 1714 Exam')
+('25391','COMP-1714','COMP 1714 Coursework'),('25392','COMP-1714','COMP 1714 Exam');
 
 
 -- SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
