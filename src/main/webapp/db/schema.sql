@@ -38,7 +38,7 @@ CREATE TABLE user_authority (
 create table course(
     `code` varchar(50) not null,
     username varchar(100) not null,
-    primary key (id)
+    primary key (code)
 )
     engine = InnoDB
     default character set = utf8;
