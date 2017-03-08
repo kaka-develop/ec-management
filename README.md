@@ -30,7 +30,7 @@ number of claims per Faculty
 - The interface must be suitable for all devices 
 
 ## Project ERD
-![alt tag](https://firebasestorage.googleapis.com/v0/b/socialapp-cc534.appspot.com/o/images%2Fsystemerd.png?alt=media&token=030ee937-a889-48c6-b3bb-a60903038112)
+![alt tag](https://firebasestorage.googleapis.com/v0/b/socialapp-cc534.appspot.com/o/images%2Fsystemerd2.png?alt=media&token=a797a262-6253-4bbd-bc7e-9f695b2e0710)
 
 ## Product backlog
 https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_backlogs?level=Backlog%20items&showParents=false&_a=backlog
