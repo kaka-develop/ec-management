@@ -98,6 +98,24 @@ create table claim_circumstances(
     engine = InnoDB
     default character set = utf8;
 
+create table faculty(
+	id int not null auto_increment,
+	user_id int not null,
+	primary key (id),
+	foreign key (user_id) references `user`(id)
+)
+	engine = InnoDB
+	default character set = utf8;
+
+create table faculty_course(
+	faculty_id int not null,
+	course_code varchar(50) not null,
+	primary key(faculty_id, course_code),
+	foreign key (faculty_id) references faculty(id),
+	foreign key (course_code) references course(`code`)
+)
+	engine = InnoDB
+	default character set = utf8;
 
 -- INSERT SAMPLE DATA FOR USER--
 
