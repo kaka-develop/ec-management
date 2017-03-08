@@ -38,6 +38,6 @@ class AssessmentClaimPK implements Serializable {
     private Claim claim_id;
 
     @OneToOne
-    @JoinColumn(name = "assessment_id")
-    private Assessment assessment_id;
+    @JoinColumn(name = "assessment_crn")
+    private Assessment assessment_crn;
 }
