@@ -38,7 +38,7 @@ public class Assessment implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "course_code")
-    private Course question;
+    private Course course;
     
     public String getCrn() {
         return crn;
@@ -56,12 +56,12 @@ public class Assessment implements Serializable {
         this.title = title;
     }
 
-    public Course getQuestion() {
-        return question;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setQuestion(Course question) {
-        this.question = question;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
 }

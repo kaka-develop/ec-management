@@ -14,7 +14,6 @@ import java.util.Set;
 @Table(name = "user")
 public class User extends AbstractEntity implements Serializable {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
