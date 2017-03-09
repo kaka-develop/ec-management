@@ -30,6 +30,11 @@ public class UserVM extends UserDTO {
         this.password = password;
     }
 
+    public UserVM(UserDTO userDTO) {
+        super(userDTO.getUsername(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
+                userDTO.getCreatedDate(), userDTO.getAuthorities());
+    }
+
     public String getPassword() {
         return password;
     }

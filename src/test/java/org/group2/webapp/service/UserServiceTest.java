@@ -21,9 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EcManagementApplication.class)
 @Transactional
-public class UserServiceIntTest {
+public class UserServiceTest {
 
-    private final Logger log = LoggerFactory.getLogger(UserServiceIntTest.class);
+    private final Logger log = LoggerFactory.getLogger(UserServiceTest.class);
 
 
     @Autowired

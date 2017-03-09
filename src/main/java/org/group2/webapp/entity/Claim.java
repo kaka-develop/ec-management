@@ -37,7 +37,7 @@ public class Claim implements Serializable{
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Null
+    @NotNull
     @Size(min = 1, max = 100)
     @Column(columnDefinition = "TEXT", unique = true, nullable = true)
     private String evidence;

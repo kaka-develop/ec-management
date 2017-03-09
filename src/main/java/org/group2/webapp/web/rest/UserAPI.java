@@ -4,12 +4,8 @@ import org.group2.webapp.entity.User;
 import org.group2.webapp.repository.UserRepository;
 import org.group2.webapp.service.UserService;
 import org.group2.webapp.service.dto.UserDTO;
-import org.group2.webapp.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +20,6 @@ import java.util.Optional;
 public class UserAPI {
 
     private final Logger log = LoggerFactory.getLogger(UserAPI.class);
-
-    private static final String ENTITY_NAME = "userManagement";
 
     private final UserRepository userRepository;
 
@@ -42,18 +36,12 @@ public class UserAPI {
         log.debug("REST request to save User : {}", userDTO);
 
         if (userRepository.findOneByUsername(userDTO.getUsername().toLowerCase()).isPresent()) {
-            return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use"))
-                    .body(null);
+            return ResponseEntity.badRequest().build();
         } else if (userRepository.findOneByEmail(userDTO.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use"))
-                    .body(null);
+            return ResponseEntity.badRequest().build();
         } else {
             User newUser = userService.createUser(userDTO);
-            return ResponseEntity.created(new URI("/api/users/" + newUser.getUsername()))
-                    .headers(HeaderUtil.createAlert("A user is created with identifier " + newUser.getUsername(), newUser.getUsername()))
-                    .body(newUser);
+            return ResponseEntity.ok(newUser);
         }
     }
 
@@ -77,6 +65,6 @@ public class UserAPI {
     public ResponseEntity<Void> deleteUser(@PathVariable String username) {
         log.debug("REST request to delete User: {}", username);
         userService.deleteUser(username);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert("A user is deleted with identifier " + username, username)).build();
+        return ResponseEntity.ok().build();
     }
 }

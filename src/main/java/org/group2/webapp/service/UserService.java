@@ -8,6 +8,7 @@ import org.group2.webapp.security.AuthoritiesConstants;
 import org.group2.webapp.security.SecurityUtils;
 import org.group2.webapp.service.dto.UserDTO;
 import org.group2.webapp.util.RandomUtil;
+import org.group2.webapp.web.mvc.vm.UserVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -124,4 +125,22 @@ public class UserService {
     }
 
 
+    public User updateUser(UserVM userVM) {
+        User user = userRepository.findOneByUsername(userVM.getUsername()).get();
+        if(user == null)
+            return null;
+        user.setFirstName(userVM.getFirstName());
+        user.setLastName(userVM.getLastName());
+        user.setEmail(userVM.getEmail());
+        user = userRepository.save(user);
+        return user;
+    }
+
+    public UserDTO findOneByUsername(String username){
+        User user = userRepository.findOneByUsername(username).get();
+        if(user == null)
+            return null;
+        UserDTO userDTO = new UserDTO(user);
+        return userDTO;
+    }
 }
