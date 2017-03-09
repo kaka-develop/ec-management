@@ -1,4 +1,4 @@
--- SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
+SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
 
 DROP DATABASE IF EXISTS ecm_db;
 CREATE DATABASE ecm_db;
@@ -100,6 +100,7 @@ create table claim_circumstances(
 
 create table faculty(
 	id int not null auto_increment,
+	title varchar(100) not null,
 	user_id int not null,
 	primary key (id),
 	foreign key (user_id) references `user`(id)
@@ -152,4 +153,4 @@ insert into assessment (crn,course_code,title) values ('23718','COMP-1108','COMP
 ('25391','COMP-1714','COMP 1714 Coursework'),('25392','COMP-1714','COMP 1714 Exam');
 
 
--- SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
