@@ -45,7 +45,7 @@ create table course(
 
 create table assessment(
     crn varchar(50) not null,
-    course_code varchar(50) not null,
+    course_code varchar(50),
     title varchar(100) not null,
     primary key(crn),
     foreign key (course_code) references course(code)
@@ -67,7 +67,7 @@ create table claim(
     engine = InnoDB
     default character set = utf8;
 
-create table circumstances(
+create table circumstance(
     id int not null auto_increment,
     title text,
     primary key(id)
@@ -87,13 +87,13 @@ create table assessment_claim(
     engine = InnoDB
     default character set = utf8;
 
-create table claim_circumstances(
+create table claim_circumstance(
     claim_id int not null,
-    circumstances_id int not null,
-    other_circumstances text,
-    primary key(claim_id, circumstances_id),
+    circumstance_id int not null,
+    other_circumstance text,
+    primary key(claim_id, circumstance_id),
     foreign key (claim_id) references claim(id),
-    foreign key (circumstances_id) references circumstances(id)
+    foreign key (circumstance_id) references circumstance(id)
 )
     engine = InnoDB
     default character set = utf8;
@@ -101,7 +101,7 @@ create table claim_circumstances(
 create table faculty(
 	id int not null auto_increment,
 	title varchar(100) not null,
-	user_id int not null,
+	user_id int,
 	primary key (id),
 	foreign key (user_id) references `user`(id)
 )
@@ -137,7 +137,7 @@ INSERT INTO user_authority (user_id, authority_name) VALUES
   (1, 'ROLE_USER'), (2, 'ROLE_STUDENT'), (3, 'ROLE_COORDINATOR'), (4, 'ROLE_ADMIN');
 
 -- INSERT SAMPLE DATA FOR CLAIMS --
-insert into circumstances (title) values ('Accident'),('Bereavement'),('Harassment or Assault'),('Jury Service'),('Medical'),
+insert into circumstance (title) values ('Accident'),('Bereavement'),('Harassment or Assault'),('Jury Service'),('Medical'),
 ('Organisational maladministration'),('Unexpected personal or family difficulties'),
 ('Work (part-time and placement studends only)'),('Other');
 

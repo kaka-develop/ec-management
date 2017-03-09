@@ -6,12 +6,9 @@
 package org.group2.webapp.entity;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -37,9 +34,26 @@ public class Assessment implements Serializable {
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "course_code")
     private Course course;
-    
+
+    @ManyToMany
+    @JoinTable(
+            name = "assessment_claim",
+            joinColumns = {@JoinColumn(name = "assessment_crn", referencedColumnName = "crn")},
+            inverseJoinColumns = {@JoinColumn(name = "claim_id", referencedColumnName = "id")})
+    private Set<Claim> claim = new HashSet<>();
+
+    public Assessment() {
+    }
+
+    public Set<Claim> getClaim() {
+        return claim;
+    }
+
+    public void setClaim(Set<Claim> claim) {
+        this.claim = claim;
+    }
+
     public String getCrn() {
         return crn;
     }

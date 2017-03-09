@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,16 +16,16 @@ public class ClaimService {
 
     private final Logger log = LoggerFactory.getLogger(ClaimService.class);
 
-    private final ClaimRepository productRepository;
+    private final ClaimRepository claimRepository;
 
-    public ClaimService(ClaimRepository productRepository) {
-        this.productRepository = productRepository;
+    public ClaimService(ClaimRepository claimRepository) {
+        this.claimRepository = claimRepository;
     }
 
 
-    public Claim save(Claim product) {
-        log.debug("Request to save Claim : {}", product);
-        Claim result = productRepository.save(product);
+    public Claim save(Claim claim) {
+        log.debug("Request to save Claim : {}", claim);
+        Claim result = claimRepository.save(claim);
         return result;
     }
 
@@ -32,7 +33,7 @@ public class ClaimService {
     @Transactional(readOnly = true)
     public List<Claim> findAll() {
         log.debug("Request to get all Claims");
-        List<Claim> result = productRepository.findAll();
+        List<Claim> result = claimRepository.findAll();
 
         return result;
     }
@@ -40,12 +41,19 @@ public class ClaimService {
     @Transactional(readOnly = true)
     public Claim findOne(Long id) {
         log.debug("Request to get Claim : {}", id);
-        Claim product = productRepository.findOne(id);
-        return product;
+        Claim claim = claimRepository.findOne(id);
+        return claim;
     }
 
     public void delete(Long id) {
         log.debug("Request to delete Claim : {}", id);
-        productRepository.delete(id);
+        claimRepository.delete(id);
+    }
+
+    public List<Claim> findClaimsPerFaculty(Long id) {
+        log.debug("Request to get all Claims per Faculty : {}", id);
+//        List<Claim> result = claimRepository.findAllByFacultyId(id);
+        List<Claim> result = new ArrayList<>();
+        return result;
     }
 }

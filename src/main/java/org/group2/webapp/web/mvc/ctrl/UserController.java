@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("admin/user")
 public class UserController {
 
     private final UserService userService;
