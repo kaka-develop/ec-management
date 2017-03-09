@@ -13,12 +13,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- *
  * @author dfChicken
  */
 @Entity
-@Table(name = "faculty")
-public class Faculty implements Serializable {
+@Table(name = "circumstance")
+public class Circumstance implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,28 +25,17 @@ public class Faculty implements Serializable {
 
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(length = 100, unique = true, nullable = false)
+    @Column(columnDefinition = "TEXT", unique = true, nullable = true)
     private String title;
-    
-    @ManyToOne
-    private User user;
 
     @ManyToMany
     @JoinTable(
-            name = "faculty_course",
-            joinColumns = {@JoinColumn(name = "faculty_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "course_code", referencedColumnName = "code")})
-    private Set<Course> courses = new HashSet<>();
+            name = "claim_circumstance",
+            joinColumns = {@JoinColumn(name = "circumstance_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "claim_id", referencedColumnName = "id")})
+    private Set<Claim> claims = new HashSet<>();
 
-    public Faculty() {
-    }
-
-    public Set<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
+    public Circumstance() {
     }
 
     public Long getId() {
@@ -66,13 +54,11 @@ public class Faculty implements Serializable {
         this.title = title;
     }
 
-    public User getUser() {
-        return user;
+    public Set<Claim> getClaims() {
+        return claims;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setClaims(Set<Claim> claims) {
+        this.claims = claims;
     }
-    
-    
 }

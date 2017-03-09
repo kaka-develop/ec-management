@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/claim")
+@RequestMapping("admin/claim")
 public class ClaimController {
 
     private final Logger log = LoggerFactory.getLogger(ClaimController.class);
@@ -29,7 +29,7 @@ public class ClaimController {
     @GetMapping(value = {"/",""})
     public String index(Model model) {
         model.addAttribute("claims", claimService.findAll());
-        return "claim/claims";
+        return "admin/claim/claims";
     }
 
     @GetMapping("/detail")
@@ -38,19 +38,19 @@ public class ClaimController {
         if (claim == null)
             return index(model);
         model.addAttribute("claim", claim);
-        return "claim/detail";
+        return "admin/claim/detail";
     }
 
     @GetMapping("/new")
     public String newClaim(Model model) {
         model.addAttribute("claim", new Claim());
-        return "claim/add";
+        return "admin/claim/add";
     }
 
     @PostMapping("/new")
     public String newClaim(@Valid @RequestBody Claim claim, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors())
-            return "claim/add";
+            return "admin/claim/add";
         else
             return index(model);
     }
@@ -62,13 +62,13 @@ public class ClaimController {
             return index(model);
 
         model.addAttribute("claim", claim);
-        return "claim/edit";
+        return "admin/claim/edit";
     }
 
     @PostMapping("/edit")
     public String editClaim(@Valid @RequestBody Claim claim, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors())
-            return "claim/edit";
+            return "admin/claim/edit";
         else
             return index(model);
     }

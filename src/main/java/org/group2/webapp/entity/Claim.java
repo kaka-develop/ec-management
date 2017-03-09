@@ -7,16 +7,9 @@ package org.group2.webapp.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
@@ -33,9 +26,6 @@ public class Claim implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @NotNull
     @Size(min = 1, max = 100)
@@ -49,7 +39,7 @@ public class Claim implements Serializable{
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_time", nullable = false)
-    private Date created_time;
+    private Date created_time = new Date();
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "processed_time", nullable = false)
@@ -57,6 +47,43 @@ public class Claim implements Serializable{
     
     @Column(name = "status")
     private int status;
+
+
+    @ManyToOne
+    private User user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "assessment_claim",
+            joinColumns = {@JoinColumn(name = "claim_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "assessment_crn", referencedColumnName = "crn")})
+    private Set<Assessment> assessment = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "claim_circumstance",
+            joinColumns = {@JoinColumn(name = "claim_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "circumstance_id", referencedColumnName = "id")})
+    private Set<Circumstance> circumstances = new HashSet<>();
+
+    public Claim() {
+    }
+
+    public Set<Circumstance> getCircumstances() {
+        return circumstances;
+    }
+
+    public void setCircumstances(Set<Circumstance> circumstances) {
+        this.circumstances = circumstances;
+    }
+
+    public Set<Assessment> getAssessment() {
+        return assessment;
+    }
+
+    public void setAssessment(Set<Assessment> assessment) {
+        this.assessment = assessment;
+    }
 
     public Long getId() {
         return id;

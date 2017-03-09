@@ -28,4 +28,6 @@ public class Authority implements Serializable {
         this.name = name;
     }
 
+    public Authority() {
+    }
 }
