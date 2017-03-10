@@ -12,7 +12,9 @@ CREATE TABLE user (
   first_name    VARCHAR(50)  NOT NULL,
   last_name     VARCHAR(50)  NOT NULL,
   email         VARCHAR(100) NOT NULL,
-  created_date  DATETIME     NOT NULL
+  faculty_id	int(20),
+  created_date  DATETIME     NOT NULL,
+  foreign key (faculty_id) references `faculty`(id)
 )
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
@@ -123,6 +125,16 @@ CREATE TABLE faculty_course (
 INSERT INTO authority (name, created_date) VALUES
   ('ROLE_USER', NOW()), ('ROLE_STUDENT', NOW()), ('ROLE_MANAGER', NOW()), ('ROLE_COORDINATOR', NOW()),
   ('ROLE_ADMIN', NOW());
+ 
+  
+insert into faculty(title) values
+("faculty1"),
+("faculty2"),
+("faculty3"),
+("faculty4"),
+("faculty5");
+
+  
 INSERT INTO user (username, password_hash, first_name, last_name, email, created_date) VALUES
   ('user', '$2a$06$7oA08ApI.X1xU0H5zkmpbutG4Uawv9mMH2qFqzpqGqr3EUJvPnKtu', 'fuser', 'luser', 'user@gmail.com', NOW()),
   ('student', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent', 'lstudent',
