@@ -14,4 +14,8 @@ public final class RandomUtil {
         return RandomStringUtils.randomAlphanumeric(DEF_COUNT);
     }
 
+    public static String generateTokenData() {
+        return RandomStringUtils.randomAlphanumeric(DEF_COUNT);
+    }
+
 }
