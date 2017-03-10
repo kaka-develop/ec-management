@@ -40,12 +40,16 @@ public class AssessmentService {
     @Transactional(readOnly = true)
     public Assessment findOne(String crn) {
         log.debug("Request to get Assessment : {}", crn);
+        if(crn == null)
+            return null;
         Assessment assessment = assessmentRepository.findOne(crn);
         return assessment;
     }
 
     public void delete(String crn) {
         log.debug("Request to delete Assessment : {}", crn);
+        if(crn == null || assessmentRepository.findOne(crn)  == null)
+            return;
         assessmentRepository.delete(crn);
     }
 }

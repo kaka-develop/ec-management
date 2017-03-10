@@ -23,13 +23,19 @@ public class ManagerController {
         this.managerService = managerService;
     }
 
+
+    @GetMapping(value = {"/", ""})
+    public String index() {
+        return "manager/manager";
+    }
+
     @GetMapping("/claims")
     public String findAllClaims(Model model) {
         model.addAttribute("claims", managerService.findAllClaims());
         return "manager/claims";
     }
 
-    @GetMapping
+    @GetMapping("/statistics")
     public String getClaimStatistics(Model model) {
         model.addAttribute("claimsPerFaculty", managerService.getClaimsPerFaculty());
         model.addAttribute("claimsPerYear", managerService.getClamsPerYear());

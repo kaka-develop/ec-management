@@ -40,12 +40,16 @@ public class FacultyService {
     @Transactional(readOnly = true)
     public Faculty findOne(Long id) {
         log.debug("Request to get Faculty : {}", id);
+        if(id == null)
+            return null;
         Faculty faculty = facultyRepository.findOne(id);
         return faculty;
     }
 
     public void delete(Long id) {
         log.debug("Request to delete Faculty : {}", id);
+        if(id == null || facultyRepository.findOne(id) == null)
+            return;
         facultyRepository.delete(id);
     }
 }

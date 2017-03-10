@@ -2,6 +2,7 @@ package org.group2.webapp.web.mvc.ctrl.admin;
 
 import org.group2.webapp.entity.Faculty;
 import org.group2.webapp.service.FacultyService;
+import org.group2.webapp.util.ConvertUntil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,7 @@ public class FacultyController {
 
     @GetMapping("/detail")
     public String detail(@RequestParam String id, Model model) {
-        Faculty faculty = facultyService.findOne(new Long(id));
+        Faculty faculty = facultyService.findOne(ConvertUntil.covertStringToLong(id));
         if (faculty == null)
             return index(model);
         model.addAttribute("faculty", faculty);
@@ -55,7 +56,7 @@ public class FacultyController {
 
     @GetMapping("/edit")
     public String editFaculty(@RequestParam String id, Model model) {
-        Faculty faculty = facultyService.findOne(new Long(id));
+        Faculty faculty = facultyService.findOne(ConvertUntil.covertStringToLong(id));
         if (faculty == null)
             return index(model);
 
@@ -74,7 +75,7 @@ public class FacultyController {
 
     @PostMapping("/delete")
     public String deleteFaculty(@RequestParam String id, Model model) {
-        facultyService.delete(new Long(id));
+        facultyService.delete(ConvertUntil.covertStringToLong(id));
         return index(model);
     }
 }

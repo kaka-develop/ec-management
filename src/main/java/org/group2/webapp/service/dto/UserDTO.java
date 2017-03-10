@@ -4,6 +4,7 @@ import org.group2.webapp.entity.Authority;
 import org.group2.webapp.entity.User;
 import org.hibernate.validator.constraints.Email;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -12,13 +13,15 @@ import java.util.stream.Collectors;
 
 public class UserDTO {
 
-
+    @NotNull
     @Size(min = 1, max = 100)
     private String username;
 
+    @NotNull
     @Size(max = 50)
     private String firstName;
 
+    @NotNull
     @Size(max = 50)
     private String lastName;
 
