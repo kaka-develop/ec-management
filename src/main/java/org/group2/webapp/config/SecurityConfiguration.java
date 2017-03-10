@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final CustomUserDetailsService customUserDetailsService;
@@ -33,7 +34,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-
+                .exceptionHandling()
+                .accessDeniedPage("/error/error")
+                .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
@@ -62,5 +65,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
+
 
 }
