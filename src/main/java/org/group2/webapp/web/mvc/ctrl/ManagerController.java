@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("admin/manager")
+@RequestMapping("/manager")
 public class ManagerController {
 
     private ManagerService managerService;
@@ -26,13 +26,13 @@ public class ManagerController {
     @GetMapping("/claims")
     public String findAllClaims(Model model) {
         model.addAttribute("claims", managerService.findAllClaims());
-        return "admin/manager/claims";
+        return "manager/claims";
     }
 
     @GetMapping
-    public String getClaimStatistics(Model model){
-        model.addAttribute("claimsPerFaculty",managerService.getClaimsPerFaculty());
-        model.addAttribute("claimsPerYear",managerService.getClamsPerYear());
-        return "admin/manager/statistics";
+    public String getClaimStatistics(Model model) {
+        model.addAttribute("claimsPerFaculty", managerService.getClaimsPerFaculty());
+        model.addAttribute("claimsPerYear", managerService.getClamsPerYear());
+        return "manager/statistics";
     }
 }

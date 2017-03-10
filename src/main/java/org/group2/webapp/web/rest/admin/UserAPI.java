@@ -1,4 +1,4 @@
-package org.group2.webapp.web.rest;
+package org.group2.webapp.web.rest.admin;
 
 import org.group2.webapp.entity.User;
 import org.group2.webapp.repository.UserRepository;
@@ -10,13 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 public class UserAPI {
 
     private final Logger log = LoggerFactory.getLogger(UserAPI.class);

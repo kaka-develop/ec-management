@@ -1,4 +1,4 @@
-package org.group2.webapp.web.mvc.ctrl;
+package org.group2.webapp.web.mvc.ctrl.admin;
 
 import org.group2.webapp.entity.Circumstance;
 import org.group2.webapp.service.CircumstanceService;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("admin/circumstance")
+@RequestMapping("/admin/circumstance")
 public class CircumstanceController {
 
     private final Logger log = LoggerFactory.getLogger(CircumstanceController.class);

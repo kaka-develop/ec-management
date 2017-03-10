@@ -1,9 +1,9 @@
-package org.group2.webapp.web.mvc.ctrl;
+package org.group2.webapp.web.mvc.ctrl.admin;
 
 import org.group2.webapp.service.UserService;
 import org.group2.webapp.service.dto.UserDTO;
 import org.group2.webapp.web.mvc.vm.UserVM;
-import org.group2.webapp.web.rest.UserAPI;
+import org.group2.webapp.web.rest.admin.UserAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,11 +12,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
-@RequestMapping("admin/user")
+@RequestMapping("/admin/user")
 public class UserController {
 
     private final UserService userService;

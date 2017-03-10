@@ -1,4 +1,4 @@
-package org.group2.webapp.web.mvc.ctrl;
+package org.group2.webapp.web.mvc.ctrl.admin;
 
 import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.service.AssessmentService;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("admin/assessment")
+@RequestMapping("/admin/assessment")
 public class AssessmentController {
 
     private final Logger log = LoggerFactory.getLogger(AssessmentController.class);

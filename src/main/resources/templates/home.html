@@ -1,22 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
-<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
-<link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}" />
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
 
-<script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
-<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
 
-<title>Title</title>
+    <title>Title</title>
 </head>
 <body>
-	<!--/* Standard layout can be mixed with Tiles */-->
-	<div th:replace="fragments/header :: header"></div>
-	<div class="container">
-		dan playss
+<!--/* Standard layout can be mixed with Tiles */-->
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
 
-		<div th:replace="fragments/footer :: footer"></div>
-	</div>
+    <div sec:authorize="!isAuthenticated()">
+        <a href="/signin"></a>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <span sec:authentication="name"></span>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
 </body>
 </html>

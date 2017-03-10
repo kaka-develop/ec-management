@@ -1,4 +1,4 @@
-package org.group2.webapp.web.mvc.ctrl;
+package org.group2.webapp.web.mvc.ctrl.admin;
 
 import org.group2.webapp.entity.Course;
 import org.group2.webapp.service.CourseService;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("admin/course")
+@RequestMapping("/admin/course")
 public class CourseController {
 
     private final Logger log = LoggerFactory.getLogger(CourseController.class);

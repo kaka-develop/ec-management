@@ -52,8 +52,7 @@ public class ClaimService {
 
     public List<Claim> findClaimsPerFaculty(Long id) {
         log.debug("Request to get all Claims per Faculty : {}", id);
-//        List<Claim> result = claimRepository.findAllByFacultyId(id);
-        List<Claim> result = new ArrayList<>();
+       List<Claim> result = claimRepository.findAllByFacultyId(id);
         return result;
     }
 }

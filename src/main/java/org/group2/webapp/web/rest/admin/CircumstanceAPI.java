@@ -1,4 +1,4 @@
-package org.group2.webapp.web.rest;
+package org.group2.webapp.web.rest.admin;
 
 import org.group2.webapp.entity.Circumstance;
 import org.group2.webapp.service.CircumstanceService;
@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 public class CircumstanceAPI {
 
     private final Logger log = LoggerFactory.getLogger(CircumstanceAPI.class);

@@ -1,9 +1,7 @@
-package org.group2.webapp.web.mvc.ctrl;
+package org.group2.webapp.web.mvc.ctrl.admin;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.service.ClaimService;
-import org.group2.webapp.web.rest.UserAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("admin/claim")
+@RequestMapping("/admin/claim")
 public class ClaimController {
 
     private final Logger log = LoggerFactory.getLogger(ClaimController.class);

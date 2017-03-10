@@ -1,4 +1,4 @@
-package org.group2.webapp.web.rest;
+package org.group2.webapp.web.rest.admin;
 
 import org.group2.webapp.entity.Course;
 import org.group2.webapp.service.CourseService;
@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 public class CourseAPI {
 
     private final Logger log = LoggerFactory.getLogger(CourseAPI.class);
