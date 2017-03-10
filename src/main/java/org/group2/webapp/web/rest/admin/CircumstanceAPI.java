@@ -59,6 +59,8 @@ public class CircumstanceAPI {
     public ResponseEntity<Circumstance> getCircumstance(@PathVariable Long id) {
         log.debug("REST request to get Circumstance : {}", id);
         Circumstance circumstance = circumstanceService.findOne(id);
+        if(circumstance == null)
+            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(circumstance);
     }
 

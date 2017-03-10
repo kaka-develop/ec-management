@@ -59,6 +59,8 @@ public class ClaimAPI {
     public ResponseEntity<Claim> getClaim(@PathVariable Long id) {
         log.debug("REST request to get Claim : {}", id);
         Claim claim = claimService.findOne(id);
+        if(claim == null)
+            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(claim);
     }
 

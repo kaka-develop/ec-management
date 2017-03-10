@@ -29,7 +29,7 @@ public class AssessmentAPI {
     @PostMapping("/assessments")
     public ResponseEntity<Assessment> createAssessment(@Valid @RequestBody Assessment assessment) throws URISyntaxException {
         log.debug("REST request to save Assessment : {}", assessment);
-        if (assessment.getCrn() != null) {
+        if (assessment.getCrn() == null || assessmentService.findOne(assessment.getCrn()) != null) {
             return ResponseEntity.badRequest().build();
         }
         Assessment result = assessmentService.save(assessment);
@@ -59,6 +59,8 @@ public class AssessmentAPI {
     public ResponseEntity<Assessment> getAssessment(@PathVariable String crn) {
         log.debug("REST request to get Assessment : {}", crn);
         Assessment assessment = assessmentService.findOne(crn);
+        if(assessment == null)
+            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(assessment);
     }
 
