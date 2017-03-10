@@ -101,11 +101,8 @@ CREATE TABLE claim_circumstance (
   DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE faculty (
-  id      INT          NOT NULL AUTO_INCREMENT,
-  title   VARCHAR(100) NOT NULL,
-  user_id INT,
-  PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES `user` (id)
+  id      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title   VARCHAR(100) NOT NULL
 )
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;

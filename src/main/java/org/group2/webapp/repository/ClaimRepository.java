@@ -9,6 +9,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ClaimRepository extends JpaRepository<Claim, Long> {
 
-    @Query("select c from Claim c, User u, Faculty f where c.user.id = u.id and u.id = f.user.id and f.id = ?1")
+    @Query("select c from Claim c, User u, Faculty f where c.user.id = u.id and u.faculty.id = f.id and f.id = ?1")
     List<Claim> findAllByFacultyId(Long id);
 }

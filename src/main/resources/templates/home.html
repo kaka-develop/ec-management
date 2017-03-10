@@ -18,10 +18,6 @@
 <div th:replace="fragments/header :: header"></div>
 <div class="container">
 
-    <div sec:authorize="!isAuthenticated()">
-        <a href="/signin"></a>
-    </div>
-
     <div sec:authorize="isAuthenticated()">
         <span sec:authentication="name"></span>
         <form th:action="@{/logout}" method="post">
