@@ -1,16 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>Add claim</title>
+<meta charset="UTF-8" />
+<title>Add claim</title>
+<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
+<script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+
 </head>
 <body>
-<table>
-	<thead>
-		<tr>
-		<td>Name</td>
-		</tr>
-	</thead>
-</table>
+	<div th:replace="fragments/header :: header"></div>
+	<div class="container">
+
+		<h1>Submit new claim</h1>
+		<h2>
+			Your are: <span th:text="${session.user.firstName}"></span>
+		</h2>
+		<form th:action="@{/student/claim/add}" method="post" class="form-horizontal">
+			<div class="form-group">
+				<div class="col-lg-6">
+					<label>Choose assessments</label>
+					<div th:each="ass : ${allAssessments}" class="checkbox">
+						<label><input type="checkbox" name="assessments" th:value="${ass.crn}" /><span th:text="${ass.title}"></span></label>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<label>Choose circumstances</label>
+					<div th:each="cir : ${allCircumstances}" class="checkbox">
+						<label><input type="checkbox" name="circumstances" th:value="${cir.id}" /><span th:text="${cir.title}"></span></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+
+				<label>Content</label>
+				<textarea class="form-control" rows="4" cols="50" name="content"></textarea>
+			</div>
+			<div class="form-group">
+				<label>Evidence</label>
+				<textarea rows="4" class="form-control" cols="50" name="evidence"></textarea>
+
+				<input type="submit" class="btn btn-primary" value="Submit claim" />
+			</div>
+
+		</form>
+	</div>
+	<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
