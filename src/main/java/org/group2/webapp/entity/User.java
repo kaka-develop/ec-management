@@ -51,9 +51,8 @@ public class User extends AbstractEntity implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private Set<Faculty> faculties = new HashSet<>();
+    @ManyToOne
+    private Faculty faculty;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
@@ -70,9 +69,6 @@ public class User extends AbstractEntity implements Serializable {
         this.email = email;
     }
 
-    public void setFaculties(Set<Faculty> faculties) {
-        this.faculties = faculties;
-    }
 
     public Set<Claim> getClaims() {
         return claims;
@@ -80,10 +76,6 @@ public class User extends AbstractEntity implements Serializable {
 
     public void setClaims(Set<Claim> claims) {
         this.claims = claims;
-    }
-
-    public Set<Faculty> getFaculties() {
-        return faculties;
     }
 
     public Long getId() {
@@ -141,4 +133,12 @@ public class User extends AbstractEntity implements Serializable {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
+
+	public Faculty getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
+	}
 }

@@ -5,6 +5,15 @@ CREATE DATABASE ecm_db;
 USE ecm_db;
 
 -- INIT USER AND AUTHORITY TABLE --
+create table faculty(
+	id int not null auto_increment,
+	title varchar(100) not null,
+	primary key (id)
+)
+	engine = InnoDB
+	default character set = utf8;
+	
+	
 CREATE TABLE user (
   id            INTEGER      NOT NULL AUTO_INCREMENT PRIMARY KEY,
   username      VARCHAR(100) NOT NULL,
@@ -12,7 +21,9 @@ CREATE TABLE user (
   first_name    VARCHAR(50)  NOT NULL,
   last_name     VARCHAR(50)  NOT NULL,
   email         VARCHAR(100) NOT NULL,
-  created_date  DATETIME     NOT NULL
+  faculty_id	int(20),
+  created_date  DATETIME     NOT NULL,
+  foreign key (faculty_id) references `faculty`(id)
 )
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
@@ -35,6 +46,7 @@ CREATE TABLE user_authority (
   DEFAULT CHARACTER SET = utf8;
 
 -- INIT CLAIM, COURSE, ASSESSMENT TABLE --
+
 create table course(
     code varchar(50) not null,
     title varchar(100) not null,
@@ -98,15 +110,7 @@ create table claim_circumstance(
     engine = InnoDB
     default character set = utf8;
 
-create table faculty(
-	id int not null auto_increment,
-	title varchar(100) not null,
-	user_id int,
-	primary key (id),
-	foreign key (user_id) references `user`(id)
-)
-	engine = InnoDB
-	default character set = utf8;
+
 
 create table faculty_course(
 	faculty_id int not null,
@@ -123,6 +127,16 @@ create table faculty_course(
 INSERT INTO authority (name, created_date) VALUES
   ('ROLE_USER', NOW()), ('ROLE_STUDENT', NOW()), ('ROLE_MANAGER', NOW()), ('ROLE_COORDINATOR', NOW()),
   ('ROLE_ADMIN', NOW());
+ 
+  
+insert into faculty(title) values
+("faculty1"),
+("faculty2"),
+("faculty3"),
+("faculty4"),
+("faculty5");
+
+  
 INSERT INTO user (username, password_hash, first_name, last_name, email, created_date) VALUES
   ('user', '$2a$06$7oA08ApI.X1xU0H5zkmpbutG4Uawv9mMH2qFqzpqGqr3EUJvPnKtu', 'fuser', 'luser', 'user@gmail.com', NOW()),
   ('student', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent', 'lstudent',

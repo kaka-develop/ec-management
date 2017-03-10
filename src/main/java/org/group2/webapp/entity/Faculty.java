@@ -12,6 +12,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author dfChicken
@@ -20,59 +22,59 @@ import javax.validation.constraints.Size;
 @Table(name = "faculty")
 public class Faculty implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(length = 100, unique = true, nullable = false)
-    private String title;
-    
-    @ManyToOne
-    private User user;
+	@NotNull
+	@Size(min = 1, max = 100)
+	@Column(length = 100, unique = true, nullable = false)
+	private String title;
 
-    @ManyToMany
-    @JoinTable(
-            name = "faculty_course",
-            joinColumns = {@JoinColumn(name = "faculty_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "course_code", referencedColumnName = "code")})
-    private Set<Course> courses = new HashSet<>();
+	@OneToMany(mappedBy = "faculty")
+	@JsonIgnore
+	private Set<User> users;
 
-    public Faculty() {
-    }
+	@ManyToMany
+	@JoinTable(name = "faculty_course", joinColumns = {
+			@JoinColumn(name = "faculty_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "course_code", referencedColumnName = "code") })
+	private Set<Course> courses = new HashSet<>();
 
-    public Set<Course> getCourses() {
-        return courses;
-    }
+	public Faculty() {
+	}
 
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
-    }
+	public Set<Course> getCourses() {
+		return courses;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
-    
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
+
 }
