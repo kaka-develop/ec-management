@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import org.group2.webapp.constraints.SessionKeys;
 import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.entity.Authority;
 import org.group2.webapp.entity.Circumstance;
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.entity.User;
@@ -19,6 +20,7 @@ import org.group2.webapp.repository.AssessmentRepository;
 import org.group2.webapp.repository.CircumstanceRepository;
 import org.group2.webapp.repository.ClaimRepository;
 import org.group2.webapp.repository.UserRepository;
+import org.group2.webapp.security.AuthoritiesConstants;
 import org.group2.webapp.web.util.MailUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -78,17 +80,13 @@ public class StudentController {
 			}
 			claim.setUser((User) req.getSession().getAttribute(SessionKeys.USER));
 			claimRepo.save(claim);
+			getECProcessClaim(claim).ifPresent(ec -> MailUtils.sendInformNewClaim(ec));
 			return "claim/success";
-		}else{
+		} else {
 			req.setAttribute("errors", result.getAllErrors());
 			addClaim(req);
 		}
 		return addClaim(req);
-	}
-
-	public List<Assessment> getAllAssetmentOfStudent(User student) {
-		// return assessmentRepo.findAll().stream().filter(a->student.get)
-		return null;
 	}
 
 	public List<Claim> getAllClaimOfStudent(User student) {
@@ -97,11 +95,15 @@ public class StudentController {
 	}
 
 	public Optional<User> getECProcessClaim(Claim claim) {
-		// claim.getAssessment().iterator().next().getCourse().get
-		return null;
-	}
-
-	public static void main(String[] args) {
-
+		Optional<User> ec = Optional.empty();
+		for (User user : userRepo.findAll()) {
+			for (Authority au : user.getAuthorities()) {
+				if (au.getName().equals(AuthoritiesConstants.COORDINATOR)) {
+					ec = Optional.of(user);
+					break;
+				}
+			}
+		}
+		return ec;
 	}
 }
