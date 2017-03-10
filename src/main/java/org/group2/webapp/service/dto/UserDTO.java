@@ -36,6 +36,7 @@ public class UserDTO {
     public UserDTO(User user) {
         this.username = user.getUsername();
         this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
         this.email = user.getEmail();
         this.createdDate = user.getCreatedDate();
         this.authorities = user.getAuthorities().stream().map(Authority::getName)

@@ -54,6 +54,8 @@ public class UserAPI {
     @GetMapping("/users/{username}")
     public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
         log.debug("REST request to get User : {}", username);
+        if (!userRepository.findOneByUsername(username).isPresent())
+            return ResponseEntity.notFound().build();
         UserDTO userDTO = new UserDTO(userRepository.findOneByUsername(username).get());
         return ResponseEntity.ok(userDTO);
     }
