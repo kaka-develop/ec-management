@@ -29,6 +29,9 @@ https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_dash
 number of claims per Faculty
 - The interface must be suitable for all devices 
 
+## Scrum Log
+https://www.gitbook.com/book/tungptseven/scrum-log/details
+
 ## Project ERD
 ![alt tag](https://firebasestorage.googleapis.com/v0/b/socialapp-cc534.appspot.com/o/images%2Fsystemerd3.png?alt=media&token=8e02afb1-f9d7-4ae3-9359-e342e2355b4f)
 
@@ -37,3 +40,5 @@ https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_back
 
 ### Sprint 1
 https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_backlogs/Iteration/Sprint%201
+
+
