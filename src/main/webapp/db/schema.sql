@@ -4,7 +4,14 @@ DROP DATABASE IF EXISTS ecm_db;
 CREATE DATABASE ecm_db;
 USE ecm_db;
 
--- INIT USER AND AUTHORITY TABLE --
+
+CREATE TABLE faculty (
+  id      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title   VARCHAR(100) NOT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8;
+
 CREATE TABLE user (
   id            INTEGER      NOT NULL AUTO_INCREMENT PRIMARY KEY,
   username      VARCHAR(100) NOT NULL,
@@ -40,7 +47,9 @@ CREATE TABLE user_authority (
 CREATE TABLE course (
   code  VARCHAR(50)  NOT NULL,
   title VARCHAR(100) NOT NULL,
-  PRIMARY KEY (code)
+  PRIMARY KEY (code),
+  faculty_id	int(20),
+  foreign key (faculty_id) references `faculty`(id)
 )
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
@@ -100,22 +109,6 @@ CREATE TABLE claim_circumstance (
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
 
-CREATE TABLE faculty (
-  id      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  title   VARCHAR(100) NOT NULL
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
-
-CREATE TABLE faculty_course (
-  faculty_id  INT         NOT NULL,
-  course_code VARCHAR(50) NOT NULL,
-  PRIMARY KEY (faculty_id, course_code),
-  FOREIGN KEY (faculty_id) REFERENCES faculty (id),
-  FOREIGN KEY (course_code) REFERENCES course (`code`)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
 
 -- INSERT SAMPLE DATA FOR USER--
 
@@ -125,11 +118,11 @@ INSERT INTO authority (name, created_date) VALUES
  
   
 insert into faculty(title) values
-("faculty1"),
-("faculty2"),
-("faculty3"),
-("faculty4"),
-("faculty5");
+('faculty1'),
+('faculty2'),
+('faculty3'),
+('faculty4'),
+('faculty5');
 
   
 INSERT INTO user (username, password_hash, first_name, last_name, email, created_date) VALUES

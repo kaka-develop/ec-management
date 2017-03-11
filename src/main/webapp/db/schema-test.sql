@@ -34,7 +34,9 @@ CREATE TABLE user_authority (
 CREATE TABLE course (
   code  VARCHAR(50)  NOT NULL,
   title VARCHAR(100) NOT NULL,
-  PRIMARY KEY (code)
+  PRIMARY KEY (code),
+  faculty_id	int(20),
+  foreign key (faculty_id) references `faculty`(id)
 );
 CREATE TABLE assessment (
   crn         VARCHAR(50)  NOT NULL,
@@ -79,14 +81,6 @@ CREATE TABLE claim_circumstance (
   PRIMARY KEY (claim_id, circumstance_id),
   FOREIGN KEY (claim_id) REFERENCES claim (id),
   FOREIGN KEY (circumstance_id) REFERENCES circumstance (id)
-);
-
-CREATE TABLE faculty_course (
-  faculty_id  INT         NOT NULL,
-  course_code VARCHAR(50) NOT NULL,
-  PRIMARY KEY (faculty_id, course_code),
-  FOREIGN KEY (faculty_id) REFERENCES faculty (id),
-  FOREIGN KEY (course_code) REFERENCES course (`code`)
 );
 
 -- INSERT SAMPLE DATA FOR USER--
