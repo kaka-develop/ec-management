@@ -8,11 +8,22 @@ package org.group2.webapp.web.mvc.ctrl;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Iterator;
+import java.util.List;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,8 +43,15 @@ public class UploadController {
 
     private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public @ResponseBody String uploadFileHandler(@RequestParam("name") String name, @RequestParam("file") MultipartFile file) {
+    @GetMapping("/upload")
+      public String uploadFileHandler() {
+       // Forward to "/WEB-INF/upload.html"
+       return "file/upload";
+   }
+    
+//    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @PostMapping("/upload")
+    public @ResponseBody String uploadFileHandlerPOST(@RequestParam("name") String name, @RequestParam("file") MultipartFile file) {
         
     String actualPath = servletContext.getRealPath("");
     String fileLocation = actualPath + File.separator + "evidents";

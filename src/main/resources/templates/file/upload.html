@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Upload File Demo</title>
+</head>
+    <body>
+        <h1>Upload File Demo</h1>
+        <form method="POST" th:action="@{/file/upload}" enctype="multipart/form-data">
+            File to upload: <input type="file" name="file" size="45" />
+
+            Name: <input type="text" name="name"/>
+
+            <input type="submit" value="Upload"  /> Press here to upload the file! 
+        </form>	
+    </body>
+</html>
