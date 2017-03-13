@@ -59,6 +59,9 @@ public class FacultyAPI {
     public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
         log.debug("REST request to get Faculty : {}", id);
         Faculty faculty = facultyService.findOne(id);
+        if(faculty == null)
+            return ResponseEntity.notFound().build();
+
         return ResponseEntity.ok(faculty);
     }
 

@@ -92,6 +92,8 @@ public class UserService {
 
 
     public void deleteUser(String username) {
+        if(username == null)
+            return;
         userRepository.findOneByUsername(username).ifPresent(user -> {
             userRepository.delete(user);
         });
@@ -126,9 +128,9 @@ public class UserService {
 
 
     public User updateUser(UserVM userVM) {
-        User user = userRepository.findOneByUsername(userVM.getUsername()).get();
-        if(user == null)
+        if (!userRepository.findOneByUsername(userVM.getUsername()).isPresent())
             return null;
+        User user = userRepository.findOneByUsername(userVM.getUsername()).get();
         user.setFirstName(userVM.getFirstName());
         user.setLastName(userVM.getLastName());
         user.setEmail(userVM.getEmail());
@@ -136,11 +138,10 @@ public class UserService {
         return user;
     }
 
-    public UserDTO findOneByUsername(String username){
-        User user = userRepository.findOneByUsername(username).get();
-        if(user == null)
+    public UserDTO findOneByUsername(String username) {
+        if (!userRepository.findOneByUsername(username).isPresent())
             return null;
-        UserDTO userDTO = new UserDTO(user);
+        UserDTO userDTO = new UserDTO(userRepository.findOneByUsername(username).get());
         return userDTO;
     }
 }

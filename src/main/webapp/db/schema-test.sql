@@ -1,16 +1,10 @@
-SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
 
-DROP DATABASE IF EXISTS ecm_db;
-CREATE DATABASE ecm_db;
-USE ecm_db;
-
+-- INIT USER AND AUTHORITY TABLE --
 
 CREATE TABLE faculty (
   id      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
   title   VARCHAR(100) NOT NULL
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+);
 
 CREATE TABLE user (
   id            INTEGER      NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -22,16 +16,12 @@ CREATE TABLE user (
   faculty_id	int(20),
   created_date  DATETIME     NOT NULL,
   foreign key (faculty_id) references `faculty`(id)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+);
 
 CREATE TABLE authority (
   name         VARCHAR(50) NOT NULL PRIMARY KEY,
   created_date DATETIME    NOT NULL
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+);
 
 CREATE TABLE user_authority (
   id             INTEGER     NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -39,10 +29,7 @@ CREATE TABLE user_authority (
   authority_name VARCHAR(50) NOT NULL,
   FOREIGN KEY (user_id) REFERENCES user (id),
   FOREIGN KEY (authority_name) REFERENCES authority (name)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
-
+);
 -- INIT CLAIM, COURSE, ASSESSMENT TABLE --
 CREATE TABLE course (
   code  VARCHAR(50)  NOT NULL,
@@ -50,19 +37,14 @@ CREATE TABLE course (
   PRIMARY KEY (code),
   faculty_id	int(20),
   foreign key (faculty_id) references `faculty`(id)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
-
+);
 CREATE TABLE assessment (
   crn         VARCHAR(50)  NOT NULL,
   course_code VARCHAR(50),
   title       VARCHAR(100) NOT NULL,
   PRIMARY KEY (crn),
   FOREIGN KEY (course_code) REFERENCES course (code)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+);
 
 CREATE TABLE claim (
   id             INT NOT NULL AUTO_INCREMENT,
@@ -74,17 +56,13 @@ CREATE TABLE claim (
   status         INT,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES `user` (id)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+);
 
 CREATE TABLE circumstance (
   id    INT NOT NULL AUTO_INCREMENT,
   title TEXT,
   PRIMARY KEY (id)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+);
 
 CREATE TABLE assessment_claim (
   claim_id       INT         NOT NULL,
@@ -94,9 +72,7 @@ CREATE TABLE assessment_claim (
   PRIMARY KEY (claim_id, assessment_crn),
   FOREIGN KEY (claim_id) REFERENCES claim (id),
   FOREIGN KEY (assessment_crn) REFERENCES assessment (crn)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
+);
 
 CREATE TABLE claim_circumstance (
   claim_id           INT NOT NULL,
@@ -105,18 +81,15 @@ CREATE TABLE claim_circumstance (
   PRIMARY KEY (claim_id, circumstance_id),
   FOREIGN KEY (claim_id) REFERENCES claim (id),
   FOREIGN KEY (circumstance_id) REFERENCES circumstance (id)
-)
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8;
-
+);
 
 -- INSERT SAMPLE DATA FOR USER--
 
 INSERT INTO authority (name, created_date) VALUES
   ('ROLE_USER', NOW()), ('ROLE_STUDENT', NOW()), ('ROLE_MANAGER', NOW()), ('ROLE_COORDINATOR', NOW()),
   ('ROLE_ADMIN', NOW());
- 
-  
+
+
 insert into faculty(title) values
 ('faculty1'),
 ('faculty2'),
@@ -124,7 +97,7 @@ insert into faculty(title) values
 ('faculty4'),
 ('faculty5');
 
-  
+
 INSERT INTO user (username, password_hash, first_name, last_name, email, created_date) VALUES
   ('user', '$2a$06$7oA08ApI.X1xU0H5zkmpbutG4Uawv9mMH2qFqzpqGqr3EUJvPnKtu', 'fuser', 'luser', 'user@gmail.com', NOW()),
   ('student', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent', 'lstudent',
@@ -170,6 +143,3 @@ INSERT INTO assessment (crn, course_code, title) VALUES ('23718', 'COMP-1108', '
   ('25042', 'COMP-1648', 'COMP 1648 Coursework'), ('25045', 'COMP-1649', 'COMP 1649 Coursework'),
   ('25066', 'COMP-1661', 'COMP 1661 Coursework'), ('25067', 'COMP-1661', 'COMP 1661 Logbook'),
   ('25391', 'COMP-1714', 'COMP 1714 Coursework'), ('25392', 'COMP-1714', 'COMP 1714 Exam');
-
-
-SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;

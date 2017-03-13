@@ -2,6 +2,7 @@ package org.group2.webapp.web.mvc.ctrl.admin;
 
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.service.ClaimService;
+import org.group2.webapp.util.ConvertUntil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,7 @@ public class ClaimController {
 
     @GetMapping("/detail")
     public String detail(@RequestParam String id, Model model) {
-        Claim claim = claimService.findOne(new Long(id));
+        Claim claim = claimService.findOne(ConvertUntil.covertStringToLong(id));
         if (claim == null)
             return index(model);
         model.addAttribute("claim", claim);
@@ -55,7 +56,7 @@ public class ClaimController {
 
     @GetMapping("/edit")
     public String editClaim(@RequestParam String id, Model model) {
-        Claim claim = claimService.findOne(new Long(id));
+        Claim claim = claimService.findOne(ConvertUntil.covertStringToLong(id));
         if (claim == null)
             return index(model);
 
@@ -74,7 +75,7 @@ public class ClaimController {
 
     @PostMapping("/delete")
     public String deleteClaim(@RequestParam String id, Model model) {
-        claimService.delete(new Long(id));
+        claimService.delete(ConvertUntil.covertStringToLong(id));
         return index(model);
     }
 }

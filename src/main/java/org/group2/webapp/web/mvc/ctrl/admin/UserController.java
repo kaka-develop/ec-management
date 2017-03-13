@@ -32,7 +32,7 @@ public class UserController {
     public String index(Model model) {
         List<UserDTO> users = userService.getAllManagedUsers();
         model.addAttribute("users", users);
-        return "user/users";
+        return "admin/user/users";
     }
 
     @GetMapping("/detail")
@@ -42,19 +42,19 @@ public class UserController {
             return index(model);
         UserVM userVM = new UserVM(userDTO);
         model.addAttribute("user",userVM);
-        return "user/detail";
+        return "admin/user/detail";
     }
 
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user",new UserVM());
-        return "user/add";
+        return "admin/user/add";
     }
 
     @PostMapping("/new")
     public String newUser(@Valid @RequestBody UserVM userVM, BindingResult bindingResult,Model model) {
         if(bindingResult.hasErrors())
-            return "user/add";
+            return "admin/user/add";
         else
             userService.createUser(userVM);
         return index(model);
@@ -67,13 +67,13 @@ public class UserController {
             return index(model);
         UserVM userVM = new UserVM(userDTO);
         model.addAttribute("user",userVM);
-        return "user/edit";
+        return "admin/user/edit";
     }
 
     @PostMapping("/edit")
     public String editUser(@Valid @RequestBody UserVM userVM, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors())
-            return "user/edit";
+            return "admin/user/edit";
         else
             userService.updateUser(userVM);
         return index(model);

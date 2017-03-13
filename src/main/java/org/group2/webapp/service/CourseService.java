@@ -40,12 +40,16 @@ public class CourseService {
     @Transactional(readOnly = true)
     public Course findOne(String code) {
         log.debug("Request to get Course : {}", code);
+        if(code == null)
+            return null;
         Course course = courseRepository.findOne(code);
         return course;
     }
 
     public void delete(String code) {
         log.debug("Request to delete Course : {}", code);
+        if(code == null || courseRepository.findOne(code) == null)
+            return;
         courseRepository.delete(code);
     }
 }

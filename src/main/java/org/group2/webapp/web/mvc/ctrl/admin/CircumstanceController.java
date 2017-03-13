@@ -2,6 +2,7 @@ package org.group2.webapp.web.mvc.ctrl.admin;
 
 import org.group2.webapp.entity.Circumstance;
 import org.group2.webapp.service.CircumstanceService;
+import org.group2.webapp.util.ConvertUntil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,7 @@ public class CircumstanceController {
 
     @GetMapping("/detail")
     public String detail(@RequestParam String id, Model model) {
-        Circumstance circumstance = circumstanceService.findOne(new Long(id));
+        Circumstance circumstance = circumstanceService.findOne(ConvertUntil.covertStringToLong(id));
         if (circumstance == null)
             return index(model);
         model.addAttribute("circumstance", circumstance);
@@ -55,7 +56,7 @@ public class CircumstanceController {
 
     @GetMapping("/edit")
     public String editCircumstance(@RequestParam String id, Model model) {
-        Circumstance circumstance = circumstanceService.findOne(new Long(id));
+        Circumstance circumstance = circumstanceService.findOne(ConvertUntil.covertStringToLong(id));
         if (circumstance == null)
             return index(model);
 
@@ -74,7 +75,7 @@ public class CircumstanceController {
 
     @PostMapping("/delete")
     public String deleteCircumstance(@RequestParam String id, Model model) {
-        circumstanceService.delete(new Long(id));
+        circumstanceService.delete(ConvertUntil.covertStringToLong(id));
         return index(model);
     }
 }

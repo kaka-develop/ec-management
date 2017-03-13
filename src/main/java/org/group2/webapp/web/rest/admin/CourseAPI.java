@@ -29,7 +29,7 @@ public class CourseAPI {
     @PostMapping("/courses")
     public ResponseEntity<Course> createCourse(@Valid @RequestBody Course course) throws URISyntaxException {
         log.debug("REST request to save Course : {}", course);
-        if (course.getCode() != null) {
+        if (course.getCode() == null || courseService.findOne(course.getCode())!= null) {
             return ResponseEntity.badRequest().build();
         }
         Course result = courseService.save(course);
@@ -59,6 +59,8 @@ public class CourseAPI {
     public ResponseEntity<Course> getCourse(@PathVariable String code) {
         log.debug("REST request to get Course : {}", code);
         Course course = courseService.findOne(code);
+        if(course == null)
+            return ResponseEntity.notFound().build();
         return ResponseEntity.ok(course);
     }
 

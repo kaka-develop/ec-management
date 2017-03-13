@@ -35,11 +35,9 @@ public class Faculty implements Serializable {
 	@JsonIgnore
 	private Set<User> users;
 
-	@ManyToMany
-	@JoinTable(name = "faculty_course", joinColumns = {
-			@JoinColumn(name = "faculty_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "course_code", referencedColumnName = "code") })
-	private Set<Course> courses = new HashSet<>();
+	@OneToMany(mappedBy = "faculty")
+	@JsonIgnore
+	private Set<Course> courses;
 
 	public Faculty() {
 	}

@@ -1,11 +1,12 @@
 package org.group2.webapp.web.mvc.vm;
 
+import org.group2.webapp.entity.Authority;
+import org.group2.webapp.entity.User;
 import org.group2.webapp.service.dto.UserDTO;
 
 import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 public class UserVM extends UserDTO {
 
@@ -21,11 +22,10 @@ public class UserVM extends UserDTO {
     }
 
     public UserVM(String username, String password, String firstName, String lastName,
-                  String email, Date createdDate,
-                  Set<String> authorities) {
+                  String email) {
 
         super(username, firstName, lastName, email,
-                createdDate, authorities);
+                Calendar.getInstance().getTime(), new HashSet<>());
 
         this.password = password;
     }
@@ -34,6 +34,7 @@ public class UserVM extends UserDTO {
         super(userDTO.getUsername(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
                 userDTO.getCreatedDate(), userDTO.getAuthorities());
     }
+
 
     public String getPassword() {
         return password;

@@ -41,12 +41,16 @@ public class CircumstanceService {
     @Transactional(readOnly = true)
     public Circumstance findOne(Long id) {
         log.debug("Request to get Circumstance : {}", id);
+        if(id == null)
+            return null;
         Circumstance circumstance = circumstanceRepository.findOne(id);
         return circumstance;
     }
 
     public void delete(Long id) {
         log.debug("Request to delete Circumstance : {}", id);
+        if(id == null || circumstanceRepository.findOne(id) == null)
+            return;
         circumstanceRepository.delete(id);
     }
 
