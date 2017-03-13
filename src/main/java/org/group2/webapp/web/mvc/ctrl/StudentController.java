@@ -21,6 +21,7 @@ import org.group2.webapp.repository.CircumstanceRepository;
 import org.group2.webapp.repository.ClaimRepository;
 import org.group2.webapp.repository.UserRepository;
 import org.group2.webapp.security.AuthoritiesConstants;
+import org.group2.webapp.security.SecurityUtils;
 import org.group2.webapp.web.util.MailUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -52,17 +53,15 @@ public class StudentController {
 
 	@GetMapping("/claim")
 	public String viewClaim(HttpServletRequest req) {
-		User user = userRepo.findOneByUsername("student1").get();
-		req.getSession().setAttribute(SessionKeys.USER, user);
-		List<Claim> claims = getAllClaimOfStudent(user);
+		List<Claim> claims = getAllClaimOfStudent((User) req.getSession().getAttribute(SecurityUtils.getCurrentUserLogin()));
 		req.setAttribute("claims", claims);
 		return "claim/claims";
 	}
 
 	@GetMapping("/claim/add")
 	public String addClaim(HttpServletRequest req) {
-		User user = userRepo.findOneByUsername("student1").get();
-		req.getSession().setAttribute(SessionKeys.USER, user);
+		
+		;
 		req.setAttribute("allAssessments", assessmentRepo.findAll());
 		req.setAttribute("allCircumstances", circumRepo.findAll());
 		return "claim/add";
@@ -78,7 +77,7 @@ public class StudentController {
 			for (long cid : circumstances) {
 				claim.getCircumstances().add(circumRepo.getOne(cid));
 			}
-			claim.setUser((User) req.getSession().getAttribute(SessionKeys.USER));
+			claim.setUser((User) req.getSession().getAttribute(SecurityUtils.getCurrentUserLogin()));
 			claimRepo.save(claim);
 			getECProcessClaim(claim).ifPresent(ec -> MailUtils.sendInformNewClaim(ec));
 			return "claim/success";
