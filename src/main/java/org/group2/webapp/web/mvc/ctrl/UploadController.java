@@ -45,7 +45,7 @@ public class UploadController {
 
     @GetMapping("/upload")
       public String uploadFileHandler() {
-       // Forward to "/WEB-INF/upload.html"
+       // Forward to templates "/WEB-INF/upload.html"
        return "file/upload";
    }
     
@@ -72,7 +72,7 @@ public class UploadController {
                 stream.write(bytes);
                 stream.close();
 
-                logger.info("Server File Location=" + serverFile.getAbsolutePath());
+                logger.info("Saved to: " + serverFile.getAbsolutePath());
 
                 return "You successfully uploaded file=" + name;
                 
