@@ -10,10 +10,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.group2.webapp.constraints.SessionKeys;
-import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.entity.Authority;
-import org.group2.webapp.entity.Circumstance;
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.entity.User;
 import org.group2.webapp.repository.AssessmentRepository;
@@ -23,6 +20,7 @@ import org.group2.webapp.repository.UserRepository;
 import org.group2.webapp.security.AuthoritiesConstants;
 import org.group2.webapp.security.SecurityUtils;
 import org.group2.webapp.web.util.MailUtils;
+import org.group2.webapp.web.util.SessionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,15 +51,14 @@ public class StudentController {
 
 	@GetMapping("/claim")
 	public String viewClaim(HttpServletRequest req) {
-		List<Claim> claims = getAllClaimOfStudent((User) req.getSession().getAttribute(SecurityUtils.getCurrentUserLogin()));
+		User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
+		List<Claim> claims = getAllClaimOfStudent(currentUser);
 		req.setAttribute("claims", claims);
 		return "claim/claims";
 	}
 
 	@GetMapping("/claim/add")
 	public String addClaim(HttpServletRequest req) {
-		
-		;
 		req.setAttribute("allAssessments", assessmentRepo.findAll());
 		req.setAttribute("allCircumstances", circumRepo.findAll());
 		return "claim/add";
