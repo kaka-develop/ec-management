@@ -35,12 +35,8 @@ public class Course implements Serializable {
     @Column(length = 100, unique = true, nullable = false)
     private String title;
 
-    @ManyToMany
-    @JoinTable(
-            name = "faculty_course",
-            joinColumns = {@JoinColumn(name = "course_code", referencedColumnName = "code")},
-            inverseJoinColumns = {@JoinColumn(name = "faculty_id", referencedColumnName = "id")})
-    private Set<Faculty> faculties = new HashSet<>();
+    @ManyToOne
+    private Faculty faculty;
 
     @OneToMany(mappedBy = "course")
     @JsonIgnore
@@ -57,12 +53,12 @@ public class Course implements Serializable {
         this.assessments = assessments;
     }
 
-    public Set<Faculty> getFaculties() {
-        return faculties;
+    public Faculty getFaculty() {
+        return faculty;
     }
 
-    public void setFaculties(Set<Faculty> faculties) {
-        this.faculties = faculties;
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     public String getCode() {
