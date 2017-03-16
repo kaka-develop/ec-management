@@ -20,21 +20,26 @@
 				<th>Status</th>
 				<th>Circumstances</th>
 				<th>Assessments</th>
+				<th>Evidences</th>
 			</tr>
 		</thead>
+
 		<tbody>
 			<tr th:each="cl : ${claims}">
 				<td th:text="${cl.id}"></td>
 				<td th:text="${cl.evidence}"></td>
-				<td th:text="${cl.content}"></td>
 				<td th:text="${cl.created_time}"></td>
 				<td th:text="${cl.status}"></td>
-				<td><span th:each="ass : ${cl.assessment}" th:text="${ass.crn}+' ,'"></span></td>
-				<td><span th:each="cir : ${cl.circumstances}" th:text="${cir.title}+' ,'"></span></td>
-			</tr>		
+<!-- 				<td><span th:each="ass : ${cl.assessment}" th:text="${ass.crn}+' ,'"></span></td> -->
+<!-- 				<td><span th:each="cir : ${cl.circumstances}" th:text="${cir.title}+' ,'"></span></td> -->
+				<td><a href="#">Click to see your evidences</a></td>
+			</tr>
 		</tbody>
-		
+
 	</table>
 	<a href="#" th:href="@{/student/claim/add}">Submit new claim</a>
 </body>
+<script>
+
+</script>
 </html>

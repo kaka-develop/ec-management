@@ -87,6 +87,7 @@ public class StudentController {
 
 	public List<Claim> getAllClaimOfStudent(User student) {
 		List<Claim> claims = claimRepo.findAll();
+		System.out.println("claims co null khong?: " + claims);
 		return claims.stream().filter(cl -> cl.getUser().getId() == student.getId()).collect(Collectors.toList());
 	}
 
