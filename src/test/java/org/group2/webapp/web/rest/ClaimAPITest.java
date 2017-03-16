@@ -111,7 +111,7 @@ public class ClaimAPITest {
     @Transactional
     public void checkEvidenceIsRequired() throws Exception {
         int databaseSizeBeforeTest = claimRepository.findAll().size();
-        claim.setEvidence(null);
+        claim.setContent(null);
 
         restClaimMockMvc.perform(post("/api/admin/claims")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)

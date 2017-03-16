@@ -86,7 +86,7 @@ public class ClaimControllerTest {
                 .andExpect(view().name("admin/claim/claims"))
                 .andExpect(status().isOk());
 
-        claim.setEvidence(null);
+        claim.setContent(null);
         restClaimMockMvc.perform(post("/admin/claim/new")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(claim)))
@@ -160,7 +160,7 @@ public class ClaimControllerTest {
                 .andExpect(view().name("admin/claim/claims"))
                 .andExpect(status().isOk());
 
-        claim.setEvidence(null);
+        claim.setContent(null);
         restClaimMockMvc.perform(post("/admin/claim/edit")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(claim)))
