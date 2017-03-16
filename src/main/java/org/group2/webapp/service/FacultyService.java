@@ -22,13 +22,6 @@ public class FacultyService {
     }
 
 
-    public Faculty save(Faculty faculty) {
-        log.debug("Request to save Faculty : {}", faculty);
-        Faculty result = facultyRepository.save(faculty);
-        return result;
-    }
-
-
     @Transactional(readOnly = true)
     public List<Faculty> findAll() {
         log.debug("Request to get all Facultys");
@@ -51,5 +44,17 @@ public class FacultyService {
         if(id == null || facultyRepository.findOne(id) == null)
             return;
         facultyRepository.delete(id);
+    }
+
+    public Faculty create(Faculty faculty) {
+        log.debug("Request to create faculty: {}", faculty);
+        return facultyRepository.save(faculty);
+    }
+
+    public Faculty update(Faculty faculty) {
+        log.debug("Request to update faculty: {}", faculty.getId());
+        if(faculty.getId() == null)
+            return null;
+        return facultyRepository.save(faculty);
     }
 }

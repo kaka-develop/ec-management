@@ -40,7 +40,7 @@ public class FacultyServiceTest {
     public void before() {
         faculty = new Faculty();
         faculty.setTitle(FACULTY_TITLE);
-        faculty = facultyService.save(faculty);
+        faculty = facultyService.create(faculty);
         log.debug("done create faculty");
     }
 

@@ -61,4 +61,13 @@ public class Circumstance implements Serializable {
     public void setClaims(Set<Claim> claims) {
         this.claims = claims;
     }
+
+
+    @Override
+    public String toString() {
+        return "Circumstance{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }

@@ -34,7 +34,7 @@ public class ClaimAPI {
         if (claim.getId() != null) {
             return ResponseEntity.badRequest().build();
         }
-        Claim result = claimService.save(claim);
+        Claim result = claimService.create(claim);
         return ResponseEntity.ok(result);
     }
 
@@ -45,7 +45,7 @@ public class ClaimAPI {
         if (claim.getId() == null) {
             return createClaim(claim);
         }
-        Claim result = claimService.save(claim);
+        Claim result = claimService.update(claim);
         return ResponseEntity.ok(result);
     }
 

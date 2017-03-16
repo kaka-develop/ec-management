@@ -32,7 +32,7 @@ public class FacultyAPI {
         if (faculty.getId() != null) {
             return ResponseEntity.badRequest().build();
         }
-        Faculty result = facultyService.save(faculty);
+        Faculty result = facultyService.create(faculty);
         return ResponseEntity.ok(result);
     }
 
@@ -43,7 +43,7 @@ public class FacultyAPI {
         if (faculty.getId() == null) {
             return createFaculty(faculty);
         }
-        Faculty result = facultyService.save(faculty);
+        Faculty result = facultyService.update(faculty);
         return ResponseEntity.ok(result);
     }
 

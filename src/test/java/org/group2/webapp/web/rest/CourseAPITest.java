@@ -157,7 +157,7 @@ public class CourseAPITest {
     @Test
     @Transactional
     public void updateCourse() throws Exception {
-        courseService.save(course);
+        courseService.update(course);
 
         int databaseSizeBeforeUpdate = courseRepository.findAll().size();
 
@@ -194,7 +194,7 @@ public class CourseAPITest {
     @Test
     @Transactional
     public void deleteCourse() throws Exception {
-        courseService.save(course);
+        courseService.create(course);
 
         int databaseSizeBeforeDelete = courseRepository.findAll().size();
 

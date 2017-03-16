@@ -41,7 +41,7 @@ public class CourseServiceTest {
         course = new Course();
         course.setCode(COURSE_CODE);
         course.setTitle(COURSE_TITLE);
-        course = courseService.save(course);
+        course = courseService.create(course);
         log.debug("done create course");
     }
 

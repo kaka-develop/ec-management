@@ -14,10 +14,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author dfChicken
- */
 @Entity
 @Table(name = "claim")
 public class Claim implements Serializable{
@@ -138,5 +134,17 @@ public class Claim implements Serializable{
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Claim{" +
+                "id=" + id +
+                ", evidence='" + evidence + '\'' +
+                ", content='" + content + '\'' +
+                ", created_time=" + created_time +
+                ", processed_time=" + processed_time +
+                ", status=" + status +
+                '}';
     }
 }

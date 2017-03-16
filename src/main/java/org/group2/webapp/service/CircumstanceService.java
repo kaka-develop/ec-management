@@ -4,10 +4,9 @@ import org.group2.webapp.entity.Circumstance;
 import org.group2.webapp.repository.CircumstanceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,13 +19,6 @@ public class CircumstanceService {
 
     public CircumstanceService(CircumstanceRepository circumstanceRepository) {
         this.circumstanceRepository = circumstanceRepository;
-    }
-
-
-    public Circumstance save(Circumstance circumstance) {
-        log.debug("Request to save Circumstance : {}", circumstance);
-        Circumstance result = circumstanceRepository.save(circumstance);
-        return result;
     }
 
 
@@ -54,10 +46,15 @@ public class CircumstanceService {
         circumstanceRepository.delete(id);
     }
 
-    public List<Circumstance> findCircumstancesPerFaculty(Long id) {
-        log.debug("Request to get all Circumstances per Faculty : {}", id);
-//        List<Circumstance> result = circumstanceRepository.findAllByFacultyId(id);
-        List<Circumstance> result = new ArrayList<>();
-        return result;
+    public Circumstance create(Circumstance circumstance) {
+        log.debug("Request to create circumstance: {}", circumstance);
+        return circumstanceRepository.save(circumstance);
+    }
+
+    public Circumstance update(Circumstance circumstance) {
+        log.debug("Request to update circumstance: {}", circumstance.getId());
+        if(circumstance.getId() == null)
+            return null;
+        return circumstanceRepository.save(circumstance);
     }
 }

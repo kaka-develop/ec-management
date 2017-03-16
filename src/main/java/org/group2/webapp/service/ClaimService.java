@@ -24,10 +24,16 @@ public class ClaimService {
     }
 
 
-    public Claim save(Claim claim) {
-        log.debug("Request to save Claim : {}", claim);
-        Claim result = claimRepository.save(claim);
-        return result;
+    public Claim create(Claim claim) {
+        log.debug("Request to create Claim : {}", claim);
+        return claimRepository.save(claim);
+    }
+
+    public Claim update(Claim claim){
+        log.debug("Request to update Claim : {}", claim.getId());
+        if(claim.getId() == null)
+            return null;
+        return claimRepository.save(claim);
     }
 
 
@@ -66,4 +72,6 @@ public class ClaimService {
         List<Claim> result = claimRepository.findAllByYear(year);
         return result;
     }
+
+
 }

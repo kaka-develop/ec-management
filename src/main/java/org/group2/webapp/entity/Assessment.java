@@ -89,4 +89,12 @@ public class Assessment implements Serializable {
         this.course = course;
     }
 
+    @Override
+    public String toString() {
+        return "Assessment{" +
+                "crn='" + crn + '\'' +
+                ", title='" + title + '\'' +
+                ", course=" + course +
+                '}';
+    }
 }

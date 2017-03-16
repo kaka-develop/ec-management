@@ -151,7 +151,7 @@ public class CircumstanceAPITest {
     @Test
     @Transactional
     public void updateCircumstance() throws Exception {
-        circumstanceService.save(circumstance);
+        circumstanceService.create(circumstance);
 
         int databaseSizeBeforeUpdate = circumstanceRepository.findAll().size();
 
@@ -188,7 +188,7 @@ public class CircumstanceAPITest {
     @Test
     @Transactional
     public void deleteCircumstance() throws Exception {
-        circumstanceService.save(circumstance);
+        circumstanceService.create(circumstance);
 
         int databaseSizeBeforeDelete = circumstanceRepository.findAll().size();
 

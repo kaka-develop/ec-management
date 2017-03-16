@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Edit claim</title>
+    <title>Faculties</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-
+<h1>Edit faculty</h1>
+<form method="POST" action="#" th:action="@{/admin/faculty/edit}" th:object="${faculty}">
+    <p><input type="text" th:field="*{id}" hidden="true"/></p>
+    <p><input type="text" th:field="*{title}" placeholder="Title" required="true" minlength="5"/></p>
+    <button type="submit">Save</button>
+    <a href="/admin/faculty">
+        <button type="button">Cancel</button>
+    </a>
+</form>
 </body>
 </html>

@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title>Circumstances</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-
+<h1>Edit circumstance</h1>
+<form method="POST" action="#" th:action="@{/admin/circumstance/edit}" th:object="${circumstance}">
+    <p><input type="text" th:field="*{id}" hidden="true"/></p>
+    <p><input type="text" th:field="*{title}" placeholder="First name" required="true" minlength="5"/></p>
+    <button type="submit">Save</button>
+    <a href="/admin/circumstance">
+        <button type="button">Cancel</button>
+    </a>
+</form>
 </body>
 </html>

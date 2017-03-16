@@ -1,7 +1,9 @@
 package org.group2.webapp.web.mvc.ctrl.admin;
 
+import org.apache.commons.lang3.StringUtils;
 import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.service.AssessmentService;
+import org.group2.webapp.util.ConvertUntil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ public class AssessmentController {
 
     private final Logger log = LoggerFactory.getLogger(AssessmentController.class);
 
+    public static final String REDIRECT_INDEX = "redirect:/admin/assessment";
+
     private AssessmentService assessmentService;
 
     public AssessmentController(AssessmentService assessmentService) {
@@ -30,11 +34,11 @@ public class AssessmentController {
         return "admin/assessment/assessments";
     }
 
-    @GetMapping("/detail")
-    public String detail(@RequestParam String crn, Model model) {
+    @GetMapping("/detail/{crn}")
+    public String detail(@PathVariable String crn, Model model) {
         Assessment assessment = assessmentService.findOne(crn);
         if (assessment == null)
-            return index(model);
+            return REDIRECT_INDEX;
         model.addAttribute("assessment", assessment);
         return "admin/assessment/detail";
     }
@@ -46,35 +50,38 @@ public class AssessmentController {
     }
 
     @PostMapping("/new")
-    public String newAssessment(@Valid @RequestBody Assessment assessment, BindingResult bindingResult, Model model) {
+    public String newAssessment(@Valid @ModelAttribute Assessment assessment, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "admin/assessment/add";
         else
-            return index(model);
+            assessmentService.create(assessment);
+        return REDIRECT_INDEX;
     }
 
-    @GetMapping("/edit")
-    public String editAssessment(@RequestParam String crn, Model model) {
+    @GetMapping("/edit/{crn}")
+    public String editAssessment(@PathVariable String crn, Model model) {
         Assessment assessment = assessmentService.findOne(crn);
         if (assessment == null)
-            return index(model);
+            return REDIRECT_INDEX;
 
         model.addAttribute("assessment", assessment);
         return "admin/assessment/edit";
     }
 
     @PostMapping("/edit")
-    public String editAssessment(@Valid @RequestBody Assessment assessment, BindingResult bindingResult, Model model) {
+    public String editAssessment(@Valid @ModelAttribute Assessment assessment, BindingResult bindingResult) {
+        log.debug("");
         if (bindingResult.hasErrors())
             return "admin/assessment/edit";
         else
-            return index(model);
+            assessmentService.update(assessment);
+        return REDIRECT_INDEX;
     }
 
 
-    @PostMapping("/delete")
-    public String deleteAssessment(@RequestParam String crn, Model model) {
+    @PostMapping("/delete/{crn}")
+    public String deleteAssessment(@PathVariable String crn) {
         assessmentService.delete(crn);
-        return index(model);
+        return REDIRECT_INDEX;
     }
 }

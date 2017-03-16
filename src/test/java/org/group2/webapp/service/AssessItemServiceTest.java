@@ -50,7 +50,7 @@ public class AssessItemServiceTest {
          assessment = new Assessment();
         assessment.setCrn(ASSESS_CRN);
         assessment.setTitle(ASSESS_TITLE);
-        assessment = assessmentService.save(assessment);
+        assessment = assessmentService.create(assessment);
 
         assessItem = new AssessItem();
         assessItem.setTitle(ASSESSITEM_TITLE);

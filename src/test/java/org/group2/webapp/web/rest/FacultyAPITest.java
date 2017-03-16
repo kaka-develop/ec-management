@@ -151,7 +151,7 @@ public class FacultyAPITest {
     @Test
     @Transactional
     public void updateFaculty() throws Exception {
-        facultyService.save(faculty);
+        facultyService.create(faculty);
 
         int databaseSizeBeforeUpdate = facultyRepository.findAll().size();
 
@@ -188,7 +188,7 @@ public class FacultyAPITest {
     @Test
     @Transactional
     public void deleteFaculty() throws Exception {
-        facultyService.save(faculty);
+        facultyService.create(faculty);
 
         int databaseSizeBeforeDelete = facultyRepository.findAll().size();
 

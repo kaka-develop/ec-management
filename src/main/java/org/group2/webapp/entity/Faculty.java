@@ -75,4 +75,11 @@ public class Faculty implements Serializable {
 	}
 
 
+	@Override
+	public String toString() {
+		return "Faculty{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				'}';
+	}
 }

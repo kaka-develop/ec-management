@@ -45,12 +45,12 @@ public class ClaimServiceTest {
         claim.setEvidence(CLAIM_EVIDENCE);
         claim.setContent(CLAIM_CONTENT);
         claim.setStatus(CLAIM_STATUS);
-        claim = claimService.save(claim);
+        claim = claimService.create(claim);
         log.debug("done create claim");
     }
 
     @Test
-    public void testFillAll() {
+    public void testFindAll() {
         assertThat(!claimRepository.findAll().isEmpty());
         assertThat(!claimService.findAll().isEmpty());
     }

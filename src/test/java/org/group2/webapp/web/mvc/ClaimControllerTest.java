@@ -53,7 +53,7 @@ public class ClaimControllerTest {
     }
 
     public void createClaim() {
-        claimService.save(claim);
+        claimService.create(claim);
     }
 
 
@@ -79,19 +79,16 @@ public class ClaimControllerTest {
     @Test
     @Transactional
     public void testPostNew() throws Exception {
+        
         restClaimMockMvc.perform(post("/admin/claim/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(claim)))
-                .andExpect(model().attributeExists("claims"))
-                .andExpect(view().name("admin/claim/claims"))
-                .andExpect(status().isOk());
+                .param("evidence",CLAIM_EVIDENCE)
+                .param("content",CLAIM_CONTENT))
+                .andExpect(view().name(ClaimController.REDIRECT_INDEX));
 
-        claim.setContent(null);
         restClaimMockMvc.perform(post("/admin/claim/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(claim)))
-                .andExpect(view().name("admin/claim/add"))
-                .andExpect(status().isOk());
+                .param("evidence","")
+                .param("content",CLAIM_CONTENT))
+                .andExpect(view().name("admin/claim/add"));
     }
 
 
@@ -100,17 +97,13 @@ public class ClaimControllerTest {
     public void testGetDetail() throws Exception {
         createClaim();
 
-        restClaimMockMvc.perform(get("/admin/claim/detail")
-                .param("id", claim.getId().toString()))
+        restClaimMockMvc.perform(get("/admin/claim/detail/"+ claim.getId().toString()))
                 .andExpect(model().attributeExists("claim"))
                 .andExpect(view().name("admin/claim/detail"))
                 .andExpect(status().isOk());
 
-        restClaimMockMvc.perform(get("/admin/claim/detail")
-                .param("id", "BBBBBBBB"))
-                .andExpect(model().attributeExists("claims"))
-                .andExpect(view().name("admin/claim/claims"))
-                .andExpect(status().isOk());
+        restClaimMockMvc.perform(get("/admin/claim/detail/" + "BBBBBBBB" ))
+                .andExpect(view().name(ClaimController.REDIRECT_INDEX));
     }
 
     @Test
@@ -122,16 +115,14 @@ public class ClaimControllerTest {
         Integer year = calendar.get(Calendar.YEAR);
 
         restClaimMockMvc.perform(get("/admin/claim/year")
-                .param("year", year.toString()))
-                .andExpect(model().attributeExists("claims"))
-                .andExpect(view().name("admin/claim/year"))
-                .andExpect(status().isOk());
-
-        restClaimMockMvc.perform(get("/admin/claim/year")
-                .param("year", "BBBBBBBB"))
+                .param("year",year.toString()))
                 .andExpect(model().attributeExists("claims"))
                 .andExpect(view().name("admin/claim/claims"))
                 .andExpect(status().isOk());
+
+        restClaimMockMvc.perform(get("/admin/claim/year")
+                .param("year","BBBBBBB"))
+                .andExpect(view().name(ClaimController.REDIRECT_INDEX));
     }
 
 
@@ -140,8 +131,7 @@ public class ClaimControllerTest {
     public void testGetEdit() throws Exception {
         createClaim();
 
-        restClaimMockMvc.perform(get("/admin/claim/edit")
-                .param("id", claim.getId().toString()))
+        restClaimMockMvc.perform(get("/admin/claim/edit/" + claim.getId().toString()))
                 .andExpect(model().attributeExists("claim"))
                 .andExpect(view().name("admin/claim/edit"))
                 .andExpect(status().isOk());
@@ -151,21 +141,18 @@ public class ClaimControllerTest {
     @Transactional
     public void testPostEdit() throws Exception {
         createClaim();
-        claim.setEvidence(CLAIM_EVIDENCE + CLAIM_EVIDENCE);
 
         restClaimMockMvc.perform(post("/admin/claim/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(claim)))
-                .andExpect(model().attributeExists("claims"))
-                .andExpect(view().name("admin/claim/claims"))
-                .andExpect(status().isOk());
+                .param("id",claim.getId().toString())
+                .param("evidence",CLAIM_EVIDENCE + CLAIM_EVIDENCE)
+                .param("content",CLAIM_CONTENT))
+                .andExpect(view().name(ClaimController.REDIRECT_INDEX));
 
-        claim.setContent(null);
         restClaimMockMvc.perform(post("/admin/claim/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(claim)))
-                .andExpect(view().name("admin/claim/edit"))
-                .andExpect(status().isOk());
+                .param("id",claim.getId().toString())
+                .param("evidence","")
+                .param("content",CLAIM_CONTENT))
+                .andExpect(view().name("admin/claim/edit"));
     }
 
     @Test
@@ -173,15 +160,11 @@ public class ClaimControllerTest {
     public void testPostDelete() throws Exception {
         createClaim();
 
-        restClaimMockMvc.perform(post("/admin/claim/delete")
-                .param("id", claim.getId().toString()))
-                .andExpect(view().name("admin/claim/claims"))
-                .andExpect(status().isOk());
+        restClaimMockMvc.perform(post("/admin/claim/delete/" +  claim.getId().toString()))
+                .andExpect(view().name(ClaimController.REDIRECT_INDEX));
 
-        restClaimMockMvc.perform(post("/admin/claim/delete")
-                .param("id", "BBBBBBB"))
-                .andExpect(view().name("admin/claim/claims"))
-                .andExpect(status().isOk());
+        restClaimMockMvc.perform(post("/admin/claim/delete/" + "BBBBBBB"))
+                .andExpect(view().name(ClaimController.REDIRECT_INDEX));
     }
 
     @After

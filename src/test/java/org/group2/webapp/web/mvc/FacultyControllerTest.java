@@ -46,7 +46,7 @@ public class FacultyControllerTest {
     }
 
     public void createFaculty() {
-        facultyService.save(faculty);
+        facultyService.create(faculty);
     }
 
 
@@ -73,18 +73,12 @@ public class FacultyControllerTest {
     @Transactional
     public void testPostNew() throws Exception {
         restFacultyMockMvc.perform(post("/admin/faculty/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(faculty)))
-                .andExpect(model().attributeExists("faculties"))
-                .andExpect(view().name("admin/faculty/faculties"))
-                .andExpect(status().isOk());
+                .param("title",FACULTY_TITLE))
+                .andExpect(view().name(FacultyController.REDIRECT_INDEX));
 
-        faculty.setTitle(null);
         restFacultyMockMvc.perform(post("/admin/faculty/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(faculty)))
-                .andExpect(view().name("admin/faculty/add"))
-                .andExpect(status().isOk());
+                .param("title",""))
+                .andExpect(view().name("admin/faculty/add"));
     }
 
 
@@ -93,17 +87,13 @@ public class FacultyControllerTest {
     public void testGetDetail() throws Exception {
         createFaculty();
 
-        restFacultyMockMvc.perform(get("/admin/faculty/detail")
-                .param("id", faculty.getId().toString()))
+        restFacultyMockMvc.perform(get("/admin/faculty/detail/" + faculty.getId().toString()))
                 .andExpect(model().attributeExists("faculty"))
                 .andExpect(view().name("admin/faculty/detail"))
                 .andExpect(status().isOk());
 
-        restFacultyMockMvc.perform(get("/admin/faculty/detail")
-                .param("id", "BBBBBBBB"))
-                .andExpect(model().attributeExists("faculties"))
-                .andExpect(view().name("admin/faculty/faculties"))
-                .andExpect(status().isOk());
+        restFacultyMockMvc.perform(get("/admin/faculty/detail/" + "BBBBBBBB"))
+                .andExpect(view().name(FacultyController.REDIRECT_INDEX));
     }
 
 
@@ -112,8 +102,7 @@ public class FacultyControllerTest {
     public void testGetEdit() throws Exception {
         createFaculty();
 
-        restFacultyMockMvc.perform(get("/admin/faculty/edit")
-                .param("id", faculty.getId().toString()))
+        restFacultyMockMvc.perform(get("/admin/faculty/edit/" + faculty.getId().toString()))
                 .andExpect(model().attributeExists("faculty"))
                 .andExpect(view().name("admin/faculty/edit"))
                 .andExpect(status().isOk());
@@ -123,21 +112,15 @@ public class FacultyControllerTest {
     @Transactional
     public void testPostEdit() throws Exception {
         createFaculty();
-        faculty.setTitle(FACULTY_TITLE + FACULTY_TITLE);
 
         restFacultyMockMvc.perform(post("/admin/faculty/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(faculty)))
-                .andExpect(model().attributeExists("faculties"))
-                .andExpect(view().name("admin/faculty/faculties"))
-                .andExpect(status().isOk());
+                .param("id",faculty.getId().toString())
+                .param("title",FACULTY_TITLE + FACULTY_TITLE))
+                .andExpect(view().name(FacultyController.REDIRECT_INDEX));
 
-        faculty.setTitle(null);
         restFacultyMockMvc.perform(post("/admin/faculty/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(faculty)))
-                .andExpect(view().name("admin/faculty/edit"))
-                .andExpect(status().isOk());
+                .param("title",""))
+                .andExpect(view().name("admin/faculty/edit"));
     }
 
     @Test
@@ -145,15 +128,11 @@ public class FacultyControllerTest {
     public void testPostDelete() throws Exception {
         createFaculty();
 
-        restFacultyMockMvc.perform(post("/admin/faculty/delete")
-                .param("id", faculty.getId().toString()))
-                .andExpect(view().name("admin/faculty/faculties"))
-                .andExpect(status().isOk());
+        restFacultyMockMvc.perform(post("/admin/faculty/delete/" + faculty.getId().toString()))
+                .andExpect(view().name(FacultyController.REDIRECT_INDEX));
 
-        restFacultyMockMvc.perform(post("/admin/faculty/delete")
-                .param("id", "BBBBBBB"))
-                .andExpect(view().name("admin/faculty/faculties"))
-                .andExpect(status().isOk());
+        restFacultyMockMvc.perform(post("/admin/faculty/delete/" + "BBBBBBB"))
+                .andExpect(view().name(FacultyController.REDIRECT_INDEX));
     }
 
     @After

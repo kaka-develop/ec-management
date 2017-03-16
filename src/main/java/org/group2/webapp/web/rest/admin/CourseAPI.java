@@ -32,7 +32,7 @@ public class CourseAPI {
         if (course.getCode() == null || courseService.findOne(course.getCode())!= null) {
             return ResponseEntity.badRequest().build();
         }
-        Course result = courseService.save(course);
+        Course result = courseService.create(course);
         return ResponseEntity.ok(result);
     }
 
@@ -43,7 +43,7 @@ public class CourseAPI {
         if (course.getCode() == null) {
             return createCourse(course);
         }
-        Course result = courseService.save(course);
+        Course result = courseService.update(course);
         return ResponseEntity.ok(result);
     }
 

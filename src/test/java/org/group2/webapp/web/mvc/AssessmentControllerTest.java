@@ -4,6 +4,7 @@ import org.group2.webapp.EcManagementApplication;
 import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.service.AssessmentService;
 import org.group2.webapp.web.mvc.ctrl.admin.AssessmentController;
+import org.group2.webapp.web.mvc.ctrl.admin.AssessmentController;
 import org.group2.webapp.web.util.TestUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -49,7 +50,7 @@ public class AssessmentControllerTest {
     }
 
     public void createAssessment() {
-        assessmentService.save(assessment);
+        assessmentService.create(assessment);
     }
 
 
@@ -76,18 +77,13 @@ public class AssessmentControllerTest {
     @Transactional
     public void testPostNew() throws Exception {
         restAssessmentMockMvc.perform(post("/admin/assessment/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(assessment)))
-                .andExpect(model().attributeExists("assessments"))
-                .andExpect(view().name("admin/assessment/assessments"))
-                .andExpect(status().isOk());
+                .param("crn",ASSESS_CRN)
+                .param("title",ASSESS_TITLE))
+                .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
 
-        assessment.setTitle(null);
         restAssessmentMockMvc.perform(post("/admin/assessment/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(assessment)))
-                .andExpect(view().name("admin/assessment/add"))
-                .andExpect(status().isOk());
+                .param("title",""))
+                .andExpect(view().name("admin/assessment/add"));
     }
 
 
@@ -96,17 +92,13 @@ public class AssessmentControllerTest {
     public void testGetDetail() throws Exception {
         createAssessment();
 
-        restAssessmentMockMvc.perform(get("/admin/assessment/detail")
-                .param("crn", assessment.getCrn()))
+        restAssessmentMockMvc.perform(get("/admin/assessment/detail/" + assessment.getCrn().toString()))
                 .andExpect(model().attributeExists("assessment"))
                 .andExpect(view().name("admin/assessment/detail"))
                 .andExpect(status().isOk());
 
-        restAssessmentMockMvc.perform(get("/admin/assessment/detail")
-                .param("crn", "BBBBBBBB"))
-                .andExpect(model().attributeExists("assessments"))
-                .andExpect(view().name("admin/assessment/assessments"))
-                .andExpect(status().isOk());
+        restAssessmentMockMvc.perform(get("/admin/assessment/detail/" + "BBBBBBBB"))
+                .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
     }
 
 
@@ -115,8 +107,7 @@ public class AssessmentControllerTest {
     public void testGetEdit() throws Exception {
         createAssessment();
 
-        restAssessmentMockMvc.perform(get("/admin/assessment/edit")
-                .param("crn", assessment.getCrn()))
+        restAssessmentMockMvc.perform(get("/admin/assessment/edit/" + assessment.getCrn().toString()))
                 .andExpect(model().attributeExists("assessment"))
                 .andExpect(view().name("admin/assessment/edit"))
                 .andExpect(status().isOk());
@@ -126,21 +117,15 @@ public class AssessmentControllerTest {
     @Transactional
     public void testPostEdit() throws Exception {
         createAssessment();
-        assessment.setTitle(ASSESS_TITLE + ASSESS_TITLE);
 
         restAssessmentMockMvc.perform(post("/admin/assessment/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(assessment)))
-                .andExpect(model().attributeExists("assessments"))
-                .andExpect(view().name("admin/assessment/assessments"))
-                .andExpect(status().isOk());
+                .param("crn",ASSESS_CRN)
+                .param("title",ASSESS_TITLE + ASSESS_TITLE))
+                .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
 
-        assessment.setTitle(null);
         restAssessmentMockMvc.perform(post("/admin/assessment/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(assessment)))
-                .andExpect(view().name("admin/assessment/edit"))
-                .andExpect(status().isOk());
+                .param("title",""))
+                .andExpect(view().name("admin/assessment/edit"));
     }
 
     @Test
@@ -148,20 +133,16 @@ public class AssessmentControllerTest {
     public void testPostDelete() throws Exception {
         createAssessment();
 
-        restAssessmentMockMvc.perform(post("/admin/assessment/delete")
-                .param("crn", assessment.getCrn()))
-                .andExpect(view().name("admin/assessment/assessments"))
-                .andExpect(status().isOk());
+        restAssessmentMockMvc.perform(post("/admin/assessment/delete/" + assessment.getCrn().toString()))
+                .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
 
-        restAssessmentMockMvc.perform(post("/admin/assessment/delete")
-                .param("crn", "BBBBBBB"))
-                .andExpect(view().name("admin/assessment/assessments"))
-                .andExpect(status().isOk());
+        restAssessmentMockMvc.perform(post("/admin/assessment/delete/" + "BBBBBBB"))
+                .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
     }
 
     @After
     public void after() {
-            assessmentService.delete(assessment.getCrn());
+        assessmentService.delete(assessment.getCrn());
     }
 
 }

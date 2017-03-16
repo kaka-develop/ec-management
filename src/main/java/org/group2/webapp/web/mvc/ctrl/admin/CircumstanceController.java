@@ -1,5 +1,6 @@
 package org.group2.webapp.web.mvc.ctrl.admin;
 
+import org.apache.commons.lang3.StringUtils;
 import org.group2.webapp.entity.Circumstance;
 import org.group2.webapp.service.CircumstanceService;
 import org.group2.webapp.util.ConvertUntil;
@@ -11,12 +12,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/circumstance")
 public class CircumstanceController {
 
     private final Logger log = LoggerFactory.getLogger(CircumstanceController.class);
+
+    public static final String REDIRECT_INDEX = "redirect:/admin/circumstance";
 
     private CircumstanceService circumstanceService;
 
@@ -31,11 +35,11 @@ public class CircumstanceController {
         return "admin/circumstance/circumstances";
     }
 
-    @GetMapping("/detail")
-    public String detail(@RequestParam String id, Model model) {
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable String id, Model model) {
         Circumstance circumstance = circumstanceService.findOne(ConvertUntil.covertStringToLong(id));
         if (circumstance == null)
-            return index(model);
+            return REDIRECT_INDEX;
         model.addAttribute("circumstance", circumstance);
         return "admin/circumstance/detail";
     }
@@ -47,35 +51,38 @@ public class CircumstanceController {
     }
 
     @PostMapping("/new")
-    public String newCircumstance(@Valid @RequestBody Circumstance circumstance, BindingResult bindingResult, Model model) {
+    public String newCircumstance(@Valid @ModelAttribute Circumstance circumstance, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "admin/circumstance/add";
         else
-            return index(model);
+            circumstanceService.create(circumstance);
+        return REDIRECT_INDEX;
     }
 
-    @GetMapping("/edit")
-    public String editCircumstance(@RequestParam String id, Model model) {
+    @GetMapping("/edit/{id}")
+    public String editCircumstance(@PathVariable String id, Model model) {
         Circumstance circumstance = circumstanceService.findOne(ConvertUntil.covertStringToLong(id));
         if (circumstance == null)
-            return index(model);
+            return REDIRECT_INDEX;
 
         model.addAttribute("circumstance", circumstance);
         return "admin/circumstance/edit";
     }
 
     @PostMapping("/edit")
-    public String editCircumstance(@Valid @RequestBody Circumstance circumstance, BindingResult bindingResult, Model model) {
+    public String editCircumstance(@Valid @ModelAttribute Circumstance circumstance, BindingResult bindingResult) {
+        log.debug("");
         if (bindingResult.hasErrors())
             return "admin/circumstance/edit";
         else
-            return index(model);
+            circumstanceService.update(circumstance);
+        return REDIRECT_INDEX;
     }
 
 
-    @PostMapping("/delete")
-    public String deleteCircumstance(@RequestParam String id, Model model) {
+    @PostMapping("/delete/{id}")
+    public String deleteCircumstance(@PathVariable String id) {
         circumstanceService.delete(ConvertUntil.covertStringToLong(id));
-        return index(model);
+        return REDIRECT_INDEX;
     }
 }

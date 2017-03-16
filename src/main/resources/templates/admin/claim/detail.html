@@ -5,6 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-
+<a href="/admin/claim">
+    <button>Back</button>
+</a>
+<h2>Claim: <span th:text="${claim.id}"></span></h2>
+<p>Evidence: <span th:text="${claim.evidence}"></span></p>
+<p>Content: <span th:text="${claim.content}"></span></p>
+<p>Status: <span th:text="${claim.status}"></span></p>
+<p>Created Date: <span th:text="${claim.created_time}"></span></p>
+<p>Process Date: <span th:text="${claim.processed_time}"></span></p>
 </body>
 </html>

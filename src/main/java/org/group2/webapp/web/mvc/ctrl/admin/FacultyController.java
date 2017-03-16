@@ -1,5 +1,6 @@
 package org.group2.webapp.web.mvc.ctrl.admin;
 
+import org.apache.commons.lang3.StringUtils;
 import org.group2.webapp.entity.Faculty;
 import org.group2.webapp.service.FacultyService;
 import org.group2.webapp.util.ConvertUntil;
@@ -11,12 +12,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/faculty")
 public class FacultyController {
 
     private final Logger log = LoggerFactory.getLogger(FacultyController.class);
+
+    public static final String REDIRECT_INDEX = "redirect:/admin/faculty";
 
     private FacultyService facultyService;
 
@@ -31,11 +35,11 @@ public class FacultyController {
         return "admin/faculty/faculties";
     }
 
-    @GetMapping("/detail")
-    public String detail(@RequestParam String id, Model model) {
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable String id, Model model) {
         Faculty faculty = facultyService.findOne(ConvertUntil.covertStringToLong(id));
         if (faculty == null)
-            return index(model);
+            return REDIRECT_INDEX;
         model.addAttribute("faculty", faculty);
         return "admin/faculty/detail";
     }
@@ -47,35 +51,38 @@ public class FacultyController {
     }
 
     @PostMapping("/new")
-    public String newFaculty(@Valid @RequestBody Faculty faculty, BindingResult bindingResult, Model model) {
+    public String newFaculty(@Valid @ModelAttribute Faculty faculty, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "admin/faculty/add";
         else
-            return index(model);
+            facultyService.create(faculty);
+        return REDIRECT_INDEX;
     }
 
-    @GetMapping("/edit")
-    public String editFaculty(@RequestParam String id, Model model) {
+    @GetMapping("/edit/{id}")
+    public String editFaculty(@PathVariable String id, Model model) {
         Faculty faculty = facultyService.findOne(ConvertUntil.covertStringToLong(id));
         if (faculty == null)
-            return index(model);
+            return REDIRECT_INDEX;
 
         model.addAttribute("faculty", faculty);
         return "admin/faculty/edit";
     }
 
     @PostMapping("/edit")
-    public String editFaculty(@Valid @RequestBody Faculty faculty, BindingResult bindingResult, Model model) {
+    public String editFaculty(@Valid @ModelAttribute Faculty faculty, BindingResult bindingResult) {
+        log.debug("");
         if (bindingResult.hasErrors())
             return "admin/faculty/edit";
         else
-            return index(model);
+            facultyService.update(faculty);
+        return REDIRECT_INDEX;
     }
 
 
-    @PostMapping("/delete")
-    public String deleteFaculty(@RequestParam String id, Model model) {
+    @PostMapping("/delete/{id}")
+    public String deleteFaculty(@PathVariable String id) {
         facultyService.delete(ConvertUntil.covertStringToLong(id));
-        return index(model);
+        return REDIRECT_INDEX;
     }
 }

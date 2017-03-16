@@ -32,7 +32,7 @@ public class CircumstanceAPI {
         if (circumstance.getId() != null) {
             return ResponseEntity.badRequest().build();
         }
-        Circumstance result = circumstanceService.save(circumstance);
+        Circumstance result = circumstanceService.create(circumstance);
         return ResponseEntity.ok(result);
     }
 
@@ -43,7 +43,7 @@ public class CircumstanceAPI {
         if (circumstance.getId() == null) {
             return createCircumstance(circumstance);
         }
-        Circumstance result = circumstanceService.save(circumstance);
+        Circumstance result = circumstanceService.update(circumstance);
         return ResponseEntity.ok(result);
     }
 

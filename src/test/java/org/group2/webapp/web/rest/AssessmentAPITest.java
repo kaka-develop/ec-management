@@ -153,7 +153,7 @@ public class AssessmentAPITest {
     @Test
     @Transactional
     public void updateAssessment() throws Exception {
-        assessmentService.save(assessment);
+        assessmentService.update(assessment);
 
         int databaseSizeBeforeUpdate = assessmentRepository.findAll().size();
 
@@ -190,7 +190,7 @@ public class AssessmentAPITest {
     @Test
     @Transactional
     public void deleteAssessment() throws Exception {
-        assessmentService.save(assessment);
+        assessmentService.create(assessment);
 
         int databaseSizeBeforeDelete = assessmentRepository.findAll().size();
 

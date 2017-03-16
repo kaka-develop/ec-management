@@ -39,7 +39,7 @@ public class CircumstanceServiceTest {
     public void before() {
         circumstance = new Circumstance();
         circumstance.setTitle(CIRCUM_TITLE);
-        circumstance = circumstanceService.save(circumstance);
+        circumstance = circumstanceService.create(circumstance);
         log.debug("done create circumstance");
     }
 

@@ -4,7 +4,6 @@ import org.group2.webapp.EcManagementApplication;
 import org.group2.webapp.entity.Circumstance;
 import org.group2.webapp.service.CircumstanceService;
 import org.group2.webapp.web.mvc.ctrl.admin.CircumstanceController;
-import org.group2.webapp.web.util.TestUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +46,7 @@ public class CircumstanceControllerTest {
     }
 
     public void createCircumstance() {
-        circumstanceService.save(circumstance);
+        circumstanceService.create(circumstance);
     }
 
 
@@ -59,7 +58,6 @@ public class CircumstanceControllerTest {
                 .andExpect(view().name("admin/circumstance/circumstances"))
                 .andExpect(status().isOk());
     }
-
 
     @Test
     @Transactional
@@ -74,18 +72,12 @@ public class CircumstanceControllerTest {
     @Transactional
     public void testPostNew() throws Exception {
         restCircumstanceMockMvc.perform(post("/admin/circumstance/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(circumstance)))
-                .andExpect(model().attributeExists("circumstances"))
-                .andExpect(view().name("admin/circumstance/circumstances"))
-                .andExpect(status().isOk());
+                .param("title",CIRCUM_TITLE))
+                .andExpect(view().name(CircumstanceController.REDIRECT_INDEX));
 
-        circumstance.setTitle(null);
         restCircumstanceMockMvc.perform(post("/admin/circumstance/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(circumstance)))
-                .andExpect(view().name("admin/circumstance/add"))
-                .andExpect(status().isOk());
+                .param("title",""))
+                .andExpect(view().name("admin/circumstance/add"));
     }
 
 
@@ -94,17 +86,13 @@ public class CircumstanceControllerTest {
     public void testGetDetail() throws Exception {
         createCircumstance();
 
-        restCircumstanceMockMvc.perform(get("/admin/circumstance/detail")
-                .param("id", circumstance.getId().toString()))
+        restCircumstanceMockMvc.perform(get("/admin/circumstance/detail/" + circumstance.getId().toString()))
                 .andExpect(model().attributeExists("circumstance"))
                 .andExpect(view().name("admin/circumstance/detail"))
                 .andExpect(status().isOk());
 
-        restCircumstanceMockMvc.perform(get("/admin/circumstance/detail")
-                .param("id", "BBBBBBBB"))
-                .andExpect(model().attributeExists("circumstances"))
-                .andExpect(view().name("admin/circumstance/circumstances"))
-                .andExpect(status().isOk());
+        restCircumstanceMockMvc.perform(get("/admin/circumstance/detail/" + "BBBBBBBB"))
+                .andExpect(view().name(CircumstanceController.REDIRECT_INDEX));
     }
 
 
@@ -113,8 +101,7 @@ public class CircumstanceControllerTest {
     public void testGetEdit() throws Exception {
         createCircumstance();
 
-        restCircumstanceMockMvc.perform(get("/admin/circumstance/edit")
-                .param("id", circumstance.getId().toString()))
+        restCircumstanceMockMvc.perform(get("/admin/circumstance/edit/" + circumstance.getId().toString()))
                 .andExpect(model().attributeExists("circumstance"))
                 .andExpect(view().name("admin/circumstance/edit"))
                 .andExpect(status().isOk());
@@ -124,21 +111,15 @@ public class CircumstanceControllerTest {
     @Transactional
     public void testPostEdit() throws Exception {
         createCircumstance();
-        circumstance.setTitle(CIRCUM_TITLE + CIRCUM_TITLE);
 
         restCircumstanceMockMvc.perform(post("/admin/circumstance/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(circumstance)))
-                .andExpect(model().attributeExists("circumstances"))
-                .andExpect(view().name("admin/circumstance/circumstances"))
-                .andExpect(status().isOk());
+                .param("id",circumstance.getId().toString())
+                .param("title",CIRCUM_TITLE + CIRCUM_TITLE))
+                .andExpect(view().name(CircumstanceController.REDIRECT_INDEX));
 
-        circumstance.setTitle(null);
         restCircumstanceMockMvc.perform(post("/admin/circumstance/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(circumstance)))
-                .andExpect(view().name("admin/circumstance/edit"))
-                .andExpect(status().isOk());
+                .param("title",""))
+                .andExpect(view().name("admin/circumstance/edit"));
     }
 
     @Test
@@ -146,20 +127,16 @@ public class CircumstanceControllerTest {
     public void testPostDelete() throws Exception {
         createCircumstance();
 
-        restCircumstanceMockMvc.perform(post("/admin/circumstance/delete")
-                .param("id", circumstance.getId().toString()))
-                .andExpect(view().name("admin/circumstance/circumstances"))
-                .andExpect(status().isOk());
+        restCircumstanceMockMvc.perform(post("/admin/circumstance/delete/" + circumstance.getId().toString()))
+                .andExpect(view().name(CircumstanceController.REDIRECT_INDEX));
 
-        restCircumstanceMockMvc.perform(post("/admin/circumstance/delete")
-                .param("id", "BBBBBBB"))
-                .andExpect(view().name("admin/circumstance/circumstances"))
-                .andExpect(status().isOk());
+        restCircumstanceMockMvc.perform(post("/admin/circumstance/delete/" + "BBBBBBB"))
+                .andExpect(view().name(CircumstanceController.REDIRECT_INDEX));
     }
 
     @After
     public void after() {
-            circumstanceService.delete(circumstance.getId());
+        circumstanceService.delete(circumstance.getId());
     }
 
 }

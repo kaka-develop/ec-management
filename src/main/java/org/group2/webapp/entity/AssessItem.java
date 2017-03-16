@@ -49,4 +49,13 @@ public class AssessItem implements Serializable {
     public void setAssessment(Assessment assessment) {
         this.assessment = assessment;
     }
+
+
+    @Override
+    public String toString() {
+        return "AssessItem{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }

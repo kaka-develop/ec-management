@@ -20,6 +20,8 @@ public class ClaimController {
 
     private final Logger log = LoggerFactory.getLogger(ClaimController.class);
 
+    public static final String REDIRECT_INDEX = "redirect:/admin/claim";
+
     private ClaimService claimService;
 
     public ClaimController(ClaimService claimService) {
@@ -33,22 +35,22 @@ public class ClaimController {
         return "admin/claim/claims";
     }
 
-    @GetMapping("/detail")
-    public String detail(@RequestParam String id, Model model) {
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable String id, Model model) {
         Claim claim = claimService.findOne(ConvertUntil.covertStringToLong(id));
         if (claim == null)
-            return index(model);
+            return REDIRECT_INDEX;
         model.addAttribute("claim", claim);
         return "admin/claim/detail";
     }
 
     @GetMapping("/year")
     public String allByYear(@RequestParam String year, Model model) {
-        if( year == null || !StringUtils.isNumeric(year))
-            return index(model);
+        if( year == null || !StringUtils.isNumeric(year) || year.isEmpty())
+            return REDIRECT_INDEX;
         List<Claim> claims = claimService.findClaimsByYear(Integer.parseInt(year));
         model.addAttribute("claims", claims);
-        return "admin/claim/year";
+        return "admin/claim/claims";
     }
 
     @GetMapping("/new")
@@ -58,35 +60,38 @@ public class ClaimController {
     }
 
     @PostMapping("/new")
-    public String newClaim(@Valid @RequestBody Claim claim, BindingResult bindingResult, Model model) {
+    public String newClaim(@Valid @ModelAttribute Claim claim, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "admin/claim/add";
         else
-            return index(model);
+        claimService.create(claim);
+            return REDIRECT_INDEX;
     }
 
-    @GetMapping("/edit")
-    public String editClaim(@RequestParam String id, Model model) {
+    @GetMapping("/edit/{id}")
+    public String editClaim(@PathVariable String id, Model model) {
         Claim claim = claimService.findOne(ConvertUntil.covertStringToLong(id));
         if (claim == null)
-            return index(model);
+            return REDIRECT_INDEX;
 
         model.addAttribute("claim", claim);
         return "admin/claim/edit";
     }
 
     @PostMapping("/edit")
-    public String editClaim(@Valid @RequestBody Claim claim, BindingResult bindingResult, Model model) {
+    public String editClaim(@Valid @ModelAttribute Claim claim, BindingResult bindingResult) {
+        log.debug("");
         if (bindingResult.hasErrors())
             return "admin/claim/edit";
         else
-            return index(model);
+            claimService.update(claim);
+            return REDIRECT_INDEX;
     }
 
 
-    @PostMapping("/delete")
-    public String deleteClaim(@RequestParam String id, Model model) {
+    @PostMapping("/delete/{id}")
+    public String deleteClaim(@PathVariable String id) {
         claimService.delete(ConvertUntil.covertStringToLong(id));
-        return index(model);
+        return REDIRECT_INDEX;
     }
 }

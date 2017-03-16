@@ -182,7 +182,7 @@ public class ClaimAPITest {
     @Test
     @Transactional
     public void updateClaim() throws Exception {
-        claimService.save(claim);
+        claimService.create(claim);
 
         int databaseSizeBeforeUpdate = claimRepository.findAll().size();
 
@@ -219,7 +219,7 @@ public class ClaimAPITest {
     @Test
     @Transactional
     public void deleteClaim() throws Exception {
-        claimService.save(claim);
+        claimService.create(claim);
 
         int databaseSizeBeforeDelete = claimRepository.findAll().size();
 

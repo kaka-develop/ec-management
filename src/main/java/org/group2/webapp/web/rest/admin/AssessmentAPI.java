@@ -32,7 +32,7 @@ public class AssessmentAPI {
         if (assessment.getCrn() == null || assessmentService.findOne(assessment.getCrn()) != null) {
             return ResponseEntity.badRequest().build();
         }
-        Assessment result = assessmentService.save(assessment);
+        Assessment result = assessmentService.create(assessment);
         return ResponseEntity.ok(result);
     }
 
@@ -43,7 +43,7 @@ public class AssessmentAPI {
         if (assessment.getCrn() == null) {
             return createAssessment(assessment);
         }
-        Assessment result = assessmentService.save(assessment);
+        Assessment result = assessmentService.update(assessment);
         return ResponseEntity.ok(result);
     }
 

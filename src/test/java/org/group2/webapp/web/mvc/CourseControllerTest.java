@@ -4,7 +4,6 @@ import org.group2.webapp.EcManagementApplication;
 import org.group2.webapp.entity.Course;
 import org.group2.webapp.service.CourseService;
 import org.group2.webapp.web.mvc.ctrl.admin.CourseController;
-import org.group2.webapp.web.util.TestUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,7 +48,7 @@ public class CourseControllerTest {
     }
 
     public void createCourse() {
-        courseService.save(course);
+        courseService.create(course);
     }
 
 
@@ -61,7 +60,6 @@ public class CourseControllerTest {
                 .andExpect(view().name("admin/course/courses"))
                 .andExpect(status().isOk());
     }
-
 
     @Test
     @Transactional
@@ -76,18 +74,13 @@ public class CourseControllerTest {
     @Transactional
     public void testPostNew() throws Exception {
         restCourseMockMvc.perform(post("/admin/course/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(course)))
-                .andExpect(model().attributeExists("courses"))
-                .andExpect(view().name("admin/course/courses"))
-                .andExpect(status().isOk());
+                .param("code",COURSE_CODE)
+                .param("title",COURSE_TITLE))
+                .andExpect(view().name(CourseController.REDIRECT_INDEX));
 
-        course.setTitle(null);
         restCourseMockMvc.perform(post("/admin/course/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(course)))
-                .andExpect(view().name("admin/course/add"))
-                .andExpect(status().isOk());
+                .param("title",""))
+                .andExpect(view().name("admin/course/add"));
     }
 
 
@@ -96,17 +89,13 @@ public class CourseControllerTest {
     public void testGetDetail() throws Exception {
         createCourse();
 
-        restCourseMockMvc.perform(get("/admin/course/detail")
-                .param("code", course.getCode()))
+        restCourseMockMvc.perform(get("/admin/course/detail/" + course.getCode()))
                 .andExpect(model().attributeExists("course"))
                 .andExpect(view().name("admin/course/detail"))
                 .andExpect(status().isOk());
 
-        restCourseMockMvc.perform(get("/admin/course/detail")
-                .param("code", "BBBBBBBB"))
-                .andExpect(model().attributeExists("courses"))
-                .andExpect(view().name("admin/course/courses"))
-                .andExpect(status().isOk());
+        restCourseMockMvc.perform(get("/admin/course/detail/" + "BBBBBBBB"))
+                .andExpect(view().name(CourseController.REDIRECT_INDEX));
     }
 
 
@@ -115,8 +104,7 @@ public class CourseControllerTest {
     public void testGetEdit() throws Exception {
         createCourse();
 
-        restCourseMockMvc.perform(get("/admin/course/edit")
-                .param("code", course.getCode()))
+        restCourseMockMvc.perform(get("/admin/course/edit/" + course.getCode()))
                 .andExpect(model().attributeExists("course"))
                 .andExpect(view().name("admin/course/edit"))
                 .andExpect(status().isOk());
@@ -126,21 +114,15 @@ public class CourseControllerTest {
     @Transactional
     public void testPostEdit() throws Exception {
         createCourse();
-        course.setTitle(COURSE_TITLE + COURSE_TITLE);
 
         restCourseMockMvc.perform(post("/admin/course/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(course)))
-                .andExpect(model().attributeExists("courses"))
-                .andExpect(view().name("admin/course/courses"))
-                .andExpect(status().isOk());
+                .param("code",COURSE_CODE)
+                .param("title",COURSE_TITLE + COURSE_TITLE))
+                .andExpect(view().name(CourseController.REDIRECT_INDEX));
 
-        course.setTitle(null);
         restCourseMockMvc.perform(post("/admin/course/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(course)))
-                .andExpect(view().name("admin/course/edit"))
-                .andExpect(status().isOk());
+                .param("title",""))
+                .andExpect(view().name("admin/course/edit"));
     }
 
     @Test
@@ -148,20 +130,16 @@ public class CourseControllerTest {
     public void testPostDelete() throws Exception {
         createCourse();
 
-        restCourseMockMvc.perform(post("/admin/course/delete")
-                .param("code", course.getCode()))
-                .andExpect(view().name("admin/course/courses"))
-                .andExpect(status().isOk());
+        restCourseMockMvc.perform(post("/admin/course/delete/" + course.getCode()))
+                .andExpect(view().name(CourseController.REDIRECT_INDEX));
 
-        restCourseMockMvc.perform(post("/admin/course/delete")
-                .param("code", "BBBBBBB"))
-                .andExpect(view().name("admin/course/courses"))
-                .andExpect(status().isOk());
+        restCourseMockMvc.perform(post("/admin/course/delete/" + "BBBBBBB"))
+                .andExpect(view().name(CourseController.REDIRECT_INDEX));
     }
 
     @After
     public void after() {
-            courseService.delete(course.getCode());
+        courseService.delete(course.getCode());
     }
 
 }

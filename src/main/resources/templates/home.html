@@ -17,14 +17,6 @@
 <!--/* Standard layout can be mixed with Tiles */-->
 <div th:replace="fragments/header :: header"></div>
 <div class="container">
-
-    <div sec:authorize="isAuthenticated()">
-        <span sec:authentication="name"></span>
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-    </div>
-
     <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
