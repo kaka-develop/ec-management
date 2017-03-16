@@ -10,29 +10,28 @@
 <title>Claims</title>
 </head>
 <body>
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Claim ID</th>
-				<th>Evident</th>
-				<th>Content</th>
+				<th>Assessments</th>
+				<th>Circumstances</th>
 				<th>Submit date</th>
 				<th>Status</th>
-				<th>Circumstances</th>
-				<th>Assessments</th>
-				<th>Evidences</th>
+				<!-- 				<th>Evidences</th> -->
 			</tr>
 		</thead>
 
 		<tbody>
-			<tr th:each="cl : ${claims}">
+			<tr th:each="cl : ${claims}" class="clickableRow">
 				<td th:text="${cl.id}"></td>
-				<td th:text="${cl.evidence}"></td>
+				<td><p th:each="ass : ${cl.assessment}" th:text="${ass.title}"></p></td>
+				<td><p th:each="cir : ${cl.circumstances}" th:text="${cir.title}"></p></td>
+				
 				<td th:text="${cl.created_time}"></td>
-				<td th:text="${cl.status}"></td>
-<!-- 				<td><span th:each="ass : ${cl.assessment}" th:text="${ass.crn}+' ,'"></span></td> -->
-<!-- 				<td><span th:each="cir : ${cl.circumstances}" th:text="${cir.title}+' ,'"></span></td> -->
-				<td><a href="#">Click to see your evidences</a></td>
+				<td th:text="${cl.status}">fds</td>
+
 			</tr>
 		</tbody>
 
@@ -40,6 +39,8 @@
 	<a href="#" th:href="@{/student/claim/add}">Submit new claim</a>
 </body>
 <script>
-
+	$(".clickableRow").on("click", function(){
+		alert("chua co")
+	})
 </script>
 </html>

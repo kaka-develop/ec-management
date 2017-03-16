@@ -3,6 +3,7 @@
  */
 package org.group2.webapp.web.mvc.ctrl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,6 +53,11 @@ public class StudentController {
 	@GetMapping("/claim")
 	public String viewClaim(HttpServletRequest req) {
 		User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
+		List<String> str=Collections.list(req.getSession().getAttributeNames());
+		for(String s : str){
+			System.out.println("session name: "+s);
+			System.out.println("value of: "+req.getSession().getAttribute(s));
+		}
 		List<Claim> claims = getAllClaimOfStudent(currentUser);
 		req.setAttribute("claims", claims);
 		return "claim/claims";
