@@ -15,7 +15,7 @@
 
 		<h1>Submit new claim</h1>
 		<h2>
-<!-- 			Your are: <span th:text="${session.user.firstName}"></span> -->
+			<!-- 			Your are: <span th:text="${session.user.firstName}"></span> -->
 		</h2>
 		<form th:action="@{/student/claim/add}" method="post" class="form-horizontal">
 			<div class="form-group">
@@ -41,17 +41,10 @@
 			</div>
 			<div class="form-group">
 
-				<label>Content</label>
-				<div>
-					<input type="file" name="pic" accept="image/*" multiple>
-				</div>
-			</div>
-			<div class="form-group">
 				<label>Evidence</label>
 				<div>
-					<textarea rows="4" class="form-control" cols="50" name="evidence"></textarea>
+					<input type="file" name="evidenceFiles" accept="image/*" multiple="true" />
 				</div>
-
 			</div>
 			<div class="form-group">
 				<input type="submit" class="btn btn-primary" value="Submit claim" />

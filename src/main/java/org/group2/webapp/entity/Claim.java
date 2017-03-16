@@ -27,7 +27,6 @@ public class Claim implements Serializable{
     private Long id;
 
 
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(columnDefinition = "TEXT", unique = true, nullable = true)
     private String evidence;
