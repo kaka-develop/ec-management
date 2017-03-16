@@ -74,7 +74,7 @@ public class StudentController {
 			for (long cid : circumstances) {
 				claim.getCircumstances().add(circumRepo.getOne(cid));
 			}
-			claim.setUser((User) req.getSession().getAttribute(SecurityUtils.getCurrentUserLogin()));
+			claim.setUser(SessionUtils.getCurrentUserSession(userRepo).get());
 			claimRepo.save(claim);
 			getECProcessClaim(claim).ifPresent(ec -> MailUtils.sendInformNewClaim(ec));
 			return "claim/success";
@@ -87,7 +87,6 @@ public class StudentController {
 
 	public List<Claim> getAllClaimOfStudent(User student) {
 		List<Claim> claims = claimRepo.findAll();
-		System.out.println("claims co null khong?: " + claims);
 		return claims.stream().filter(cl -> cl.getUser().getId() == student.getId()).collect(Collectors.toList());
 	}
 
