@@ -64,6 +64,15 @@ CREATE TABLE assessment (
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
 
+CREATE TABLE assessitem (
+  id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title       VARCHAR(100) NOT NULL,
+  assessment_crn VARCHAR(50),
+  FOREIGN KEY (assessment_crn) REFERENCES assessment (crn)
+)ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8;
+
+
 CREATE TABLE claim (
   id             INT NOT NULL AUTO_INCREMENT,
   user_id        INT,

@@ -7,8 +7,7 @@ import org.hibernate.validator.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserDTO {
@@ -29,9 +28,9 @@ public class UserDTO {
     @Size(min = 5, max = 100)
     private String email;
 
-    private Date createdDate;
+    private Date createdDate = Calendar.getInstance().getTime();
 
-    private Set<String> authorities;
+    private Set<String> authorities = new HashSet<>();
 
     public UserDTO() {
     }
@@ -46,12 +45,6 @@ public class UserDTO {
                 .collect(Collectors.toSet());
     }
 
-    public UserDTO(String username, String firstName, String lastName, String email) {
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
 
     public UserDTO(String username, String firstName, String lastName, String email, Date createdDate, Set<String> authorities) {
         this.username = username;

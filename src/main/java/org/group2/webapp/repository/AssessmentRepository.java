@@ -13,6 +13,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Contact kunedo1104@gmail.com
  *
  */
-public interface AssessmentRepository extends JpaRepository<Assessment, Serializable> {
+public interface AssessmentRepository extends JpaRepository<Assessment, String> {
 	
 }

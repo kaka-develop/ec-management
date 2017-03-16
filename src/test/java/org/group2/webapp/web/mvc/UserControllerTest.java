@@ -89,18 +89,20 @@ public class UserControllerTest {
     @Transactional
     public void testPostNew() throws Exception {
         restUserMockMvc.perform(post("/admin/user/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userVM)))
-                .andExpect(model().attributeExists("users"))
-                .andExpect(view().name("admin/user/users"))
-                .andExpect(status().isOk());
+                .param("username",USER_NAME)
+                .param("firstName",USER_FIRSTNAME)
+                .param("lastName",USER_LASTNAME)
+                .param("email",USER_EMAIL)
+                .param("password",USER_PASSWORD))
+                .andExpect(view().name(UserController.REDIRECT_INDEX));
 
-        userVM.setUsername(null);
         restUserMockMvc.perform(post("/admin/user/new")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userVM)))
-                .andExpect(view().name("admin/user/add"))
-                .andExpect(status().isOk());
+                .param("username","")
+                .param("firstName",USER_FIRSTNAME)
+                .param("lastName",USER_LASTNAME)
+                .param("email",USER_EMAIL)
+                .param("password",USER_PASSWORD))
+                .andExpect(view().name("admin/user/add"));
     }
 
 
@@ -109,17 +111,12 @@ public class UserControllerTest {
     public void testGetDetail() throws Exception {
         createUser();
 
-        restUserMockMvc.perform(get("/admin/user/detail")
-                .param("username", USER_NAME))
+        restUserMockMvc.perform(get("/admin/user/detail/" + USER_NAME))
                 .andExpect(model().attributeExists("user"))
-                .andExpect(view().name("admin/user/detail"))
-                .andExpect(status().isOk());
+                .andExpect(view().name("admin/user/detail"));
 
-        restUserMockMvc.perform(get("/admin/user/detail")
-                .param("username", "BBBBBBBB"))
-                .andExpect(model().attributeExists("users"))
-                .andExpect(view().name("admin/user/users"))
-                .andExpect(status().isOk());
+        restUserMockMvc.perform(get("/admin/user/detail/" + "BBBBBBB"))
+                .andExpect(view().name(UserController.REDIRECT_INDEX));
     }
 
 
@@ -128,8 +125,7 @@ public class UserControllerTest {
     public void testGetEdit() throws Exception {
         createUser();
 
-        restUserMockMvc.perform(get("/admin/user/edit")
-                .param("username", USER_NAME))
+        restUserMockMvc.perform(get("/admin/user/edit/" + USER_NAME))
                 .andExpect(model().attributeExists("user"))
                 .andExpect(view().name("admin/user/edit"))
                 .andExpect(status().isOk());
@@ -142,18 +138,16 @@ public class UserControllerTest {
         userVM.setFirstName(USER_FIRSTNAME + USER_FIRSTNAME);
 
         restUserMockMvc.perform(post("/admin/user/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userVM)))
-                .andExpect(model().attributeExists("users"))
-                .andExpect(view().name("admin/user/users"))
-                .andExpect(status().isOk());
+                .param("username",USER_NAME)
+                .param("firstName",USER_FIRSTNAME + USER_FIRSTNAME)
+                .param("lastName",USER_LASTNAME + USER_LASTNAME))
+                .andExpect(view().name(UserController.REDIRECT_INDEX));
 
-        userVM.setUsername(null);
         restUserMockMvc.perform(post("/admin/user/edit")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userVM)))
-                .andExpect(view().name("admin/user/edit"))
-                .andExpect(status().isOk());
+                .param("username","")
+                .param("firstName",USER_FIRSTNAME + USER_FIRSTNAME)
+                .param("lastName",USER_LASTNAME + USER_LASTNAME))
+                .andExpect(view().name("admin/user/edit"));
     }
 
     @Test
@@ -161,15 +155,11 @@ public class UserControllerTest {
     public void testPostDelete() throws Exception{
         createUser();
 
-        restUserMockMvc.perform(post("/admin/user/delete")
-                .param("username", USER_NAME))
-                .andExpect(view().name("admin/user/users"))
-                .andExpect(status().isOk());
+        restUserMockMvc.perform(post("/admin/user/delete/" + USER_NAME))
+                .andExpect(view().name(UserController.REDIRECT_INDEX));
 
-        restUserMockMvc.perform(post("/admin/user/delete")
-                .param("username", "BBBBBBB"))
-                .andExpect(view().name("admin/user/users"))
-                .andExpect(status().isOk());
+        restUserMockMvc.perform(post("/admin/user/delete/" + "BBBBBBBB"))
+                .andExpect(view().name(UserController.REDIRECT_INDEX));
     }
 
     @After

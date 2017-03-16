@@ -17,6 +17,7 @@ public class UserVM extends UserDTO {
     @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
     private String password;
 
+
     public UserVM() {
         // Empty constructor needed for Jackson.
     }
@@ -39,4 +40,5 @@ public class UserVM extends UserDTO {
     public String getPassword() {
         return password;
     }
+
 }

@@ -10,5 +10,8 @@ import java.util.List;
 public interface ClaimRepository extends JpaRepository<Claim, Long> {
 
     @Query("select c from Claim c, User u, Faculty f where c.user.id = u.id and u.faculty.id = f.id and f.id = ?1")
-    List<Claim> findAllByFacultyId(Long id);
+    List<Claim> findAllByFacultyId(Long facultyId);
+
+    @Query("select c from Claim c where YEAR(c.created_time) = ?1")
+    List<Claim> findAllByYear(int year);
 }

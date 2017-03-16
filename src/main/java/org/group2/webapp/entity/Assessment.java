@@ -36,6 +36,9 @@ public class Assessment implements Serializable {
     @ManyToOne
     private Course course;
 
+    @OneToMany(mappedBy = "assessment")
+    private Set<AssessItem> assessItems;
+
     @ManyToMany
     @JoinTable(
             name = "assessment_claim",
@@ -44,6 +47,14 @@ public class Assessment implements Serializable {
     private Set<Claim> claim = new HashSet<>();
 
     public Assessment() {
+    }
+
+    public Set<AssessItem> getAssessItems() {
+        return assessItems;
+    }
+
+    public void setAssessItems(Set<AssessItem> assessItems) {
+        this.assessItems = assessItems;
     }
 
     public Set<Claim> getClaim() {

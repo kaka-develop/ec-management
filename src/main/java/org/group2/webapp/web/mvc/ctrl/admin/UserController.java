@@ -27,6 +27,8 @@ public class UserController {
         this.userService = userService;
     }
 
+    public static final String REDIRECT_INDEX = "redirect:/admin/user";
+
 
     @GetMapping(value = {"/",""})
     public String index(Model model) {
@@ -35,11 +37,11 @@ public class UserController {
         return "admin/user/users";
     }
 
-    @GetMapping("/detail")
-    public String detail(@RequestParam String username, Model model){
+    @GetMapping("/detail/{username}")
+    public String detail(@PathVariable String username, Model model){
         UserDTO userDTO = userService.findOneByUsername(username);
         if(userDTO == null)
-            return index(model);
+            return REDIRECT_INDEX;
         UserVM userVM = new UserVM(userDTO);
         model.addAttribute("user",userVM);
         return "admin/user/detail";
@@ -51,39 +53,39 @@ public class UserController {
         return "admin/user/add";
     }
 
-    @PostMapping("/new")
-    public String newUser(@Valid @RequestBody UserVM userVM, BindingResult bindingResult,Model model) {
+    @PostMapping(value = "/new")
+    public String newUser(@Valid @ModelAttribute UserVM user, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
             return "admin/user/add";
         else
-            userService.createUser(userVM);
-        return index(model);
+            userService.createUser(user);
+        return REDIRECT_INDEX;
     }
 
-    @GetMapping("/edit")
-    public String editUser(@RequestParam String username, Model model) {
+    @GetMapping("/edit/{username}")
+    public String editUser(@PathVariable String username, Model model) {
         UserDTO userDTO = userService.findOneByUsername(username);
         if(userDTO == null)
-            return index(model);
+            return REDIRECT_INDEX;
         UserVM userVM = new UserVM(userDTO);
         model.addAttribute("user",userVM);
         return "admin/user/edit";
     }
 
-    @PostMapping("/edit")
-    public String editUser(@Valid @RequestBody UserVM userVM, BindingResult bindingResult, Model model) {
+    @PostMapping(value = "/edit")
+    public String editUser(@Valid @ModelAttribute UserVM user, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
             return "admin/user/edit";
         else
-            userService.updateUser(userVM);
-        return index(model);
+            userService.updateUser(user);
+        return REDIRECT_INDEX;
     }
 
 
-    @PostMapping("/delete")
-    public String deleteUser(@RequestParam String username, Model model) {
+    @PostMapping("/delete/{username}")
+    public String deleteUser(@PathVariable String username) {
         userService.deleteUser(username);
-        return index(model);
+        return REDIRECT_INDEX;
     }
 
 }

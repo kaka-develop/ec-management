@@ -90,7 +90,10 @@
             <version>2.6.5</version>
             <scope>test</scope>
         </dependency>
-        
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -138,6 +141,12 @@
                         </resource>
                     </webResources>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>springloaded</artifactId>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

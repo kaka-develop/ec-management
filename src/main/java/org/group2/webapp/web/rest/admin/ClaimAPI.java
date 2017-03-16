@@ -1,5 +1,6 @@
 package org.group2.webapp.web.rest.admin;
 
+import org.apache.commons.lang3.StringUtils;
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.service.ClaimService;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -52,6 +54,16 @@ public class ClaimAPI {
     public List<Claim> getAllClaims() {
         log.debug("REST request to get all Claims");
         return claimService.findAll();
+    }
+
+    @GetMapping("/claims/year")
+    public ResponseEntity<List<Claim>> getAllClaimsByYear(@RequestParam String year) {
+        log.debug("REST request to get all Claims by year");
+        if( year == null || !StringUtils.isNumeric(year))
+            return ResponseEntity.badRequest().build();
+
+        Integer cYear = Integer.parseInt(year);
+        return ResponseEntity.ok(claimService.findClaimsByYear(cYear));
     }
 
 

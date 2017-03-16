@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
+import java.util.Calendar;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -60,6 +62,15 @@ public class ClaimServiceTest {
 
         assertThat(claimRepository.findOne(new Long(11111))== null);
         assertThat(claimService.findOne(new Long(11111))== null);
+    }
+
+    @Test
+    public void testFindAllByYear() {
+        Calendar calendar = Calendar.getInstance();
+        Integer year = calendar.get(Calendar.YEAR);
+
+        assertThat(!claimRepository.findAllByYear(year).isEmpty());
+        assertThat(!claimService.findClaimsByYear(year).isEmpty());
     }
 
     @After

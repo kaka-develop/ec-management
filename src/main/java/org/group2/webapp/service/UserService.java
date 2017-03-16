@@ -134,6 +134,13 @@ public class UserService {
         user.setFirstName(userVM.getFirstName());
         user.setLastName(userVM.getLastName());
         user.setEmail(userVM.getEmail());
+        if (userVM.getAuthorities() != null) {
+            Set<Authority> authorities = new HashSet<>();
+            userVM.getAuthorities().forEach(
+                    authority -> authorities.add(authorityRepository.findOne(authority))
+            );
+            user.setAuthorities(authorities);
+        }
         user = userRepository.save(user);
         return user;
     }

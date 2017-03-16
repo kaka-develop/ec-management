@@ -1,5 +1,6 @@
 package org.group2.webapp.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.repository.ClaimRepository;
 import org.slf4j.Logger;
@@ -54,9 +55,15 @@ public class ClaimService {
         claimRepository.delete(id);
     }
 
-    public List<Claim> findClaimsPerFaculty(Long id) {
-        log.debug("Request to get all Claims per Faculty : {}", id);
-        List<Claim> result = claimRepository.findAllByFacultyId(id);
+    public List<Claim> findClaimsPerFaculty(Long facultyId) {
+        log.debug("Request to get all Claims per Faculty : {}", facultyId);
+        List<Claim> result = claimRepository.findAllByFacultyId(facultyId);
+        return result;
+    }
+
+    public List<Claim> findClaimsByYear(int year){
+        log.debug("Request to get all Claims by year : {}", year);
+        List<Claim> result = claimRepository.findAllByYear(year);
         return result;
     }
 }

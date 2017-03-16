@@ -1,5 +1,6 @@
 package org.group2.webapp.web.mvc.ctrl.admin;
 
+import org.apache.commons.lang3.StringUtils;
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.service.ClaimService;
 import org.group2.webapp.util.ConvertUntil;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/claim")
@@ -38,6 +40,15 @@ public class ClaimController {
             return index(model);
         model.addAttribute("claim", claim);
         return "admin/claim/detail";
+    }
+
+    @GetMapping("/year")
+    public String allByYear(@RequestParam String year, Model model) {
+        if( year == null || !StringUtils.isNumeric(year))
+            return index(model);
+        List<Claim> claims = claimService.findClaimsByYear(Integer.parseInt(year));
+        model.addAttribute("claims", claims);
+        return "admin/claim/year";
     }
 
     @GetMapping("/new")

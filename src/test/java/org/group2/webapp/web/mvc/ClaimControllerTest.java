@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -106,6 +108,27 @@ public class ClaimControllerTest {
 
         restClaimMockMvc.perform(get("/admin/claim/detail")
                 .param("id", "BBBBBBBB"))
+                .andExpect(model().attributeExists("claims"))
+                .andExpect(view().name("admin/claim/claims"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @Transactional
+    public void testGetByYear() throws Exception {
+        createClaim();
+
+        Calendar calendar = Calendar.getInstance();
+        Integer year = calendar.get(Calendar.YEAR);
+
+        restClaimMockMvc.perform(get("/admin/claim/year")
+                .param("year", year.toString()))
+                .andExpect(model().attributeExists("claims"))
+                .andExpect(view().name("admin/claim/year"))
+                .andExpect(status().isOk());
+
+        restClaimMockMvc.perform(get("/admin/claim/year")
+                .param("year", "BBBBBBBB"))
                 .andExpect(model().attributeExists("claims"))
                 .andExpect(view().name("admin/claim/claims"))
                 .andExpect(status().isOk());

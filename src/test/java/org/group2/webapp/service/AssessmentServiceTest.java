@@ -51,6 +51,7 @@ public class AssessmentServiceTest {
         assertThat(!assessmentService.findAll().isEmpty());
     }
 
+
     @Test
     public void testFindOne() {
         assertThat(assessmentRepository.findOne(assessment.getCrn())!= null);

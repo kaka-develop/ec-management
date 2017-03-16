@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -133,6 +134,28 @@ public class ClaimAPITest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(claim.getId().intValue())))
                 .andExpect(jsonPath("$.[*].evidence").value(hasItem(CLAIM_EVIDENCE.toString())));
+    }
+
+    @Test
+    @Transactional
+    public void getAllClaimsByYear() throws Exception {
+        // Initialize the database
+        claimRepository.saveAndFlush(claim);
+
+        Calendar calendar = Calendar.getInstance();
+        Integer year = calendar.get(Calendar.YEAR);
+
+        // Get all the claimList
+        restClaimMockMvc.perform(get("/api/admin/claims/year")
+                .param("year",year.toString()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.[*].id").value(hasItem(claim.getId().intValue())))
+                .andExpect(jsonPath("$.[*].evidence").value(hasItem(CLAIM_EVIDENCE.toString())));
+
+        restClaimMockMvc.perform(get("/api/admin/claims/year")
+                .param("year","BBBBBBBBBB"))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
