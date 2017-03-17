@@ -21,6 +21,6 @@ public class MailTest extends TestCase {
 	public void testSendingMail() throws MessagingException {
 		User user=new User();
 		user.setEmail("kunedo1104@gmail.com");
-		MailUtils.sendInformNewClaim(user);
+		MailUtils.sendInformNewClaim(user, null);
 	}
 }

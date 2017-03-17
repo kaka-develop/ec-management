@@ -53,10 +53,10 @@ public class StudentController {
 	@GetMapping("/claim")
 	public String viewClaim(HttpServletRequest req) {
 		User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
-		List<String> str=Collections.list(req.getSession().getAttributeNames());
-		for(String s : str){
-			System.out.println("session name: "+s);
-			System.out.println("value of: "+req.getSession().getAttribute(s));
+		List<String> str = Collections.list(req.getSession().getAttributeNames());
+		for (String s : str) {
+			System.out.println("session name: " + s);
+			System.out.println("value of: " + req.getSession().getAttribute(s));
 		}
 		List<Claim> claims = getAllClaimOfStudent(currentUser);
 		req.setAttribute("claims", claims);
@@ -80,9 +80,11 @@ public class StudentController {
 			for (long cid : circumstances) {
 				claim.getCircumstances().add(circumRepo.getOne(cid));
 			}
-			claim.setUser(SessionUtils.getCurrentUserSession(userRepo).get());
+			User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
+			claim.setUser(currentUser);
 			claimRepo.save(claim);
-			getECProcessClaim(claim).ifPresent(ec -> MailUtils.sendInformNewClaim(ec));
+			getECProcessClaim(currentUser.getFaculty().getId())
+					.ifPresent(ec -> MailUtils.sendInformNewClaim(ec, claim));
 			return "claim/success";
 		} else {
 			req.setAttribute("errors", result.getAllErrors());
@@ -96,16 +98,12 @@ public class StudentController {
 		return claims.stream().filter(cl -> cl.getUser().getId() == student.getId()).collect(Collectors.toList());
 	}
 
-	public Optional<User> getECProcessClaim(Claim claim) {
-		Optional<User> ec = Optional.empty();
+	public Optional<User> getECProcessClaim(long facultyId) {
 		for (User user : userRepo.findAll()) {
-			for (Authority au : user.getAuthorities()) {
-				if (au.getName().equals(AuthoritiesConstants.COORDINATOR)) {
-					ec = Optional.of(user);
-					break;
-				}
+			if (user.getFaculty().getId() == facultyId) {
+				return Optional.of(user);
 			}
 		}
-		return ec;
+		return Optional.empty();
 	}
 }

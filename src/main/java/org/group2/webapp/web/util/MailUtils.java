@@ -14,6 +14,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.group2.webapp.entity.Claim;
 import org.group2.webapp.entity.User;
 
 /**
@@ -38,7 +39,7 @@ public class MailUtils {
 		}
 	}
 
-	public static void sendInformNewClaim(User user) {
+	public static void sendInformNewClaim(User user, Claim claim) {
 		String subject = "New claim";
 		String content = "You have a new claim, click here to see";
 		sendMail(user.getEmail(), user.getEmail(), subject, content);

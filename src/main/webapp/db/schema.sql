@@ -134,27 +134,27 @@ insert into faculty(title) values
 ('faculty5');
 
   
-INSERT INTO user (username, password_hash, first_name, last_name, email, created_date) VALUES
-  ('user', '$2a$06$7oA08ApI.X1xU0H5zkmpbutG4Uawv9mMH2qFqzpqGqr3EUJvPnKtu', 'fuser', 'luser', 'user@gmail.com', NOW()),
+INSERT INTO user (username, password_hash, first_name, last_name, email, created_date, faculty_id) VALUES
+  ('user', '$2a$06$7oA08ApI.X1xU0H5zkmpbutG4Uawv9mMH2qFqzpqGqr3EUJvPnKtu', 'fuser', 'luser', 'user@gmail.com', NOW(),1),
   ('student', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent', 'lstudent',
-   'student@gmail.com', NOW()),
+   'student@gmail.com', NOW(),1),
   ('manager', '$2a$06$g5UumdjnCb5vRLy6FAice.mzSfkrU2ZPvGIh63t0nUzGnT9e/nZuu', 'fmanager', 'lmanager',
-   'anhndgc00893@fpt.edu.vn', NOW()),
+   'anhndgc00893@fpt.edu.vn', NOW(),1),
   ('coordinator', '$2a$06$8iHCr9.rIYwzgkblpWoIiO7Bnu38QklQB6tleSlrwbLrvI5PEAojm', 'fcoordinator', 'lcoordinator',
-   'anhndgc00893@fpt.edu.vn', NOW()),
+   'anhndgc00893@fpt.edu.vn', NOW(),1),
   ('admin', '$2a$06$P4rfOGUCvzL.2OzecFrar.oWmuIjozP5oogg3CT4GGw3oRBenbEVa', 'fadmin', 'ladmin',
    'anhndgc00893@fpt.edu.vn',
-   NOW()),
+   NOW(),1),
   ('student1', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent1', 'lstudent1',
-   'sondcgc00681@fpt.edu.vn', NOW()),
+   'sondcgc00681@fpt.edu.vn', NOW(),1),
   ('student2', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent2', 'lstudent2',
-   'ainvgc00704@fpt.edu.vn', NOW()),
+   'ainvgc00704@fpt.edu.vn', NOW(),1),
   ('student3', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent3', 'lstudent3',
-   'namnhgc00683@fpt.edu.vn', NOW()),
+   'namnhgc00683@fpt.edu.vn', NOW(),1),
   ('student4', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstuden4', 'lstudent4',
-   'anhndgc00893@fpt.edu.vn', NOW()),
+   'anhndgc00893@fpt.edu.vn', NOW(),1),
   ('student5', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent5', 'lstudent5',
-   'anhndgc00893@fpt.edu.vn', NOW());
+   'anhndgc00893@fpt.edu.vn', NOW(),1);
 INSERT INTO user_authority (user_id, authority_name) VALUES
   (1, 'ROLE_USER'),
   (2, 'ROLE_STUDENT'), (2, 'ROLE_USER'),
