@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,24 +30,39 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 @Controller
-@RequestMapping("/ecmanager")
-public class ECManagerController {
-	private static final Logger logger = LoggerFactory.getLogger(ECManagerController.class);
+@RequestMapping("/eccoordinator")
+public class ECCoordinatorController {
+	private static final Logger logger = LoggerFactory.getLogger(ECCoordinatorController.class);
 
 	private ClaimRepository claimRepo;
 	private UserRepository userRepo;
 
-	public ECManagerController(ClaimRepository claimRepo, UserRepository userRepo) {
+	public ECCoordinatorController(ClaimRepository claimRepo, UserRepository userRepo) {
 		super();
 		this.claimRepo = claimRepo;
 		this.userRepo = userRepo;
 	}
 
-	@GetMapping("")
+	@GetMapping("/claim")
 	public String index(HttpServletRequest req) {
 		User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
 		req.setAttribute("claims", findClaimsOfEC(currentUser));
 		return "claim/claims";
+	}
+
+	@GetMapping("/claim/detail")
+	public String index(long id, HttpServletRequest req) {
+		// User currentUser =
+		// SessionUtils.getCurrentUserSession(userRepo).get();
+		Claim claim = claimRepo.findOne(id);
+		System.out.println("claim: " + claim);
+		req.setAttribute("claim", claim);
+		return "claim/detail";
+	}
+	
+	@PostMapping("/claim/process")
+	public String process(Claim claim, HttpServletRequest req){
+		return "claim/success";
 	}
 
 	private List<Claim> findClaimsOfEC(User ec) {
@@ -54,4 +70,5 @@ public class ECManagerController {
 		return claims.stream().filter(c -> c.getUser().getFaculty().getId() == ec.getFaculty().getId())
 				.collect(Collectors.toList());
 	}
+
 }

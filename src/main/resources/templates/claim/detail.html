@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
+<script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+
+<title>Detail claim</title>
+</head>
+<body>
+
+	<span th:text="${claim==null}"></span>
+	<span th:text="${claim.id}"></span>
+	<span th:text="${claim.content}"></span>
+	<select>
+		<option>Done</option>
+		<option>Disable</option>
+	</select>
+	<span th:text="${claim.status}"></span>
+
+	<form th:action="@{/eccoordinator/claim/process}" method="post">
+		<input type="submit" value="Save" />
+	</form>
+
+
+
+
+	<!-- 	<table class="table table-striped"> -->
+	<!-- 		<thead> -->
+	<!-- 			<tr> -->
+	<!-- 				<th>Claim ID</th> -->
+	<!-- 				<th>Assessments</th> -->
+	<!-- 				<th>Circumstances</th> -->
+	<!-- 				<th>Submit date</th> -->
+	<!-- 				<th>Status</th> -->
+	<!-- 								<th>Evidences</th> -->
+	<!-- 			</tr> -->
+	<!-- 		</thead> -->
+
+	<!-- 		<tbody> -->
+	<!-- 			<tr th:each="cl : ${claims}" class="clickableRow"> -->
+	<!-- 				<td th:text="${cl.id}" class="claimId"></td> -->
+	<!-- 				<td><p th:each="ass : ${cl.assessment}" th:text="${ass.title}"></p></td> -->
+	<!-- 				<td><p th:each="cir : ${cl.circumstances}" th:text="${cir.title}"></p></td> -->
+
+	<!-- 				<td th:text="${cl.created_time}"></td> -->
+	<!-- 				<td th:text="${cl.status}">fds</td> -->
+
+	<!-- 			</tr> -->
+	<!-- 		</tbody> -->
+
+	<!-- 	</table> -->
+	<!-- 	<a href="#" th:href="@{/student/claim/add}">Submit new claim</a> -->
+</body>
+<script>
+	// 	$(".clickableRow").on("click", function() {
+	//  		window.location.href = "http://localhost:8080/eccoordinator/claim/detail?id="+$(this).find(".claimId").html()
+	// 	})
+</script>
+</html>
