@@ -24,9 +24,8 @@ mvn package
 ```
 3. Install mysql and run query for granting user's permission
 ```
-CREATE USER ‘ecm’@‘localhost' IDENTIFIED BY 'ecm';
-GRANT ALL ON *.* TO 'ecm'@'localhost';
-FLUSH PRIVILEGES;
+CREATE USER 'ecm'@'localhost' IDENTIFIED BY 'ecm';
+GRANT ALL PRIVILEGES ON *.* TO 'ecm'@'localhost'
 ```
 4. Run tomcat web server
 ```
