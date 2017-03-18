@@ -11,9 +11,9 @@
 </head>
 <body>
 
-	<span th:text="${claim==null}"></span>
 	<span th:text="${claim.id}"></span>
 	<span th:text="${claim.content}"></span>
+
 	<th:block th:switch="${claim.status}">
 		<span th:case="0">Done</span>
 		<span th:case="1">Processing</span>
@@ -21,38 +21,13 @@
 	</th:block>
 
 	<form th:action="@{/eccoordinator/claim/process}" method="post">
-		<input type="submit" value="Save" />
+	<input type="text" value="${claim.id}" name="claimId" />
+		<select name="status">
+			<option value="0">Done</option>
+			<option value="1">Processing</option>
+			<option value="2">Disabled</option>
+		</select> <input type="submit" value="Save" />
 	</form>
-
-
-
-
-	<!-- 	<table class="table table-striped"> -->
-	<!-- 		<thead> -->
-	<!-- 			<tr> -->
-	<!-- 				<th>Claim ID</th> -->
-	<!-- 				<th>Assessments</th> -->
-	<!-- 				<th>Circumstances</th> -->
-	<!-- 				<th>Submit date</th> -->
-	<!-- 				<th>Status</th> -->
-	<!-- 								<th>Evidences</th> -->
-	<!-- 			</tr> -->
-	<!-- 		</thead> -->
-
-	<!-- 		<tbody> -->
-	<!-- 			<tr th:each="cl : ${claims}" class="clickableRow"> -->
-	<!-- 				<td th:text="${cl.id}" class="claimId"></td> -->
-	<!-- 				<td><p th:each="ass : ${cl.assessment}" th:text="${ass.title}"></p></td> -->
-	<!-- 				<td><p th:each="cir : ${cl.circumstances}" th:text="${cir.title}"></p></td> -->
-
-	<!-- 				<td th:text="${cl.created_time}"></td> -->
-	<!-- 				<td th:text="${cl.status}">fds</td> -->
-
-	<!-- 			</tr> -->
-	<!-- 		</tbody> -->
-
-	<!-- 	</table> -->
-	<!-- 	<a href="#" th:href="@{/student/claim/add}">Submit new claim</a> -->
 </body>
 <script>
 	// 	$(".clickableRow").on("click", function() {

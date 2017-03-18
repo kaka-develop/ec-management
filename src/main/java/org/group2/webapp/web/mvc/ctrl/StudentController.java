@@ -80,11 +80,12 @@ public class StudentController {
 			for (long cid : circumstances) {
 				claim.getCircumstances().add(circumRepo.getOne(cid));
 			}
+			claim.setStatus(1);
 			User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
 			claim.setUser(currentUser);
 			claimRepo.save(claim);
 			getECProcessClaim(currentUser.getFaculty().getId())
-					.ifPresent(ec -> MailUtils.sendInformNewClaim(ec, claim));
+					.ifPresent(ec -> MailUtils.sendInformNewClaimForECCoordinator(ec, claim));
 			return "claim/success";
 		} else {
 			req.setAttribute("errors", result.getAllErrors());

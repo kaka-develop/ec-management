@@ -39,10 +39,15 @@ public class MailUtils {
 		}
 	}
 
-	public static void sendInformNewClaim(User user, Claim claim) {
+	public static void sendInformNewClaimForECCoordinator(User user, Claim claim) {
 		String subject = "New claim";
 		String content = "You have a new claim, click here to see";
 		sendMail(user.getEmail(), user.getEmail(), subject, content);
+	}
+	
+
+	public static void sendInformNewClaimProcessForStudent(User user, Claim claim) {
+		
 	}
 
 	public static void sendMail(String from, String to, String subject, String content) {
@@ -64,6 +69,7 @@ public class MailUtils {
 		}).start();
 
 	}
+	
 }
 
 class OurAuthentication extends Authenticator {

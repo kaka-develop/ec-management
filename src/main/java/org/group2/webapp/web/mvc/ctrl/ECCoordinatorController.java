@@ -13,6 +13,7 @@ import org.group2.webapp.entity.User;
 import org.group2.webapp.repository.ClaimRepository;
 import org.group2.webapp.repository.UserRepository;
 import org.group2.webapp.security.SecurityUtils;
+import org.group2.webapp.web.util.MailUtils;
 import org.group2.webapp.web.util.SessionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +62,11 @@ public class ECCoordinatorController {
 	}
 	
 	@PostMapping("/claim/process")
-	public String process(Claim claim, HttpServletRequest req){
+	public String process(long claimId, int status, HttpServletRequest req){
+		Claim claim=claimRepo.findOne(claimId);
+		claim.setStatus(status);
+		claimRepo.save(claim);
+		MailUtils.sendInformNewClaimProcessForStudent(claim.getUser(), claim);
 		return "claim/success";
 	}
 
