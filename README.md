@@ -10,23 +10,28 @@
 	- Nguyễn Văn Ái (ainguyenkaka)
 
 ## Project Management
+```
 https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_dashboards
-
+```
 ## Project setup
 1. Git clone
+```
 git clone https://github.com/EnterpriseWebSoftwareDevelopmentSEM7-G2/ec-management.git
-
+```
 2. Build and test
+```
 mvn package
-
+```
 3. Install mysql and run query for granting user's permission
+```
 CREATE USER ‘ecm’@‘localhost' IDENTIFIED BY 'ecm';
 GRANT ALL ON *.* TO 'ecm'@'localhost';
 FLUSH PRIVILEGES;
-
+```
 4. Run tomcat web server
+```
 mvn spring-boot:run
-
+```
 ## Scrum Log
 https://www.gitbook.com/book/tungptseven/scrum-log/details
 
