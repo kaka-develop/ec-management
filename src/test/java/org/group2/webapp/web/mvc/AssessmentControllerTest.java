@@ -1,11 +1,11 @@
 package org.group2.webapp.web.mvc;
 
 import org.group2.webapp.EcManagementApplication;
+import org.group2.webapp.entity.AssessItem;
 import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.service.AssessItemService;
 import org.group2.webapp.service.AssessmentService;
 import org.group2.webapp.web.mvc.ctrl.admin.AssessmentController;
-import org.group2.webapp.web.mvc.ctrl.admin.AssessmentController;
-import org.group2.webapp.web.util.TestUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +27,9 @@ public class AssessmentControllerTest {
 
     @Autowired
     private AssessmentService assessmentService;
+
+    @Autowired
+    private AssessItemService assessItemService;
 
     private MockMvc restAssessmentMockMvc;
 
@@ -86,6 +89,23 @@ public class AssessmentControllerTest {
                 .andExpect(view().name("admin/assessment/add"));
     }
 
+    @Test
+    @Transactional
+    public void testPostNewItem() throws Exception {
+        createAssessment();
+        AssessItem item = assessItemService.create(new AssessItem("BBBBBB"));
+
+        restAssessmentMockMvc.perform(post("/admin/assessment/items/new")
+                .param("itemId",item.getId().toString())
+                .param("crn",assessment.getCrn()))
+                .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
+
+        restAssessmentMockMvc.perform(post("/admin/assessment/items/new")
+                .param("itemId",""))
+                .andExpect(view().name("admin/assessment/detail"));
+    }
+
+
 
     @Test
     @Transactional
@@ -94,10 +114,25 @@ public class AssessmentControllerTest {
 
         restAssessmentMockMvc.perform(get("/admin/assessment/detail/" + assessment.getCrn().toString()))
                 .andExpect(model().attributeExists("assessment"))
+                .andExpect(model().attributeExists("items"))
                 .andExpect(view().name("admin/assessment/detail"))
                 .andExpect(status().isOk());
 
         restAssessmentMockMvc.perform(get("/admin/assessment/detail/" + "BBBBBBBB"))
+                .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
+    }
+
+    @Test
+    @Transactional
+    public void testLoadAllItemsOfAssessment() throws Exception {
+        createAssessment();
+
+        restAssessmentMockMvc.perform(get("/admin/assessment/items/" + assessment.getCrn()))
+                .andExpect(model().attributeExists("items"))
+                .andExpect(view().name("admin/assessment/items"))
+                .andExpect(status().isOk());
+
+        restAssessmentMockMvc.perform(get("/admin/assessment/items/" + "BBBBBBBB"))
                 .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
     }
 

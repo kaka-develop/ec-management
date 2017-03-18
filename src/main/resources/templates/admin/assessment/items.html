@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Items</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>All items</h1>
+<a href="/admin/assessment">
+    <button>Back</button>
+</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+    </tr>
+    <tr th:each="item : ${items}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.title}"></td>
+    </tr>
+</table>
+</body>
+</html>

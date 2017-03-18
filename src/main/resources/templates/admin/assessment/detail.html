@@ -8,7 +8,16 @@
 <a href="/admin/assessment">
     <button>Back</button>
 </a>
-<h2>Claim: <span th:text="${assessment.crn}"></span></h2>
+<h2>Assessment: <span th:text="${assessment.crn}"></span></h2>
 <p>Title: <span th:text="${assessment.title}"></span></p>
 </body>
+<p></p>
+<b>Add item</b>
+<form th:action="@{/admin/assessment/items/new}" method="POST">
+    <input type="text" name="crn" th:value="${assessment.crn}" hidden="true"/>
+    <select name="itemId">
+        <option th:each="item : ${items}" th:text="${item.title}" th:value="${item.id}"></option>
+    </select>
+    <button type="submit">Add new</button>
+</form>
 </html>

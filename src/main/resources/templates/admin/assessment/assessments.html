@@ -13,6 +13,7 @@
     <tr>
         <th>ID</th>
         <th>Title</th>
+        <th>Items</th>
         <th></th>
         <th></th>
     </tr>
@@ -23,6 +24,12 @@
             </a>
         </td>
         <td th:text="${assessment.title}"></td>
+        <td>
+            <a th:if="${assessment.assessItems.size() > 0}" th:href="'/admin/assessment/items/' + ${assessment.crn}">
+                <span th:text="${assessment.assessItems.size()}"></span>
+            </a>
+            <span th:if="${assessment.assessItems.size() == 0}" th:text="${assessment.assessItems.size()}"></span>
+        </td>
         <td><a th:href="'/admin/assessment/edit/' + ${assessment.crn}">edit</a></td>
         <td>
             <form method="post" th:action="'/admin/assessment/delete/' + ${assessment.crn}">

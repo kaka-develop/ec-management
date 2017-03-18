@@ -15,6 +15,7 @@
         <th>Evident</th>
         <th>Content</th>
         <th>Status</th>
+        <th>Missed dateline</th>
         <th></th>
         <th></th>
     </tr>
@@ -27,6 +28,7 @@
         <td th:text="${claim.evidence}"></td>
         <td th:text="${claim.content}"></td>
         <td th:text="${claim.status}"></td>
+        <td th:text="${claim.isMissClosedDate()}"></td>
         <td><a th:href="'/admin/claim/edit/' + ${claim.id}">edit</a></td>
         <td>
             <form method="post" th:action="'/admin/claim/delete/' + ${claim.id}">
