@@ -6,8 +6,8 @@ USE ecm_db;
 
 
 CREATE TABLE faculty (
-  id      INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  title   VARCHAR(100) NOT NULL
+  id    INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(100) NOT NULL
 )
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
@@ -19,9 +19,9 @@ CREATE TABLE user (
   first_name    VARCHAR(50)  NOT NULL,
   last_name     VARCHAR(50)  NOT NULL,
   email         VARCHAR(100) NOT NULL,
-  faculty_id	int(20),
+  faculty_id    INT(20),
   created_date  DATETIME     NOT NULL,
-  foreign key (faculty_id) references `faculty`(id)
+  FOREIGN KEY (faculty_id) REFERENCES `faculty` (id)
 )
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
@@ -45,11 +45,11 @@ CREATE TABLE user_authority (
 
 -- INIT CLAIM, COURSE, ASSESSMENT TABLE --
 CREATE TABLE course (
-  code  VARCHAR(50)  NOT NULL,
-  title VARCHAR(100) NOT NULL,
+  code       VARCHAR(50)  NOT NULL,
+  title      VARCHAR(100) NOT NULL,
   PRIMARY KEY (code),
-  faculty_id	int(20),
-  foreign key (faculty_id) references `faculty`(id)
+  faculty_id INT(20),
+  FOREIGN KEY (faculty_id) REFERENCES `faculty` (id)
 )
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
@@ -65,11 +65,20 @@ CREATE TABLE assessment (
   DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE assessitem (
-  id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  title       VARCHAR(100) NOT NULL,
-  assessment_crn VARCHAR(50),
-  FOREIGN KEY (assessment_crn) REFERENCES assessment (crn)
-)ENGINE = InnoDB
+  id    INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(100) NOT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE assessment_assessitem (
+  id             INTEGER     NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  assessment_crn VARCHAR(50) NOT NULL,
+  assessitem_id  INT         NOT NULL,
+  FOREIGN KEY (assessment_crn) REFERENCES assessment (crn),
+  FOREIGN KEY (assessitem_id) REFERENCES assessitem (id)
+)
+  ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
 
 
@@ -80,6 +89,7 @@ CREATE TABLE claim (
   content        TEXT,
   created_time   DATETIME,
   processed_time DATETIME,
+  closed_date    DATETIME,
   status         INT,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES `user` (id)
@@ -118,22 +128,21 @@ CREATE TABLE claim_circumstance (
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8;
 
-
 -- INSERT SAMPLE DATA FOR USER--
 
 INSERT INTO authority (name, created_date) VALUES
   ('ROLE_USER', NOW()), ('ROLE_STUDENT', NOW()), ('ROLE_MANAGER', NOW()), ('ROLE_COORDINATOR', NOW()),
   ('ROLE_ADMIN', NOW());
- 
-  
-insert into faculty(title) values
-('faculty1'),
-('faculty2'),
-('faculty3'),
-('faculty4'),
-('faculty5');
 
-  
+
+INSERT INTO faculty (title) VALUES
+  ('faculty1'),
+  ('faculty2'),
+  ('faculty3'),
+  ('faculty4'),
+  ('faculty5');
+
+
 INSERT INTO user (username, password_hash, first_name, last_name, email, created_date) VALUES
   ('user', '$2a$06$7oA08ApI.X1xU0H5zkmpbutG4Uawv9mMH2qFqzpqGqr3EUJvPnKtu', 'fuser', 'luser', 'user@gmail.com', NOW()),
   ('student', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent', 'lstudent',
@@ -163,6 +172,11 @@ INSERT INTO user_authority (user_id, authority_name) VALUES
   (5, 'ROLE_ADMIN'), (5, 'ROLE_USER'), (5, 'ROLE_STUDENT'), (5, 'ROLE_MANAGER'), (5, 'ROLE_COORDINATOR');
 
 -- INSERT SAMPLE DATA FOR CLAIMS --
+INSERT INTO claim (evidence, content, created_time, processed_time, status, user_id) VALUES
+  ('Evidence1', 'Content1', NOW(), NOW(), 1, 2),
+  ('Evidence2', 'Content2', NOW(), NOW(), 1, 2),
+  ('Evidence3', 'Content3', NOW(), NOW(), 1, 2);
+
 INSERT INTO circumstance (title)
 VALUES ('Accident'), ('Bereavement'), ('Harassment or Assault'), ('Jury Service'), ('Medical'),
   ('Organisational maladministration'), ('Unexpected personal or family difficulties'),
@@ -180,5 +194,11 @@ INSERT INTO assessment (crn, course_code, title) VALUES ('23718', 'COMP-1108', '
   ('25066', 'COMP-1661', 'COMP 1661 Coursework'), ('25067', 'COMP-1661', 'COMP 1661 Logbook'),
   ('25391', 'COMP-1714', 'COMP 1714 Coursework'), ('25392', 'COMP-1714', 'COMP 1714 Exam');
 
+INSERT INTO assessitem (title) VALUES
+  ('Item1'), ('Item2'), ('Item3'), ('Item4'), ('Item5'), ('Item6'), ('Item7'), ('Item8');
+
+INSERT INTO assessment_assessitem (assessment_crn, assessitem_id) VALUES
+  ('23717', 1), ('23717', 2), ('24760', 3), ('24760', 4), ('24760', 5), ('23718', 6),
+  ('25042', 1), ('25042', 2), ('25391', 3), ('25391', 4), ('23717', 5), ('25391', 6);
 
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;

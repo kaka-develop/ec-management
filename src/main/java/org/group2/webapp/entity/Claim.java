@@ -5,7 +5,10 @@
  */
 package org.group2.webapp.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +19,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "claim")
-public class Claim implements Serializable{
+public class Claim implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,11 +38,16 @@ public class Claim implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_time", nullable = false)
     private Date created_time = new Date();
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "processed_time", nullable = false)
     private Date processed_time;
-    
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "closed_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date closedDate;
+
     @Column(name = "status")
     private int status;
 
@@ -134,6 +142,22 @@ public class Claim implements Serializable{
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Date getClosedDate() {
+        return closedDate;
+    }
+
+    public void setClosedDate(Date closedDate) {
+        this.closedDate = closedDate;
+    }
+
+    public boolean isMissClosedDate() {
+        if (this.closedDate == null)
+            return false;
+        if (this.closedDate.getTime() >= Calendar.getInstance().getTime().getTime())
+            return false;
+        return true;
     }
 
     @Override

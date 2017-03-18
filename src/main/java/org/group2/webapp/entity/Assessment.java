@@ -5,6 +5,8 @@
  */
 package org.group2.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,9 +38,15 @@ public class Assessment implements Serializable {
     @ManyToOne
     private Course course;
 
-    @OneToMany(mappedBy = "assessment")
-    private Set<AssessItem> assessItems;
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "assessment_assessitem",
+            joinColumns = {@JoinColumn(name = "assessment_crn", referencedColumnName = "crn")},
+            inverseJoinColumns = {@JoinColumn(name = "assessitem_id", referencedColumnName = "id")})
+    private Set<AssessItem> assessItems = new HashSet<>();
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "assessment_claim",

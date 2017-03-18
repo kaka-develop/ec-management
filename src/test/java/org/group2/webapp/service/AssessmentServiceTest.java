@@ -1,6 +1,7 @@
 package org.group2.webapp.service;
 
 import org.group2.webapp.EcManagementApplication;
+import org.group2.webapp.entity.AssessItem;
 import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.repository.AssessmentRepository;
 import org.junit.After;
@@ -29,6 +30,9 @@ public class AssessmentServiceTest {
 
     @Autowired
     private AssessmentService assessmentService;
+
+    @Autowired
+    private AssessItemService assessItemService;
 
 
     private final String ASSESS_CRN = "AAAAAAAA";
@@ -60,6 +64,30 @@ public class AssessmentServiceTest {
         assertThat(assessmentRepository.findOne("BBBBBBB")== null);
         assertThat(assessmentService.findOne( "BBBBBBB")== null);
     }
+
+
+    @Test
+    public void testAddItemForAssessment() {
+        AssessItem item = assessItemService.create(new AssessItem("BBBBBB"));
+        assertThat(assessmentService.addItem(item.getId(),assessment.getCrn()));
+
+        assertThat(assessmentService.addItem(new Long(11111),assessment.getCrn()));
+        assertThat(assessmentService.addItem(item.getId(),"BBBBBBBB"));
+
+        assertThat(!assessmentService.findOne(assessment.getCrn()).getAssessItems().isEmpty());
+        assertThat(assessItemService.findOne(item.getId()).getAssessment() != null);
+    }
+
+
+    @Test
+    public void testGetItemsNotExistedInAssessment() {
+        AssessItem item = assessItemService.create(new AssessItem("BBBBBB"));
+        assessmentService.addItem(item.getId(),assessment.getCrn());
+
+        assertThat(!assessmentService.getNotExistedItems(assessment).isEmpty());
+        assertThat(assessmentService.getNotExistedItems(null) == null);
+    }
+
 
     @After
     public void after() {

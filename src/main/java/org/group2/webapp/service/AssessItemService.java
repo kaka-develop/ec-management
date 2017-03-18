@@ -59,4 +59,9 @@ public class AssessItemService {
             return;
         assessItemRepository.delete(id);
     }
+
+    public AssessItem create(AssessItem item) {
+        log.debug("Request to create item: " + item);
+        return assessItemRepository.save(item);
+    }
 }

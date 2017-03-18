@@ -54,7 +54,7 @@ public class AssessItemServiceTest {
 
         assessItem = new AssessItem();
         assessItem.setTitle(ASSESSITEM_TITLE);
-        assessItem.setAssessment(assessment);
+        assessItem.getAssessment().add(assessment);
         assessItem = assessmentItemService.save(assessItem);
         log.debug("done create assessItem");
     }

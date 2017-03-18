@@ -1,7 +1,7 @@
 package org.group2.webapp.web.mvc.ctrl.admin;
 
-import org.apache.commons.lang3.StringUtils;
 import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.service.AssessItemService;
 import org.group2.webapp.service.AssessmentService;
 import org.group2.webapp.util.ConvertUntil;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class AssessmentController {
     }
 
 
-    @GetMapping(value = {"/",""})
+    @GetMapping(value = {"/", ""})
     public String index(Model model) {
         model.addAttribute("assessments", assessmentService.findAll());
         return "admin/assessment/assessments";
@@ -40,7 +40,25 @@ public class AssessmentController {
         if (assessment == null)
             return REDIRECT_INDEX;
         model.addAttribute("assessment", assessment);
+        model.addAttribute("items",assessmentService.getNotExistedItems(assessment));
         return "admin/assessment/detail";
+    }
+
+    @GetMapping("/items/{crn}")
+    public String getItems(@PathVariable String crn, Model model) {
+        Assessment assessment = assessmentService.findOne(crn);
+        if (assessment == null)
+            return REDIRECT_INDEX;
+        model.addAttribute("items", assessment.getAssessItems());
+        return "admin/assessment/items";
+    }
+
+    @PostMapping("/items/new")
+    public String addItem(@RequestParam String itemId, @RequestParam(required = false) String crn) {
+        if (assessmentService.addItem(ConvertUntil.covertStringToLong(itemId), crn))
+            return REDIRECT_INDEX;
+        else
+            return "admin/assessment/detail";
     }
 
     @GetMapping("/new")
