@@ -10,7 +10,7 @@ and open the template in the editor.
     
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
      <!--25 mb max--> 
-    <property name="maxUploadSize" value="100000"/>
+    <property name="maxUploadSize" value="2147483648"/>
     
 </bean>
 </beans>
