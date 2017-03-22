@@ -10,22 +10,37 @@
 <title>Detail claim</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 
-	<span th:text="${claim==null}"></span>
-	<span th:text="${claim.id}"></span>
-	<span th:text="${claim.content}"></span>
-	<th:block th:switch="${claim.status}">
+
+	<p>Claim ID#: <span th:text="${claim.id}"></span> </p>
+	<p>Content#:<span th:text="${claim.content}"></span></p>
+	<span>Status: 
+		<th:block th:switch="${claim.status}">
 		<span th:case="0">Done</span>
 		<span th:case="1">Processing</span>
 		<span th:case="2">Disabled</span>
 	</th:block>
+	</span>
+	
+	<p th:each="ass : ${claim.assessment}" th:text="${ass.title}"></p>
+	<p th:each="cir : ${claim.circumstances}" th:text="${cir.title}"></p>
+
+
+
+
+
 
 	<form th:action="@{/eccoordinator/claim/process}" method="post">
+		<select>
+		<option>Done</option>
+		<option>Processing</option>
+		<option>Disabled</option>
+	</select>
+	
 		<input type="submit" value="Save" />
 	</form>
-
-
-
+<div th:replace="fragments/footer :: footer"></div>
 
 	<!-- 	<table class="table table-striped"> -->
 	<!-- 		<thead> -->
