@@ -51,14 +51,14 @@ public class ECCoordinatorController {
 		return "claim/claims";
 	}
 
-	@GetMapping("/claim/detail")
+	@GetMapping("/claim/process")
 	public String index(long id, HttpServletRequest req) {
 		// User currentUser =
 		// SessionUtils.getCurrentUserSession(userRepo).get();
 		Claim claim = claimRepo.findOne(id);
 		System.out.println("claim: " + claim);
 		req.setAttribute("claim", claim);
-		return "claim/detail";
+		return "claim/process-claim";
 	}
 	
 	@PostMapping("/claim/process")

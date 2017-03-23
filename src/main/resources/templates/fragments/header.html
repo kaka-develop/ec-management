@@ -15,25 +15,29 @@
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">EC Managemnet System</a>
+				<a class="navbar-brand" href="#" th:href="@{/}">EC Managemnet System</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="#" th:href="@{/student/claim}">Student claims</a></li>
-					<li><a href="#" th:href="@{/student/claim/add}">Student send claim</a></li>
-					<li><a href="#" th:href="@{/eccoordinator/claim}">EC manager view claim</a></li>
-					<li><span sec:authentication="principal"></span></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown
-							<span class="caret"></span>
+					<th:block sec:authorize="hasRole('ROLE_STUDENT')">
+						<li><a href="#" th:href="@{/student/claim}">My EC claims</a></li>
+						<li><a href="#" th:href="@{/student/claim/add}">Request new EC claim</a></li>
+					</th:block>
+					<th:block sec:authorize="hasRole('ROLE_MANAGER')">
+						<li><a href="#" th:href="@{/eccoordinator/claim}">View EC claims</a></li>
+					</th:block>
+					
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						<span class="glyphicon glyphicon-user"></span>
+						<span sec:authentication="principal.username"></span>
+						<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
+							<li><a href="#">My Profile</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="#">Separated link</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="#">One more separated link</a></li>
+							<li><form th:action="@{/logout}" method="post">
+							<input class="btn btn-primary btn-block" type="submit" value="Sign Out" />
+						</form></li>
 						</ul></li>
 					<li sec:authorize="hasRole('ROLE_ADMIN')"><a href="#" th:href="@{/admin}">Administration</a></li>
 				</ul>

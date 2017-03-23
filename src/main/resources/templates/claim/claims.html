@@ -4,13 +4,26 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
 <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
 <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
 <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
 
 <title>Claims</title>
 </head>
-<body>
 
+<div th:replace="fragments/header :: header"></div>
+<body>
+<!-- 	<div sec:authorize="isAuthenticated()"> -->
+<!--   This content is only shown to authenticated users. -->
+<!-- </div> -->
+<!-- <th:block sec:authorize="hasRole('ROLE_STUDENT')"> -->
+<!--   This content is only shown to ROLE_STUDENT. -->
+<!-- </th:block> -->
+<!-- <div sec:authorize="hasRole('ROLE_MANAGER')"> -->
+<!--   This content is only shown to ROLE_MANAGER. -->
+<!-- </div> -->
+
+<div class="container">
 	<span th:field="${claims.size()}"></span>
 	<table class="table table-striped">
 		<thead>
@@ -38,10 +51,19 @@
 
 	</table>
 	<a href="#" th:href="@{/student/claim/add}">Submit new claim</a>
+	</div>
+	<div th:replace="fragments/footer :: footer"></div>
 </body>
 <script>
 	$(".clickableRow").on("click", function() {
- 		window.location.href = "http://localhost:8080/eccoordinator/claim/detail?id="+$(this).find(".claimId").html()
+		<th:block sec:authorize="hasRole('ROLE_STUDENT')">
+		window.location.href = "http://localhost:8080/student/claim/detail?id="+$(this).find(".claimId").html()
+		</th:block>		
+		<th:block sec:authorize="hasRole('ROLE_MANAGER')">
+		window.location.href = "http://localhost:8080/eccoordinator/claim/process?id="+$(this).find(".claimId").html()
+		</th:block>		
+ 		
+ 		
 	})
 </script>
 </html>

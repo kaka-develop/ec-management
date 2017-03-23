@@ -93,6 +93,16 @@ public class StudentController {
 		}
 		return addClaim(req);
 	}
+	
+	@GetMapping("/claim/detail")
+	public String index(long id, HttpServletRequest req) {
+		// User currentUser =
+		// SessionUtils.getCurrentUserSession(userRepo).get();
+		Claim claim = claimRepo.findOne(id);
+		System.out.println("claim: " + claim);
+		req.setAttribute("claim", claim);
+		return "claim/detail";
+	}
 
 	public List<Claim> getAllClaimOfStudent(User student) {
 		List<Claim> claims = claimRepo.findAll();

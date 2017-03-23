@@ -35,6 +35,9 @@ public class Claim implements Serializable {
     @Column(columnDefinition = "TEXT", unique = true, nullable = true)
     private String content;
 
+    @Column(columnDefinition = "TEXT", nullable = true)
+    private String decision;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_time", nullable = false)
     private Date created_time = new Date();
@@ -171,4 +174,12 @@ public class Claim implements Serializable {
                 ", status=" + status +
                 '}';
     }
+
+	public String getDecision() {
+		return decision;
+	}
+
+	public void setDecision(String decision) {
+		this.decision = decision;
+	}
 }

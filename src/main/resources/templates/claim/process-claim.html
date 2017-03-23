@@ -12,9 +12,8 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-
-
 <div class="container">
+
 	<label>Claim ID#:</label><br/>
 	<span th:text="${claim.id}"></span><br/>
 	<label>Content#:</label><br/>
@@ -25,26 +24,23 @@
 	<label>Circumstances: </label><br/>
 	<p th:each="cir : ${claim.circumstances}" th:text="${cir.title}"></p><br/>
 	<br/>
-	<label>Status:</label> 
-		<th:block th:switch="${claim.status}">
-		<span th:case="0">Done</span>
-		<span th:case="1">Processing</span>
-		<span th:case="2">Disabled</span>
-	</th:block>
-	<br/>
-	
-	<label>decision</label><br/>
-	<p th:text="${claim.decision"></p><br/>
-	
-<form>
-<label>Upload evidents: </label>
-<input type="file" multiple="true"/>
-<input type="submit" value="Upload"/>
-</form>
 
-</div>
+	<form th:action="@{/eccoordinator/claim/process}" method="post">
+		<select class="form-control" >
+			<option>Done</option>
+			<option>Processing</option>
+			<option>Disabled</option>
+		</select>
+		
+		<label>Decision</label><br/>
+	
+		<textarea class="form-control" th:text="${claim.decision}"></textarea><br/>
 
-<div th:replace="fragments/footer :: footer"></div>
+		<input class="btn btn-primary" type="submit" value="Save"/>
+	</form>
+	</div>
+	
+	<div th:replace="fragments/footer :: footer"></div>
 
 	<!-- 	<table class="table table-striped"> -->
 	<!-- 		<thead> -->
