@@ -42,7 +42,7 @@ public class MailUtils {
 	public static void sendInformNewClaimForECCoordinator(User user, Claim claim) {
 		String subject = "New claim";
 		String content = "You have a new claim, click here to see";
-		sendMail(user.getEmail(), user.getEmail(), subject, content);
+		sendMail(user.getEmail(), subject, content);
 	}
 	
 
@@ -50,17 +50,16 @@ public class MailUtils {
 		
 	}
 
-	public static void sendMail(String from, String to, String subject, String content) {
+	public static void sendMail(String to, String subject, String content) {
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				try {
 					Message msg = new MimeMessage(mailSs);
-					msg.setFrom(new InternetAddress(from));
 					msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 					msg.setSubject(subject);
-					msg.setText(content);
+					msg.setContent(content, "text/html");
 					Transport.send(msg);
 				} catch (MessagingException e) {
 					e.printStackTrace();
@@ -70,11 +69,14 @@ public class MailUtils {
 
 	}
 	
+	public static void main(String[] args) {
+		MailUtils.sendMail("sondcgc00681@fpt.edu.vn", "Title", "<a href='#'>Click vao day</a>");
+	}
 }
 
 class OurAuthentication extends Authenticator {
 	private static final String USERNAME = "systemec2017@gmail.com";
-	private static final String PASSWORD = "ec123456789";
+	private static final String PASSWORD = "-ec12356789";
 
 	@Override
 	protected PasswordAuthentication getPasswordAuthentication() {

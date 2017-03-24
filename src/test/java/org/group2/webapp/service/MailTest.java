@@ -19,8 +19,14 @@ import junit.framework.TestCase;
 public class MailTest extends TestCase {
 	@Test
 	public void testSendingMail() throws MessagingException {
-		User user=new User();
+		User user = new User();
 		user.setEmail("kunedo1104@gmail.com");
-		MailUtils.sendInformNewClaimForECCoordinator(user, null);
+		// MailUtils.sendInformNewClaimForECCoordinator(user, null);
 	}
+
+	@Test
+	public void testSendMail() {
+//		MailUtils.sendMail("kunedo1104@gmail.com", "sondcgc00681@fpt.edu.vn", "Title", "<a href='#'>Click vao day</a>");
+	}
+
 }
