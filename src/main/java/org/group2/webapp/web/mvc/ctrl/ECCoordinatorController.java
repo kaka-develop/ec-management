@@ -58,13 +58,14 @@ public class ECCoordinatorController {
 		Claim claim = claimRepo.findOne(id);
 		System.out.println("claim: " + claim);
 		req.setAttribute("claim", claim);
-		return "claim/process-claim";
+		return index(req);
 	}
 	
 	@PostMapping("/claim/process")
-	public String process(long claimId, int status, HttpServletRequest req){
+	public String process(long claimId, int status, HttpServletRequest req, String decision){
 		Claim claim=claimRepo.findOne(claimId);
 		claim.setStatus(status);
+		claim.setDecision(decision);
 		claimRepo.save(claim);
 		MailUtils.sendInformNewClaimProcessForStudent(claim.getUser(), claim);
 		return "claim/success";

@@ -40,14 +40,19 @@ public class MailUtils {
 	}
 
 	public static void sendInformNewClaimForECCoordinator(User user, Claim claim) {
-		String subject = "New claim";
-		String content = "You have a new claim, click here to see";
-		sendMail(user.getEmail(), user.getEmail(), subject, content);
+		StringBuilder sb=new StringBuilder();
+		sb.append("You have new EC claim from student!\n");
+		sb.append("<a href='localhost:8080'>Click here to see</a>");
+		sendMail(user.getEmail(), user.getEmail(), "New EC Claim", sb.toString());
 	}
 	
 
 	public static void sendInformNewClaimProcessForStudent(User user, Claim claim) {
+		StringBuilder sb=new StringBuilder();
+		sb.append("Your EC claim has final decision!\n");
+		sb.append("<a href='localhost:8080'>Click here to see</a>");
 		
+		sendMail(user.getEmail(), user.getEmail(), "EC Claim", sb.toString());
 	}
 
 	public static void sendMail(String from, String to, String subject, String content) {
@@ -70,6 +75,10 @@ public class MailUtils {
 
 	}
 	
+	public static void main(String[] args) {
+		sendMail("kunedo1104@gmail.com", "sondcgc00681@fpt.edu.vn", "Moi", "Noi dung");
+		System.out.println("Done");
+	}
 }
 
 class OurAuthentication extends Authenticator {
