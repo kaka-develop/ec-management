@@ -40,50 +40,47 @@ public class MailUtils {
 	}
 
 	public static void sendInformNewClaimForECCoordinator(User user, Claim claim) {
-		StringBuilder sb=new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append("You have new EC claim from student!\n");
 		sb.append("<a href='localhost:8080'>Click here to see</a>");
-		sendMail(user.getEmail(), user.getEmail(), "New EC Claim", sb.toString());
+		sendMail(user.getEmail(), "New EC Claim", sb.toString());
 	}
-	
 
 	public static void sendInformNewClaimProcessForStudent(User user, Claim claim) {
-		StringBuilder sb=new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append("Your EC claim has final decision!\n");
 		sb.append("<a href='localhost:8080'>Click here to see</a>");
-		
-		sendMail(user.getEmail(), user.getEmail(), "EC Claim", sb.toString());
+
+		sendMail(user.getEmail(), "EC Claim", sb.toString());
 	}
 
-	public static void sendMail(String from, String to, String subject, String content) {
+	public static void sendMail(String to, String subject, String content) {
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				try {
 					Message msg = new MimeMessage(mailSs);
-					msg.setFrom(new InternetAddress(from));
 					msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 					msg.setSubject(subject);
-					msg.setText(content);
+					msg.setContent(content, "text/html");
 					Transport.send(msg);
 				} catch (MessagingException e) {
 					e.printStackTrace();
 				}
 			}
 		}).start();
-
 	}
-	
+
 	public static void main(String[] args) {
-		sendMail("kunedo1104@gmail.com", "sondcgc00681@fpt.edu.vn", "Moi", "Noi dung");
+		sendMail("sondcgc00681@fpt.edu.vn", "Moi", "Noi dung");
 		System.out.println("Done");
 	}
 }
 
 class OurAuthentication extends Authenticator {
 	private static final String USERNAME = "systemec2017@gmail.com";
-	private static final String PASSWORD = "ec123456789";
+	private static final String PASSWORD = "-ec12356789";
 
 	@Override
 	protected PasswordAuthentication getPasswordAuthentication() {
