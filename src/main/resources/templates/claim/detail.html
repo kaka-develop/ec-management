@@ -4,47 +4,40 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
 <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
-<link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
+<link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}" />
 <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
 <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
 
 <title>Detail claim</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+	<div th:replace="fragments/header :: header"></div>
 
 
-<div class="container">
-	<label>Claim ID#:</label><br/>
-	<span th:text="${claim.id}"></span><br/>
-	<label>Content#:</label><br/>
-	<span th:text="${claim.content}"></span><br/>
-	
-	<label>Assessments: </label><br/>
-	<p th:each="ass : ${claim.assessment}" th:text="${ass.title}"></p><br/>
-	<label>Circumstances: </label><br/>
-	<p th:each="cir : ${claim.circumstances}" th:text="${cir.title}"></p><br/>
-	<br/>
-	<label>Status:</label> 
+	<div class="container">
+		<label>Claim ID#:</label><br /> <span th:text="${claim.id}"></span><br /> <label>Content#:</label><br /> <span th:text="${claim.content}"></span><br />
+
+		<label>Assessments: </label><br />
+		<p th:each="ass : ${claim.assessment}" th:text="${ass.title}"></p>
+		<br /> <label>Circumstances: </label><br />
+		<p th:each="cir : ${claim.circumstances}" th:text="${cir.title}"></p>
+		<br /> <br /> <label>Status:</label>
 		<th:block th:switch="${claim.status}">
-		<span th:case="0">Done</span>
-		<span th:case="1">Processing</span>
-		<span th:case="2">Disabled</span>
-	</th:block>
-	<br/>
-	
-	<label>decision</label><br/>
-	<p th:text="${claim.decision"></p><br/>
-	
-<form>
-<label>Upload evidents: </label>
-<input type="file" multiple="true"/>
-<input type="submit" value="Upload"/>
-</form>
+			<span th:case="0">Done</span>
+			<span th:case="1">Processing</span>
+			<span th:case="2">Disabled</span>
+		</th:block>
+		<br /> <label>decision</label><br />
+		<p th:text="${claim.decision}"></p>
+		<br />
 
-</div>
+		<form>
+			<label>Upload evidents: </label> <input type="file" multiple="true" /> <input type="submit" value="Upload" />
+		</form>
 
-<div th:replace="fragments/footer :: footer"></div>
+	</div>
+
+	<div th:replace="fragments/footer :: footer"></div>
 
 	<!-- 	<table class="table table-striped"> -->
 	<!-- 		<thead> -->
