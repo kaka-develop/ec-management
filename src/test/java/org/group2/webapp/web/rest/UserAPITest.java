@@ -55,7 +55,7 @@ public class UserAPITest {
 
     @Test
     @Transactional
-    public void testGetExistingUser() throws Exception {
+    public void testShouldResponseOneUserByUsername() throws Exception {
         restUserMockMvc.perform(get("/api/admin/users/admin")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -65,7 +65,7 @@ public class UserAPITest {
 
     @Test
     @Transactional
-    public void testGetUnknownUser() throws Exception {
+    public void testShouldResonseUserIsNotFound() throws Exception {
         restUserMockMvc.perform(get("/api/admin/users/unknown")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -73,7 +73,7 @@ public class UserAPITest {
 
     @Test
     @Transactional
-    public void testGetExistingUserWithAnEmailLogin() throws Exception {
+    public void testShouldResponseExistingUserWithAnEmailLogin() throws Exception {
         User user = userService.createUser("johnss", "johndoe", "John", "Doe", "john.doe@localhost.com");
 
         restUserMockMvc.perform(get("/api/admin/users/johnss")
@@ -87,7 +87,7 @@ public class UserAPITest {
 
     @Test
     @Transactional
-    public void testDeleteExistingUserWithAnEmailLogin() throws Exception {
+    public void testShouldResponseOkDeletingUserWithAnEmailLogin() throws Exception {
         User user = userService.createUser("johnsa", "johndoe", "John", "Doe", "john.doe@localhost.com");
 
         restUserMockMvc.perform(delete("/api/admin/users/johnsa")

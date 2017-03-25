@@ -44,13 +44,13 @@ public class CircumstanceServiceTest {
     }
 
     @Test
-    public void testFillAll() {
+    public void testShouldHaveCircumstance() {
         assertThat(!circumstanceRepository.findAll().isEmpty());
         assertThat(!circumstanceService.findAll().isEmpty());
     }
 
     @Test
-    public void testFindOne() {
+    public void testShouldHaveOneCircumstanceByID() {
         assertThat(circumstanceRepository.findOne(circumstance.getId())!= null);
         assertThat(circumstanceService.findOne(circumstance.getId())!= null);
 

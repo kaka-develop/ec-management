@@ -63,6 +63,7 @@ CREATE TABLE claim (
   user_id        INT,
   evidence       TEXT,
   content        TEXT,
+  decision       TEXT,
   created_time   DATETIME,
   processed_time DATETIME,
   closed_date    DATETIME,

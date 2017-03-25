@@ -59,7 +59,7 @@ public class ClaimControllerTest {
 
     @Test
     @Transactional
-    public void testIndex() throws Exception {
+    public void testShouldHaveViewForAllClaims() throws Exception {
         restClaimMockMvc.perform(get("/admin/claim"))
                 .andExpect(model().attributeExists("claims"))
                 .andExpect(view().name("admin/claim/claims"))
@@ -69,7 +69,7 @@ public class ClaimControllerTest {
 
     @Test
     @Transactional
-    public void testGetNew() throws Exception {
+    public void testShouldHaveViewForAddingClaim() throws Exception {
         restClaimMockMvc.perform(get("/admin/claim/new"))
                 .andExpect(model().attributeExists("claim"))
                 .andExpect(view().name("admin/claim/add"))
@@ -78,7 +78,7 @@ public class ClaimControllerTest {
 
     @Test
     @Transactional
-    public void testPostNew() throws Exception {
+    public void testShouldPostAddingOneClaim() throws Exception {
         
         restClaimMockMvc.perform(post("/admin/claim/new")
                 .param("evidence",CLAIM_EVIDENCE)
@@ -94,7 +94,7 @@ public class ClaimControllerTest {
 
     @Test
     @Transactional
-    public void testGetDetail() throws Exception {
+    public void testShouldHaveViewForClaimInfo() throws Exception {
         createClaim();
 
         restClaimMockMvc.perform(get("/admin/claim/detail/"+ claim.getId().toString()))
@@ -108,7 +108,7 @@ public class ClaimControllerTest {
 
     @Test
     @Transactional
-    public void testGetByYear() throws Exception {
+    public void testShouldHaveViewForFindingClaimsByYear() throws Exception {
         createClaim();
 
         Calendar calendar = Calendar.getInstance();
@@ -128,7 +128,7 @@ public class ClaimControllerTest {
 
     @Test
     @Transactional
-    public void testGetEdit() throws Exception {
+    public void testShouldHaveViewForEditingClaim() throws Exception {
         createClaim();
 
         restClaimMockMvc.perform(get("/admin/claim/edit/" + claim.getId().toString()))
@@ -139,7 +139,7 @@ public class ClaimControllerTest {
 
     @Test
     @Transactional
-    public void testPostEdit() throws Exception {
+    public void testShouldPostEditingOneClaim() throws Exception {
         createClaim();
 
         restClaimMockMvc.perform(post("/admin/claim/edit")
@@ -157,7 +157,7 @@ public class ClaimControllerTest {
 
     @Test
     @Transactional
-    public void testPostDelete() throws Exception {
+    public void testShouldPostDeletingClaim() throws Exception {
         createClaim();
 
         restClaimMockMvc.perform(post("/admin/claim/delete/" +  claim.getId().toString()))

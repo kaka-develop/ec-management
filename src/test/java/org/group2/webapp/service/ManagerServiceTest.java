@@ -49,17 +49,17 @@ public class ManagerServiceTest {
     }
 
     @Test
-    public void testFillAll() {
+    public void testShouldHaveClaim() {
         assertThat(!managerService.findAllClaims().isEmpty());
     }
 
     @Test
-    public void testFindAllPerFaculty() {
+    public void testShouldHaveAllClaimsByFaculty() {
         assertThat(!managerService.getClaimsPerFaculty().isEmpty());
     }
 
     @Test
-    public void testFindAllPerYear() {
+    public void testShouldHaveClaimsForEachYear() {
         assertThat(!managerService.getClamsPerYear().isEmpty());
     }
 

@@ -72,7 +72,7 @@ public class CourseAPITest {
 
     @Test
     @Transactional
-    public void createCourse() throws Exception {
+    public void testShouldResponseAddedCourse() throws Exception {
         int databaseSizeBeforeCreate = courseRepository.findAll().size();
 
 
@@ -89,7 +89,7 @@ public class CourseAPITest {
 
     @Test
     @Transactional
-    public void createCourseWithExistingCode() throws Exception {
+    public void testShouldResponseCourseWithExistingCode() throws Exception {
         int databaseSizeBeforeCreate = courseRepository.findAll().size();
 
         Course existingCourse = new Course();
@@ -106,7 +106,7 @@ public class CourseAPITest {
 
     @Test
     @Transactional
-    public void checkTitleIsRequired() throws Exception {
+    public void testShouldResponseCourseIsInvalid() throws Exception {
         int databaseSizeBeforeTest = courseRepository.findAll().size();
         course.setTitle(null);
 
@@ -121,7 +121,7 @@ public class CourseAPITest {
 
     @Test
     @Transactional
-    public void getAllCourses() throws Exception {
+    public void testShouldResponseAllCourses() throws Exception {
         // Initialize the database
         courseRepository.saveAndFlush(course);
 
@@ -135,7 +135,7 @@ public class CourseAPITest {
 
     @Test
     @Transactional
-    public void getCourse() throws Exception {
+    public void testShouldResponseOneCourseByCode() throws Exception {
         // Initialize the database
         courseRepository.saveAndFlush(course);
 
@@ -149,14 +149,14 @@ public class CourseAPITest {
 
     @Test
     @Transactional
-    public void getNonExistingCourse() throws Exception {
+    public void testShouldResponseCourseIsNotFound() throws Exception {
         restCourseMockMvc.perform(get("/api/admin/courses/{code}", "BBBBBBBBB"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     @Transactional
-    public void updateCourse() throws Exception {
+    public void testShouldResponseUpdatedCourse() throws Exception {
         courseService.update(course);
 
         int databaseSizeBeforeUpdate = courseRepository.findAll().size();
@@ -179,21 +179,7 @@ public class CourseAPITest {
 
     @Test
     @Transactional
-    public void updateNonExistingCourse() throws Exception {
-        int databaseSizeBeforeUpdate = courseRepository.findAll().size();
-
-        restCourseMockMvc.perform(put("/api/admin/courses")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(course)))
-                .andExpect(status().isOk());
-
-        List<Course> courseList = courseRepository.findAll();
-        assertThat(courseList).hasSize(databaseSizeBeforeUpdate + 1);
-    }
-
-    @Test
-    @Transactional
-    public void deleteCourse() throws Exception {
+    public void testShouldResponseOkDeletingCourseByCode() throws Exception {
         courseService.create(course);
 
         int databaseSizeBeforeDelete = courseRepository.findAll().size();

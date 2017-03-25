@@ -50,14 +50,14 @@ public class AssessmentServiceTest {
     }
 
     @Test
-    public void testFillAll() {
+    public void testShouldHaveAssessment() {
         assertThat(!assessmentRepository.findAll().isEmpty());
         assertThat(!assessmentService.findAll().isEmpty());
     }
 
 
     @Test
-    public void testFindOne() {
+    public void testShouldHaveOneAssementByCRN() {
         assertThat(assessmentRepository.findOne(assessment.getCrn())!= null);
         assertThat(assessmentService.findOne(assessment.getCrn())!= null);
 
@@ -67,7 +67,7 @@ public class AssessmentServiceTest {
 
 
     @Test
-    public void testAddItemForAssessment() {
+    public void testShouldAddAssessment() {
         AssessItem item = assessItemService.create(new AssessItem("BBBBBB"));
         assertThat(assessmentService.addItem(item.getId(),assessment.getCrn()));
 
@@ -78,15 +78,6 @@ public class AssessmentServiceTest {
         assertThat(assessItemService.findOne(item.getId()).getAssessment() != null);
     }
 
-
-    @Test
-    public void testGetItemsNotExistedInAssessment() {
-        AssessItem item = assessItemService.create(new AssessItem("BBBBBB"));
-        assessmentService.addItem(item.getId(),assessment.getCrn());
-
-        assertThat(!assessmentService.getNotExistedItems(assessment).isEmpty());
-        assertThat(assessmentService.getNotExistedItems(null) == null);
-    }
 
 
     @After

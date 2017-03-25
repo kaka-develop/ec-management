@@ -65,7 +65,7 @@ public class ManagerAPITest {
 
     @Test
     @Transactional
-    public void testGetAllClaims() throws Exception {
+    public void testShouldResponseAllClaims() throws Exception {
         restManagerMockMvc.perform(get("/api/manager/claims"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -76,7 +76,7 @@ public class ManagerAPITest {
 
     @Test
     @Transactional
-    public void testGetClaimsByFaculty() throws Exception{
+    public void testShouldResponseAllClaimsByFaculty() throws Exception{
         restManagerMockMvc.perform(get("/api/manager/claims/faculty"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
@@ -84,7 +84,7 @@ public class ManagerAPITest {
 
     @Test
     @Transactional
-    public void testGetClaimsByYear() throws Exception{
+    public void testShouldResponseAllClaimsByYear() throws Exception{
         restManagerMockMvc.perform(get("/api/manager/claims/year"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));

@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SecurityUtilsTest {
 
     @Test
-    public void testgetCurrentUserLogin() {
+    public void testShouldHaveCurrentLoginUser() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
         SecurityContextHolder.setContext(securityContext);
@@ -24,7 +24,7 @@ public class SecurityUtilsTest {
     }
 
     @Test
-    public void testIsAuthenticated() {
+    public void testShouldBeAuthenticatedWithUser() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
         SecurityContextHolder.setContext(securityContext);

@@ -70,12 +70,12 @@ public class MailUtils {
 				}
 			}
 		}).start();
-	}
 
-	public static void main(String[] args) {
-		sendMail("sondcgc00681@fpt.edu.vn", "Moi", "Noi dung");
-		System.out.println("Done");
 	}
+	public static void main(String[] args) {
+		MailUtils.sendMail("sondcgc00681@fpt.edu.vn", "Title", "<a href='#'>Click vao day</a>");
+	}
+	
 }
 
 class OurAuthentication extends Authenticator {

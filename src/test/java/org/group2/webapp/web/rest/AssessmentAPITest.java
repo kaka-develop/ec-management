@@ -68,7 +68,7 @@ public class AssessmentAPITest {
 
     @Test
     @Transactional
-    public void createAssessment() throws Exception {
+    public void testShouldResponseAddedAssessment() throws Exception {
         int databaseSizeBeforeCreate = assessmentRepository.findAll().size();
 
 
@@ -85,7 +85,7 @@ public class AssessmentAPITest {
 
     @Test
     @Transactional
-    public void createAssessmentWithExistingCrn() throws Exception {
+    public void testShouldResponseAssessmentWithExistingCrn() throws Exception {
         int databaseSizeBeforeCreate = assessmentRepository.findAll().size();
 
         Assessment existingAssessment = new Assessment();
@@ -102,7 +102,7 @@ public class AssessmentAPITest {
 
     @Test
     @Transactional
-    public void checkTitleIsRequired() throws Exception {
+    public void testShouldResponseAssessmentIsInvalid() throws Exception {
         int databaseSizeBeforeTest = assessmentRepository.findAll().size();
         assessment.setTitle(null);
 
@@ -117,7 +117,7 @@ public class AssessmentAPITest {
 
     @Test
     @Transactional
-    public void getAllAssessments() throws Exception {
+    public void testShouldResponseAllAssessments() throws Exception {
         // Initialize the database
         assessmentRepository.saveAndFlush(assessment);
 
@@ -131,12 +131,12 @@ public class AssessmentAPITest {
 
     @Test
     @Transactional
-    public void getAssessment() throws Exception {
+    public void testShouldResponseOneAssessmentByCrn() throws Exception {
         // Initialize the database
         assessmentRepository.saveAndFlush(assessment);
 
         // Get the assessment
-        restAssessmentMockMvc.perform(get("/api/admin/assessments/{code}", assessment.getCrn()))
+        restAssessmentMockMvc.perform(get("/api/admin/assessments/{crn}", assessment.getCrn()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.crn").value(assessment.getCrn()))
@@ -145,14 +145,14 @@ public class AssessmentAPITest {
 
     @Test
     @Transactional
-    public void getNonExistingAssessment() throws Exception {
-        restAssessmentMockMvc.perform(get("/api/admin/assessments/{code}", "BBBBBBBBB"))
+    public void testShouldResponseAssessmentIsNotFound() throws Exception {
+        restAssessmentMockMvc.perform(get("/api/admin/assessments/{crn}", "BBBBBBBBB"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     @Transactional
-    public void updateAssessment() throws Exception {
+    public void testShouldResponseUpdatedAssessment() throws Exception {
         assessmentService.update(assessment);
 
         int databaseSizeBeforeUpdate = assessmentRepository.findAll().size();
@@ -175,26 +175,12 @@ public class AssessmentAPITest {
 
     @Test
     @Transactional
-    public void updateNonExistingAssessment() throws Exception {
-        int databaseSizeBeforeUpdate = assessmentRepository.findAll().size();
-
-        restAssessmentMockMvc.perform(put("/api/admin/assessments")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(assessment)))
-                .andExpect(status().isOk());
-
-        List<Assessment> assessmentList = assessmentRepository.findAll();
-        assertThat(assessmentList).hasSize(databaseSizeBeforeUpdate + 1);
-    }
-
-    @Test
-    @Transactional
-    public void deleteAssessment() throws Exception {
+    public void testShouldResponseOkDeletingAssessmentByCrn() throws Exception {
         assessmentService.create(assessment);
 
         int databaseSizeBeforeDelete = assessmentRepository.findAll().size();
 
-        restAssessmentMockMvc.perform(delete("/api/admin/assessments/{code}", assessment.getCrn())
+        restAssessmentMockMvc.perform(delete("/api/admin/assessments/{crn}", assessment.getCrn())
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 

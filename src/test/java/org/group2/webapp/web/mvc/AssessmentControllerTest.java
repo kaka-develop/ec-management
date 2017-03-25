@@ -59,7 +59,7 @@ public class AssessmentControllerTest {
 
     @Test
     @Transactional
-    public void testIndex() throws Exception {
+    public void testShouldHaveViewForAllAssessments() throws Exception {
         restAssessmentMockMvc.perform(get("/admin/assessment"))
                 .andExpect(model().attributeExists("assessments"))
                 .andExpect(view().name("admin/assessment/assessments"))
@@ -69,7 +69,7 @@ public class AssessmentControllerTest {
 
     @Test
     @Transactional
-    public void testGetNew() throws Exception {
+    public void testShouldHaveViewForAddingOneAssessment() throws Exception {
         restAssessmentMockMvc.perform(get("/admin/assessment/new"))
                 .andExpect(model().attributeExists("assessment"))
                 .andExpect(view().name("admin/assessment/add"))
@@ -78,7 +78,7 @@ public class AssessmentControllerTest {
 
     @Test
     @Transactional
-    public void testPostNew() throws Exception {
+    public void testShouldPostAddingOneAssessment() throws Exception {
         restAssessmentMockMvc.perform(post("/admin/assessment/new")
                 .param("crn",ASSESS_CRN)
                 .param("title",ASSESS_TITLE))
@@ -89,27 +89,11 @@ public class AssessmentControllerTest {
                 .andExpect(view().name("admin/assessment/add"));
     }
 
-    @Test
-    @Transactional
-    public void testPostNewItem() throws Exception {
-        createAssessment();
-        AssessItem item = assessItemService.create(new AssessItem("BBBBBB"));
-
-        restAssessmentMockMvc.perform(post("/admin/assessment/items/new")
-                .param("itemId",item.getId().toString())
-                .param("crn",assessment.getCrn()))
-                .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
-
-        restAssessmentMockMvc.perform(post("/admin/assessment/items/new")
-                .param("itemId",""))
-                .andExpect(view().name("admin/assessment/detail"));
-    }
-
 
 
     @Test
     @Transactional
-    public void testGetDetail() throws Exception {
+    public void testShouldHaveViewForOneAssessment() throws Exception {
         createAssessment();
 
         restAssessmentMockMvc.perform(get("/admin/assessment/detail/" + assessment.getCrn().toString()))
@@ -124,7 +108,7 @@ public class AssessmentControllerTest {
 
     @Test
     @Transactional
-    public void testLoadAllItemsOfAssessment() throws Exception {
+    public void testShaveHaveViewForAllItems() throws Exception {
         createAssessment();
 
         restAssessmentMockMvc.perform(get("/admin/assessment/items/" + assessment.getCrn()))
@@ -139,7 +123,7 @@ public class AssessmentControllerTest {
 
     @Test
     @Transactional
-    public void testGetEdit() throws Exception {
+    public void testShouldHaveViewForEditingAssessment() throws Exception {
         createAssessment();
 
         restAssessmentMockMvc.perform(get("/admin/assessment/edit/" + assessment.getCrn().toString()))
@@ -150,7 +134,7 @@ public class AssessmentControllerTest {
 
     @Test
     @Transactional
-    public void testPostEdit() throws Exception {
+    public void testShouldPostEditingOneAssessment() throws Exception {
         createAssessment();
 
         restAssessmentMockMvc.perform(post("/admin/assessment/edit")
@@ -165,7 +149,7 @@ public class AssessmentControllerTest {
 
     @Test
     @Transactional
-    public void testPostDelete() throws Exception {
+    public void testShouldPostDeletingOneAssessment() throws Exception {
         createAssessment();
 
         restAssessmentMockMvc.perform(post("/admin/assessment/delete/" + assessment.getCrn().toString()))

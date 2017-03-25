@@ -75,7 +75,7 @@ public class ClaimAPITest {
 
     @Test
     @Transactional
-    public void createClaim() throws Exception {
+    public void testShouldResponseAddedClaim() throws Exception {
         int databaseSizeBeforeCreate = claimRepository.findAll().size();
         
 
@@ -92,7 +92,7 @@ public class ClaimAPITest {
 
     @Test
     @Transactional
-    public void createClaimWithExistingId() throws Exception {
+    public void testShouldResponseClaimWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = claimRepository.findAll().size();
         
         Claim existingClaim = new Claim();
@@ -109,7 +109,7 @@ public class ClaimAPITest {
 
     @Test
     @Transactional
-    public void checkEvidenceIsRequired() throws Exception {
+    public void testShouldResponseEvidenceIsInValid() throws Exception {
         int databaseSizeBeforeTest = claimRepository.findAll().size();
         claim.setContent(null);
 
@@ -124,7 +124,7 @@ public class ClaimAPITest {
 
     @Test
     @Transactional
-    public void getAllClaims() throws Exception {
+    public void testShouldResponseAllClaims() throws Exception {
         // Initialize the database
         claimRepository.saveAndFlush(claim);
 
@@ -138,7 +138,7 @@ public class ClaimAPITest {
 
     @Test
     @Transactional
-    public void getAllClaimsByYear() throws Exception {
+    public void testShouldResponseAllClaimsByYear() throws Exception {
         // Initialize the database
         claimRepository.saveAndFlush(claim);
 
@@ -160,7 +160,7 @@ public class ClaimAPITest {
 
     @Test
     @Transactional
-    public void getClaim() throws Exception {
+    public void testShouldResponseOneClaimByID() throws Exception {
         // Initialize the database
         claimRepository.saveAndFlush(claim);
 
@@ -174,14 +174,14 @@ public class ClaimAPITest {
 
     @Test
     @Transactional
-    public void getNonExistingClaim() throws Exception {
+    public void testShouldResponseClaimIsNotFound() throws Exception {
         restClaimMockMvc.perform(get("/api/admin/claims/{id}", Long.MAX_VALUE))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     @Transactional
-    public void updateClaim() throws Exception {
+    public void testShouldResponseUpdatedClaim() throws Exception {
         claimService.create(claim);
 
         int databaseSizeBeforeUpdate = claimRepository.findAll().size();
@@ -204,21 +204,7 @@ public class ClaimAPITest {
 
     @Test
     @Transactional
-    public void updateNonExistingClaim() throws Exception {
-        int databaseSizeBeforeUpdate = claimRepository.findAll().size();
-
-        restClaimMockMvc.perform(put("/api/admin/claims")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(claim)))
-                .andExpect(status().isOk());
-
-        List<Claim> claimList = claimRepository.findAll();
-        assertThat(claimList).hasSize(databaseSizeBeforeUpdate + 1);
-    }
-
-    @Test
-    @Transactional
-    public void deleteClaim() throws Exception {
+    public void testShouldResponseOkDeletingClaimByID() throws Exception {
         claimService.create(claim);
 
         int databaseSizeBeforeDelete = claimRepository.findAll().size();
