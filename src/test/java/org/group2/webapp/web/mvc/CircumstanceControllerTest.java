@@ -52,7 +52,7 @@ public class CircumstanceControllerTest {
 
     @Test
     @Transactional
-    public void testIndex() throws Exception {
+    public void testShouldHaveViewForAllCircumstances() throws Exception {
         restCircumstanceMockMvc.perform(get("/admin/circumstance"))
                 .andExpect(model().attributeExists("circumstances"))
                 .andExpect(view().name("admin/circumstance/circumstances"))
@@ -61,7 +61,7 @@ public class CircumstanceControllerTest {
 
     @Test
     @Transactional
-    public void testGetNew() throws Exception {
+    public void testShouldHaveViewForAddingCircumstance() throws Exception {
         restCircumstanceMockMvc.perform(get("/admin/circumstance/new"))
                 .andExpect(model().attributeExists("circumstance"))
                 .andExpect(view().name("admin/circumstance/add"))
@@ -70,7 +70,7 @@ public class CircumstanceControllerTest {
 
     @Test
     @Transactional
-    public void testPostNew() throws Exception {
+    public void testShouldPostAddingOneCircumstance() throws Exception {
         restCircumstanceMockMvc.perform(post("/admin/circumstance/new")
                 .param("title",CIRCUM_TITLE))
                 .andExpect(view().name(CircumstanceController.REDIRECT_INDEX));
@@ -83,7 +83,7 @@ public class CircumstanceControllerTest {
 
     @Test
     @Transactional
-    public void testGetDetail() throws Exception {
+    public void testShouldHaveViewForCircumstanceInfo() throws Exception {
         createCircumstance();
 
         restCircumstanceMockMvc.perform(get("/admin/circumstance/detail/" + circumstance.getId().toString()))
@@ -98,7 +98,7 @@ public class CircumstanceControllerTest {
 
     @Test
     @Transactional
-    public void testGetEdit() throws Exception {
+    public void testShouldHaveViewForEditingCircumstance() throws Exception {
         createCircumstance();
 
         restCircumstanceMockMvc.perform(get("/admin/circumstance/edit/" + circumstance.getId().toString()))
@@ -109,7 +109,7 @@ public class CircumstanceControllerTest {
 
     @Test
     @Transactional
-    public void testPostEdit() throws Exception {
+    public void testShouldPostEditingOneCircumstance() throws Exception {
         createCircumstance();
 
         restCircumstanceMockMvc.perform(post("/admin/circumstance/edit")
@@ -124,7 +124,7 @@ public class CircumstanceControllerTest {
 
     @Test
     @Transactional
-    public void testPostDelete() throws Exception {
+    public void testShouldPostDeletingOneCircumstance() throws Exception {
         createCircumstance();
 
         restCircumstanceMockMvc.perform(post("/admin/circumstance/delete/" + circumstance.getId().toString()))

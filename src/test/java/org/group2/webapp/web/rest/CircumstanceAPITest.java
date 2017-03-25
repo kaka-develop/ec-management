@@ -66,7 +66,7 @@ public class CircumstanceAPITest {
 
     @Test
     @Transactional
-    public void createCircumstance() throws Exception {
+    public void testShouldResponseAddedCircumstance() throws Exception {
         int databaseSizeBeforeCreate = circumstanceRepository.findAll().size();
         
 
@@ -83,7 +83,7 @@ public class CircumstanceAPITest {
 
     @Test
     @Transactional
-    public void createCircumstanceWithExistingId() throws Exception {
+    public void testShouldResponseCircumstanceWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = circumstanceRepository.findAll().size();
         
         Circumstance existingCircumstance = new Circumstance();
@@ -100,7 +100,7 @@ public class CircumstanceAPITest {
 
     @Test
     @Transactional
-    public void checkTitleIsRequired() throws Exception {
+    public void testShouldResponseCircumstanceIsInvalid() throws Exception {
         int databaseSizeBeforeTest = circumstanceRepository.findAll().size();
         circumstance.setTitle(null);
 
@@ -115,7 +115,7 @@ public class CircumstanceAPITest {
 
     @Test
     @Transactional
-    public void getAllCircumstances() throws Exception {
+    public void testShouldResponseAllCircumstances() throws Exception {
         // Initialize the database
         circumstanceRepository.saveAndFlush(circumstance);
 
@@ -129,7 +129,7 @@ public class CircumstanceAPITest {
 
     @Test
     @Transactional
-    public void getCircumstance() throws Exception {
+    public void testShouldResponseOneCircumstanceByID() throws Exception {
         // Initialize the database
         circumstanceRepository.saveAndFlush(circumstance);
 
@@ -143,14 +143,14 @@ public class CircumstanceAPITest {
 
     @Test
     @Transactional
-    public void getNonExistingCircumstance() throws Exception {
+    public void testShouldResponseCircumstanceIsNotFound() throws Exception {
         restCircumstanceMockMvc.perform(get("/api/admin/circumstances/{id}", Long.MAX_VALUE))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     @Transactional
-    public void updateCircumstance() throws Exception {
+    public void estShouldResponseUpdatedCircumstance() throws Exception {
         circumstanceService.create(circumstance);
 
         int databaseSizeBeforeUpdate = circumstanceRepository.findAll().size();
@@ -171,23 +171,11 @@ public class CircumstanceAPITest {
         assertThat(testCircumstance.getTitle()).isEqualTo(CIRCUM_TITLE + CIRCUM_TITLE);
     }
 
-    @Test
-    @Transactional
-    public void updateNonExistingCircumstance() throws Exception {
-        int databaseSizeBeforeUpdate = circumstanceRepository.findAll().size();
 
-        restCircumstanceMockMvc.perform(put("/api/admin/circumstances")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(circumstance)))
-                .andExpect(status().isOk());
-
-        List<Circumstance> circumstanceList = circumstanceRepository.findAll();
-        assertThat(circumstanceList).hasSize(databaseSizeBeforeUpdate + 1);
-    }
 
     @Test
     @Transactional
-    public void deleteCircumstance() throws Exception {
+    public void testShouldResponseOkDeletingCircumstanceByID() throws Exception {
         circumstanceService.create(circumstance);
 
         int databaseSizeBeforeDelete = circumstanceRepository.findAll().size();

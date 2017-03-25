@@ -50,13 +50,13 @@ public class ClaimServiceTest {
     }
 
     @Test
-    public void testFindAll() {
+    public void testShouldHaveClaim() {
         assertThat(!claimRepository.findAll().isEmpty());
         assertThat(!claimService.findAll().isEmpty());
     }
 
     @Test
-    public void testFindOne() {
+    public void testShouldHaveOneClaimByID() {
         assertThat(claimRepository.findOne(claim.getId())!= null);
         assertThat(claimService.findOne(claim.getId())!= null);
 
@@ -65,7 +65,7 @@ public class ClaimServiceTest {
     }
 
     @Test
-    public void testFindAllByYear() {
+    public void testShouldHaveAllClaimsByYear() {
         Calendar calendar = Calendar.getInstance();
         Integer year = calendar.get(Calendar.YEAR);
 

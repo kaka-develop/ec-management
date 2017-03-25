@@ -45,13 +45,13 @@ public class FacultyServiceTest {
     }
 
     @Test
-    public void testFillAll() {
+    public void testShouldHaveFaculty() {
         assertThat(!facultyRepository.findAll().isEmpty());
         assertThat(!facultyService.findAll().isEmpty());
     }
 
     @Test
-    public void testFindOne() {
+    public void testShouldHaveOneFacultyByID() {
         assertThat(facultyRepository.findOne(faculty.getId())!= null);
         assertThat(facultyService.findOne(faculty.getId())!= null);
 

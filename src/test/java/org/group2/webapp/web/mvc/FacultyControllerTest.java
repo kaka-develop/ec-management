@@ -52,7 +52,7 @@ public class FacultyControllerTest {
 
     @Test
     @Transactional
-    public void testIndex() throws Exception {
+    public void testShaveHaveViewForAllFaculties() throws Exception {
         restFacultyMockMvc.perform(get("/admin/faculty"))
                 .andExpect(model().attributeExists("faculties"))
                 .andExpect(view().name("admin/faculty/faculties"))
@@ -62,7 +62,7 @@ public class FacultyControllerTest {
 
     @Test
     @Transactional
-    public void testGetNew() throws Exception {
+    public void testShouldHaveViewForAddingFaculty() throws Exception {
         restFacultyMockMvc.perform(get("/admin/faculty/new"))
                 .andExpect(model().attributeExists("faculty"))
                 .andExpect(view().name("admin/faculty/add"))
@@ -71,7 +71,7 @@ public class FacultyControllerTest {
 
     @Test
     @Transactional
-    public void testPostNew() throws Exception {
+    public void testShouldPostAddingOneFaculty() throws Exception {
         restFacultyMockMvc.perform(post("/admin/faculty/new")
                 .param("title",FACULTY_TITLE))
                 .andExpect(view().name(FacultyController.REDIRECT_INDEX));
@@ -84,7 +84,7 @@ public class FacultyControllerTest {
 
     @Test
     @Transactional
-    public void testGetDetail() throws Exception {
+    public void testShouldHaveViewForFacultyInfo() throws Exception {
         createFaculty();
 
         restFacultyMockMvc.perform(get("/admin/faculty/detail/" + faculty.getId().toString()))
@@ -99,7 +99,7 @@ public class FacultyControllerTest {
 
     @Test
     @Transactional
-    public void testGetEdit() throws Exception {
+    public void testShouldHaveViewForEditingFaculty() throws Exception {
         createFaculty();
 
         restFacultyMockMvc.perform(get("/admin/faculty/edit/" + faculty.getId().toString()))
@@ -110,7 +110,7 @@ public class FacultyControllerTest {
 
     @Test
     @Transactional
-    public void testPostEdit() throws Exception {
+    public void testShouldPostEditingOneFaculty() throws Exception {
         createFaculty();
 
         restFacultyMockMvc.perform(post("/admin/faculty/edit")
@@ -125,7 +125,7 @@ public class FacultyControllerTest {
 
     @Test
     @Transactional
-    public void testPostDelete() throws Exception {
+    public void testShouldPostDeletingOneFaculty() throws Exception {
         createFaculty();
 
         restFacultyMockMvc.perform(post("/admin/faculty/delete/" + faculty.getId().toString()))

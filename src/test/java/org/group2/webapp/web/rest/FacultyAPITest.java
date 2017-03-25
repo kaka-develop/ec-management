@@ -66,7 +66,7 @@ public class FacultyAPITest {
 
     @Test
     @Transactional
-    public void createFaculty() throws Exception {
+    public void testShouldResponseAddedFaculty() throws Exception {
         int databaseSizeBeforeCreate = facultyRepository.findAll().size();
         
 
@@ -83,7 +83,7 @@ public class FacultyAPITest {
 
     @Test
     @Transactional
-    public void createFacultyWithExistingId() throws Exception {
+    public void testShouldResponseFacultyWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = facultyRepository.findAll().size();
         
         Faculty existingFaculty = new Faculty();
@@ -100,7 +100,7 @@ public class FacultyAPITest {
 
     @Test
     @Transactional
-    public void checkTitleIsRequired() throws Exception {
+    public void testShouldResponseFacultyIsInvalid() throws Exception {
         int databaseSizeBeforeTest = facultyRepository.findAll().size();
         faculty.setTitle(null);
 
@@ -115,7 +115,7 @@ public class FacultyAPITest {
 
     @Test
     @Transactional
-    public void getAllFacultys() throws Exception {
+    public void testShouldResponseAllFaculties() throws Exception {
         // Initialize the database
         facultyRepository.saveAndFlush(faculty);
 
@@ -129,7 +129,7 @@ public class FacultyAPITest {
 
     @Test
     @Transactional
-    public void getFaculty() throws Exception {
+    public void testShouldResponseOneFacultyById() throws Exception {
         // Initialize the database
         facultyRepository.saveAndFlush(faculty);
 
@@ -143,14 +143,14 @@ public class FacultyAPITest {
 
     @Test
     @Transactional
-    public void getNonExistingFaculty() throws Exception {
+    public void testShouldResponseFacultyIsNotFound() throws Exception {
         restFacultyMockMvc.perform(get("/api/admin/faculties/{id}", Long.MAX_VALUE))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     @Transactional
-    public void updateFaculty() throws Exception {
+    public void testShouldResponseUpdatedFaculty() throws Exception {
         facultyService.create(faculty);
 
         int databaseSizeBeforeUpdate = facultyRepository.findAll().size();
@@ -171,23 +171,10 @@ public class FacultyAPITest {
         assertThat(testFaculty.getTitle()).isEqualTo(FACULTY_TITLE + FACULTY_TITLE);
     }
 
-    @Test
-    @Transactional
-    public void updateNonExistingFaculty() throws Exception {
-        int databaseSizeBeforeUpdate = facultyRepository.findAll().size();
-
-        restFacultyMockMvc.perform(put("/api/admin/faculties")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(faculty)))
-                .andExpect(status().isOk());
-
-        List<Faculty> facultyList = facultyRepository.findAll();
-        assertThat(facultyList).hasSize(databaseSizeBeforeUpdate + 1);
-    }
 
     @Test
     @Transactional
-    public void deleteFaculty() throws Exception {
+    public void testShouldResponseOkDeletingFaculty() throws Exception {
         facultyService.create(faculty);
 
         int databaseSizeBeforeDelete = facultyRepository.findAll().size();

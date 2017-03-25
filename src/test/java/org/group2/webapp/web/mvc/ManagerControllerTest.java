@@ -64,7 +64,7 @@ public class ManagerControllerTest {
 
     @Test
     @Transactional
-    public void testGetAllClaims() throws Exception {
+    public void testShouldHaveViewForAllClaims() throws Exception {
         restManagerMockMvc.perform(get("/manager/claims"))
                 .andExpect(model().attributeExists("claims"))
                 .andExpect(view().name("manager/claims"));
@@ -73,7 +73,7 @@ public class ManagerControllerTest {
 
     @Test
     @Transactional
-    public void testGetClaimStatistics() throws Exception{
+    public void testShaveHaveViewForAllStatistics() throws Exception{
         restManagerMockMvc.perform(get("/manager/statistics"))
                 .andExpect(model().attributeExists("claimsPerFaculty"))
                 .andExpect(model().attributeExists("claimsPerYear"))

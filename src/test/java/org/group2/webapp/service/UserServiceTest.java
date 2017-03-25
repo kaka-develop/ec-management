@@ -48,26 +48,26 @@ public class UserServiceTest {
 
 
     @Test
-    public void testFindAllUsers() {
+    public void testShouldHaveUsers() {
         assertThat(!userRepository.findAll().isEmpty());
         assertThat(!userService.getAllManagedUsers().isEmpty());
         assertThat(userService.getAllManagedUsers().size() == 1);
     }
 
     @Test
-    public void testGetUserWithAuthoritiesByUsername() {
+    public void testShouldHaveUsersWithAuthoritiesByUsername() {
         assertThat(userRepository.findOneWithAuthoritiesByUsername(USER_NAME) != null);
         assertThat(userService.getUserWithAuthoritiesByUsername(USER_NAME) != null);
     }
 
     @Test
-    public void testFindOneUser() {
+    public void testShouldHaveUserByEmailOrUsername() {
         assertThat(userRepository.findOneByEmail(USER_EMAIL) != null);
         assertThat(userRepository.findOneByUsername(USER_NAME) != null);
     }
 
     @Test
-    public void testUpdateUser() {
+    public void testShouldUpdateUserInfo() {
         user.setFirstName(USER_FIRSTNAME + USER_FIRSTNAME);
         assertThat(userRepository.save(user) != null);
         user.setLastName(USER_LASTNAME + USER_LASTNAME);
@@ -77,7 +77,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testGetUserWithAuthorities() {
+    public void testShouldHaveUserWithAuthoritiesByID() {
         assertThat(userService.getUserWithAuthorities(user.getId()) != null);
         assertThat(userRepository.findOne(user.getId()) != null);
     }

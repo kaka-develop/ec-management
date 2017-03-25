@@ -68,7 +68,7 @@ public class UserControllerTest {
 
     @Test
     @Transactional
-    public void testIndex() throws Exception {
+    public void testShouldHaveViewForUsers() throws Exception {
         restUserMockMvc.perform(get("/admin/user"))
                 .andExpect(model().attributeExists("users"))
                 .andExpect(view().name("admin/user/users"))
@@ -78,7 +78,7 @@ public class UserControllerTest {
 
     @Test
     @Transactional
-    public void testGetNew() throws Exception {
+    public void testShouldHaveViewForAddingUser() throws Exception {
         restUserMockMvc.perform(get("/admin/user/new"))
                 .andExpect(model().attributeExists("user"))
                 .andExpect(view().name("admin/user/add"))
@@ -87,7 +87,7 @@ public class UserControllerTest {
 
     @Test
     @Transactional
-    public void testPostNew() throws Exception {
+    public void testShouldPostAddingOneUser() throws Exception {
         restUserMockMvc.perform(post("/admin/user/new")
                 .param("username",USER_NAME)
                 .param("firstName",USER_FIRSTNAME)
@@ -108,7 +108,7 @@ public class UserControllerTest {
 
     @Test
     @Transactional
-    public void testGetDetail() throws Exception {
+    public void testShouldHaveViewForUserInfo() throws Exception {
         createUser();
 
         restUserMockMvc.perform(get("/admin/user/detail/" + USER_NAME))
@@ -122,7 +122,7 @@ public class UserControllerTest {
 
     @Test
     @Transactional
-    public void testGetEdit() throws Exception {
+    public void testShouldHaveViewForEditingUser() throws Exception {
         createUser();
 
         restUserMockMvc.perform(get("/admin/user/edit/" + USER_NAME))
@@ -133,7 +133,7 @@ public class UserControllerTest {
 
     @Test
     @Transactional
-    public void testPostEdit() throws Exception {
+    public void testShouldPostEditingUser() throws Exception {
         createUser();
         userVM.setFirstName(USER_FIRSTNAME + USER_FIRSTNAME);
 
@@ -152,7 +152,7 @@ public class UserControllerTest {
 
     @Test
     @Transactional
-    public void testPostDelete() throws Exception{
+    public void testShouldPostDeletingUser() throws Exception{
         createUser();
 
         restUserMockMvc.perform(post("/admin/user/delete/" + USER_NAME))

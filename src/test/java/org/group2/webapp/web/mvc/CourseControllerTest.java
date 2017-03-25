@@ -54,7 +54,7 @@ public class CourseControllerTest {
 
     @Test
     @Transactional
-    public void testIndex() throws Exception {
+    public void testShouldHaveViewForAllCourses() throws Exception {
         restCourseMockMvc.perform(get("/admin/course"))
                 .andExpect(model().attributeExists("courses"))
                 .andExpect(view().name("admin/course/courses"))
@@ -63,7 +63,7 @@ public class CourseControllerTest {
 
     @Test
     @Transactional
-    public void testGetNew() throws Exception {
+    public void testShouldHaveViewForAddingCourse() throws Exception {
         restCourseMockMvc.perform(get("/admin/course/new"))
                 .andExpect(model().attributeExists("course"))
                 .andExpect(view().name("admin/course/add"))
@@ -72,7 +72,7 @@ public class CourseControllerTest {
 
     @Test
     @Transactional
-    public void testPostNew() throws Exception {
+    public void testShouldPostAddingOneCourse() throws Exception {
         restCourseMockMvc.perform(post("/admin/course/new")
                 .param("code",COURSE_CODE)
                 .param("title",COURSE_TITLE))
@@ -86,7 +86,7 @@ public class CourseControllerTest {
 
     @Test
     @Transactional
-    public void testGetDetail() throws Exception {
+    public void testShouldHaveViewForCourseDetail() throws Exception {
         createCourse();
 
         restCourseMockMvc.perform(get("/admin/course/detail/" + course.getCode()))
@@ -101,7 +101,7 @@ public class CourseControllerTest {
 
     @Test
     @Transactional
-    public void testGetEdit() throws Exception {
+    public void testShouldHaveViewForEditingCourse() throws Exception {
         createCourse();
 
         restCourseMockMvc.perform(get("/admin/course/edit/" + course.getCode()))
@@ -112,7 +112,7 @@ public class CourseControllerTest {
 
     @Test
     @Transactional
-    public void testPostEdit() throws Exception {
+    public void testShouldPostEditingOneCourse() throws Exception {
         createCourse();
 
         restCourseMockMvc.perform(post("/admin/course/edit")
@@ -127,7 +127,7 @@ public class CourseControllerTest {
 
     @Test
     @Transactional
-    public void testPostDelete() throws Exception {
+    public void testShouldPostDeletingOneCourse() throws Exception {
         createCourse();
 
         restCourseMockMvc.perform(post("/admin/course/delete/" + course.getCode()))

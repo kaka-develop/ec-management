@@ -46,13 +46,13 @@ public class CourseServiceTest {
     }
 
     @Test
-    public void testFillAll() {
+    public void testShouldHaveCourse() {
         assertThat(!courseRepository.findAll().isEmpty());
         assertThat(!courseService.findAll().isEmpty());
     }
 
     @Test
-    public void testFindOne() {
+    public void testShouldHaveOneCourseByID() {
         assertThat(courseRepository.findOne(course.getCode())!= null);
         assertThat(courseService.findOne(course.getCode())!= null);
 
