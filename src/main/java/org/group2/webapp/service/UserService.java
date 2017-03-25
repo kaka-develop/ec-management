@@ -44,7 +44,8 @@ public class UserService {
     }
 
     public User createUser(String username, String password, String firstName, String lastName, String email) {
-
+        if (userRepository.findOneWithAuthoritiesByUsername(username).isPresent())
+            return null;
         User newUser = new User();
         Authority authority = authorityRepository.findOne(AuthoritiesConstants.STUDENT);
         Set<Authority> authorities = new HashSet<>();
@@ -63,6 +64,8 @@ public class UserService {
 
 
     public User createUser(UserDTO userDTO) {
+        if (userRepository.findOneWithAuthoritiesByUsername(userDTO.getUsername()).isPresent())
+            return null;
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setFirstName(userDTO.getFirstName());
@@ -75,9 +78,14 @@ public class UserService {
             );
             user.setAuthorities(authorities);
         }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
-        user.setPassword(encryptedPassword);
 
+        if (userDTO instanceof UserVM) {
+            UserVM userVM = (UserVM) userDTO;
+            user.setPassword(passwordEncoder.encode(userVM.getPassword()));
+        } else {
+            String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+            user.setPassword(encryptedPassword);
+        }
         userRepository.save(user);
         return user;
     }
@@ -92,7 +100,7 @@ public class UserService {
 
 
     public void deleteUser(String username) {
-        if(username == null)
+        if (username == null)
             return;
         userRepository.findOneByUsername(username).ifPresent(user -> {
             userRepository.delete(user);
@@ -151,4 +159,5 @@ public class UserService {
         UserDTO userDTO = new UserDTO(userRepository.findOneByUsername(username).get());
         return userDTO;
     }
+
 }

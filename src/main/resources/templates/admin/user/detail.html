@@ -2,17 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
+    <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <title>Admin</title>
 </head>
 <body>
-<a href="/admin/user">
-    <button>Back</button>
-</a>
-<h2>User: <span th:text="${user.username}"></span></h2>
-<p>First name: <span th:text="${user.firstName}"></span></p>
-<p>Last name: <span th:text="${user.lastName}"></span></p>
-<p>Email: <span th:text="${user.email}"></span></p>
-<p>Created Date: <span th:text="${user.createdDate}"></span></p>
-<p>Authorities: <p th:each="role : ${user.authorities}" th:text="${role}"></p></p>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <a href="/admin/user">
+        <button>Back</button>
+    </a>
+    <h2>User: <span th:text="${user.username}"></span></h2>
+    <p>First name: <span th:text="${user.firstName}"></span></p>
+    <p>Last name: <span th:text="${user.lastName}"></span></p>
+    <p>Email: <span th:text="${user.email}"></span></p>
+    <p>Created Date: <span th:text="${user.createdDate}"></span></p>
+    <p>Faculty: <span th:text="${user.faculty}"></span></p>
+    <p>Authorities:
+    <p th:each="role : ${user.authorities}" th:text="${role}"></p></p>
+</div>
 </body>
 </html>

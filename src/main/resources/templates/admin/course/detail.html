@@ -2,13 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
+    <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <title>Course</title>
 </head>
 <body>
-<a href="/admin/course">
-    <button>Back</button>
-</a>
-<h2>Claim: <span th:text="${course.code}"></span></h2>
-<p>Title: <span th:text="${course.title}"></span></p>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <a href="/admin/course">
+        <button>Back</button>
+    </a>
+    <h2>Claim detail</h2>
+    <p>Code: <span th:text="${course.code}"></span></p>
+    <p>Title: <span th:text="${course.title}"></span></p>
+    <p>Faculty: <span th:text="${course.faculty.title}"></span></p>
+</div>
 </body>
 </html>

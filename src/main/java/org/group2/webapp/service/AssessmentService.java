@@ -1,8 +1,6 @@
 package org.group2.webapp.service;
 
-import org.group2.webapp.entity.AssessItem;
 import org.group2.webapp.entity.Assessment;
-import org.group2.webapp.repository.AssessItemRepository;
 import org.group2.webapp.repository.AssessmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +18,9 @@ public class AssessmentService {
 
     private final AssessmentRepository assessmentRepository;
 
-    private final AssessItemRepository assessItemRepository;
 
-    public AssessmentService(AssessmentRepository assessmentRepository, AssessItemRepository assessItemRepository) {
+    public AssessmentService(AssessmentRepository assessmentRepository) {
         this.assessmentRepository = assessmentRepository;
-        this.assessItemRepository = assessItemRepository;
     }
 
 
@@ -64,27 +60,4 @@ public class AssessmentService {
         return assessmentRepository.save(assessment);
     }
 
-    public boolean addItem(Long itemId, String crn) {
-        log.debug("Request to add item: {} - {}", itemId, crn);
-        if (itemId == null || crn == null)
-            return false;
-        AssessItem item = assessItemRepository.findOne(itemId);
-        if (item == null)
-            return false;
-        Assessment assessment = assessmentRepository.findOne(crn);
-        if (assessment == null)
-            return false;
-        assessment.getAssessItems().add(item);
-        assessmentRepository.save(assessment);
-        return true;
-    }
-
-    public List<AssessItem> getNotExistedItems(Assessment assessment) {
-        log.debug("Request to get unexisted items of assement: {}", assessment);
-        if(assessment == null)
-            return null;
-        return assessItemRepository.findAll().stream()
-                .filter(item -> !assessment.getAssessItems().contains(item))
-                .collect(Collectors.toList());
-    }
 }

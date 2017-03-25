@@ -53,21 +53,6 @@ public class ClaimController {
         return "admin/claim/claims";
     }
 
-    @GetMapping("/new")
-    public String newClaim(Model model) {
-        model.addAttribute("claim", new Claim());
-        return "admin/claim/add";
-    }
-
-    @PostMapping("/new")
-    public String newClaim(@Valid @ModelAttribute Claim claim, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            return "admin/claim/add";
-        else
-        claimService.create(claim);
-            return REDIRECT_INDEX;
-    }
-
     @GetMapping("/edit/{id}")
     public String editClaim(@PathVariable String id, Model model) {
         Claim claim = claimService.findOne(ConvertUntil.covertStringToLong(id));
@@ -91,7 +76,10 @@ public class ClaimController {
 
     @PostMapping("/delete/{id}")
     public String deleteClaim(@PathVariable String id) {
-        claimService.delete(ConvertUntil.covertStringToLong(id));
+        try{
+            claimService.delete(ConvertUntil.covertStringToLong(id));
+        }catch (Exception e){}
+
         return REDIRECT_INDEX;
     }
 }

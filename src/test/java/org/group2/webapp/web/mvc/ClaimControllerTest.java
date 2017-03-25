@@ -69,31 +69,6 @@ public class ClaimControllerTest {
 
     @Test
     @Transactional
-    public void testShouldHaveViewForAddingClaim() throws Exception {
-        restClaimMockMvc.perform(get("/admin/claim/new"))
-                .andExpect(model().attributeExists("claim"))
-                .andExpect(view().name("admin/claim/add"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @Transactional
-    public void testShouldPostAddingOneClaim() throws Exception {
-        
-        restClaimMockMvc.perform(post("/admin/claim/new")
-                .param("evidence",CLAIM_EVIDENCE)
-                .param("content",CLAIM_CONTENT))
-                .andExpect(view().name(ClaimController.REDIRECT_INDEX));
-
-        restClaimMockMvc.perform(post("/admin/claim/new")
-                .param("evidence","")
-                .param("content",CLAIM_CONTENT))
-                .andExpect(view().name("admin/claim/add"));
-    }
-
-
-    @Test
-    @Transactional
     public void testShouldHaveViewForClaimInfo() throws Exception {
         createClaim();
 

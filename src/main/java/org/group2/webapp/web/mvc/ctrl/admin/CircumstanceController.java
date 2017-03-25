@@ -82,7 +82,10 @@ public class CircumstanceController {
 
     @PostMapping("/delete/{id}")
     public String deleteCircumstance(@PathVariable String id) {
-        circumstanceService.delete(ConvertUntil.covertStringToLong(id));
+        try {
+            circumstanceService.delete(ConvertUntil.covertStringToLong(id));
+        }catch (Exception e){}
+
         return REDIRECT_INDEX;
     }
 }

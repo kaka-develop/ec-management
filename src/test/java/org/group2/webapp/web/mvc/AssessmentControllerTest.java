@@ -1,9 +1,7 @@
 package org.group2.webapp.web.mvc;
 
 import org.group2.webapp.EcManagementApplication;
-import org.group2.webapp.entity.AssessItem;
 import org.group2.webapp.entity.Assessment;
-import org.group2.webapp.service.AssessItemService;
 import org.group2.webapp.service.AssessmentService;
 import org.group2.webapp.web.mvc.ctrl.admin.AssessmentController;
 import org.junit.After;
@@ -28,8 +26,6 @@ public class AssessmentControllerTest {
     @Autowired
     private AssessmentService assessmentService;
 
-    @Autowired
-    private AssessItemService assessItemService;
 
     private MockMvc restAssessmentMockMvc;
 
@@ -96,27 +92,12 @@ public class AssessmentControllerTest {
     public void testShouldHaveViewForOneAssessment() throws Exception {
         createAssessment();
 
-        restAssessmentMockMvc.perform(get("/admin/assessment/detail/" + assessment.getCrn().toString()))
+        restAssessmentMockMvc.perform(get("/admin/assessment/detail/" + assessment.getCrn()))
                 .andExpect(model().attributeExists("assessment"))
-                .andExpect(model().attributeExists("items"))
                 .andExpect(view().name("admin/assessment/detail"))
                 .andExpect(status().isOk());
 
         restAssessmentMockMvc.perform(get("/admin/assessment/detail/" + "BBBBBBBB"))
-                .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
-    }
-
-    @Test
-    @Transactional
-    public void testShaveHaveViewForAllItems() throws Exception {
-        createAssessment();
-
-        restAssessmentMockMvc.perform(get("/admin/assessment/items/" + assessment.getCrn()))
-                .andExpect(model().attributeExists("items"))
-                .andExpect(view().name("admin/assessment/items"))
-                .andExpect(status().isOk());
-
-        restAssessmentMockMvc.perform(get("/admin/assessment/items/" + "BBBBBBBB"))
                 .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
     }
 

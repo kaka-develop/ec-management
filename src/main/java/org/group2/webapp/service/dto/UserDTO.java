@@ -1,6 +1,7 @@
 package org.group2.webapp.service.dto;
 
 import org.group2.webapp.entity.Authority;
+import org.group2.webapp.entity.Faculty;
 import org.group2.webapp.entity.User;
 import org.hibernate.validator.constraints.Email;
 
@@ -32,6 +33,8 @@ public class UserDTO {
 
     private Set<String> authorities = new HashSet<>();
 
+    private String faculty;
+
     public UserDTO() {
     }
 
@@ -43,6 +46,9 @@ public class UserDTO {
         this.createdDate = user.getCreatedDate();
         this.authorities = user.getAuthorities().stream().map(Authority::getName)
                 .collect(Collectors.toSet());
+
+        if(user.getFaculty() != null)
+            this.faculty = user.getFaculty().getTitle();
     }
 
 
@@ -55,6 +61,13 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
 
     public Set<String> getAuthorities() {
         return authorities;

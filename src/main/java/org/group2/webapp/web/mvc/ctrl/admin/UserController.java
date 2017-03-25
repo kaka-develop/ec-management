@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,7 +31,7 @@ public class UserController {
     public static final String REDIRECT_INDEX = "redirect:/admin/user";
 
 
-    @GetMapping(value = {"/",""})
+    @GetMapping(value = {"/", ""})
     public String index(Model model) {
         List<UserDTO> users = userService.getAllManagedUsers();
         model.addAttribute("users", users);
@@ -38,43 +39,42 @@ public class UserController {
     }
 
     @GetMapping("/detail/{username}")
-    public String detail(@PathVariable String username, Model model){
+    public String detail(@PathVariable String username, Model model) {
         UserDTO userDTO = userService.findOneByUsername(username);
-        if(userDTO == null)
+        if (userDTO == null)
             return REDIRECT_INDEX;
         UserVM userVM = new UserVM(userDTO);
-        model.addAttribute("user",userVM);
+        model.addAttribute("user", userVM);
         return "admin/user/detail";
     }
 
     @GetMapping("/new")
     public String newUser(Model model) {
-        model.addAttribute("user",new UserVM());
+        model.addAttribute("user", new UserVM());
         return "admin/user/add";
     }
 
     @PostMapping(value = "/new")
     public String newUser(@Valid @ModelAttribute UserVM user, BindingResult bindingResult) {
-        if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors())
             return "admin/user/add";
-        else
-            userService.createUser(user);
+        userService.createUser(user);
         return REDIRECT_INDEX;
     }
 
     @GetMapping("/edit/{username}")
     public String editUser(@PathVariable String username, Model model) {
         UserDTO userDTO = userService.findOneByUsername(username);
-        if(userDTO == null)
+        if (userDTO == null)
             return REDIRECT_INDEX;
         UserVM userVM = new UserVM(userDTO);
-        model.addAttribute("user",userVM);
+        model.addAttribute("user", userVM);
         return "admin/user/edit";
     }
 
     @PostMapping(value = "/edit")
     public String editUser(@Valid @ModelAttribute UserVM user, BindingResult bindingResult) {
-        if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors())
             return "admin/user/edit";
         else
             userService.updateUser(user);
@@ -84,7 +84,10 @@ public class UserController {
 
     @PostMapping("/delete/{username}")
     public String deleteUser(@PathVariable String username) {
-        userService.deleteUser(username);
+        try {
+            userService.deleteUser(username);
+        } catch (Exception e) {
+        }
         return REDIRECT_INDEX;
     }
 

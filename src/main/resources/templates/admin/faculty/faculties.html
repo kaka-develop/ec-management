@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Facultys</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
+    <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <title>Faculty</title>
 </head>
 <body>
-<h1>All faculties</h1>
-<a href="/admin/faculty/new">
-    <button>New faculty</button>
-</a>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th></th>
-        <th></th>
-    </tr>
-    <tr th:each="faculty : ${faculties}">
-        <td>
-            <a th:href="'/admin/faculty/detail/' + ${faculty.id}">
-                <span th:text="${faculty.id}"></span>
-            </a>
-        </td>
-        <td th:text="${faculty.title}"></td>
-        <td><a th:href="'/admin/faculty/edit/' + ${faculty.id}">edit</a></td>
-        <td>
-            <form method="post" th:action="'/admin/faculty/delete/' + ${faculty.id}">
-                <button type="submit">delete now</button>
-            </form>
-        </td>
-    </tr>
-</table>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <h1>All faculties</h1>
+    <a href="/admin/faculty/new">
+        <button>New faculty</button>
+    </a>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="faculty : ${faculties}">
+            <td>
+                <a th:href="'/admin/faculty/detail/' + ${faculty.id}">
+                    <span th:text="${faculty.id}"></span>
+                </a>
+            </td>
+            <td th:text="${faculty.title}"></td>
+            <td><a th:href="'/admin/faculty/edit/' + ${faculty.id}">edit</a></td>
+            <td>
+                <form method="post" th:action="'/admin/faculty/delete/' + ${faculty.id}">
+                    <button type="submit">delete now</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

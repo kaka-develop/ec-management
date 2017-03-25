@@ -38,13 +38,6 @@ public class Assessment implements Serializable {
     @ManyToOne
     private Course course;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "assessment_assessitem",
-            joinColumns = {@JoinColumn(name = "assessment_crn", referencedColumnName = "crn")},
-            inverseJoinColumns = {@JoinColumn(name = "assessitem_id", referencedColumnName = "id")})
-    private Set<AssessItem> assessItems = new HashSet<>();
 
     @JsonIgnore
     @ManyToMany
@@ -55,14 +48,6 @@ public class Assessment implements Serializable {
     private Set<Claim> claim = new HashSet<>();
 
     public Assessment() {
-    }
-
-    public Set<AssessItem> getAssessItems() {
-        return assessItems;
-    }
-
-    public void setAssessItems(Set<AssessItem> assessItems) {
-        this.assessItems = assessItems;
     }
 
     public Set<Claim> getClaim() {

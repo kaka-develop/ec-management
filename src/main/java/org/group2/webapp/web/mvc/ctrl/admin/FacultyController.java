@@ -82,7 +82,9 @@ public class FacultyController {
 
     @PostMapping("/delete/{id}")
     public String deleteFaculty(@PathVariable String id) {
-        facultyService.delete(ConvertUntil.covertStringToLong(id));
+        try {
+            facultyService.delete(ConvertUntil.covertStringToLong(id));
+        }catch (Exception e){}
         return REDIRECT_INDEX;
     }
 }

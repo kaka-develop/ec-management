@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Users</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
+    <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <title>Admin</title>
 </head>
 <body>
-<h1>Edit user</h1>
-<form method="POST" action="#" th:action="@{/admin/user/edit}" th:object="${user}">
-    <p><input type="text" th:field="*{username}" placeholder="Username" required="true" minlength="5" hidden="true"/></p>
-    <p><input type="text" th:field="*{firstName}" placeholder="First name" required="true" minlength="5"/></p>
-    <p><input type="text" th:field="*{lastName}" placeholder="Last name" required="true" minlength="5"/></p>
-    <p><input type="email" th:field="*{email}" placeholder="Email" required="true" hidden="true"/></p>
-    <p>Authories: <br/>
-        <input type="checkbox" th:field="*{authorities}" value="ROLE_STUDENT" hidden="true"/><br/>
-        <input type="checkbox" th:field="*{authorities}" value="ROLE_MANAGER"/>Manager <br/>
-        <input type="checkbox" th:field="*{authorities}" value="ROLE_COORDINATOR"/>Coordinator<br/>
-        <input type="checkbox" th:field="*{authorities}"  value="ROLE_ADMIN"/>Admin</p>
-    <button type="submit">Save</button>
-    <a href="/admin/user">
-        <button type="button">Cancel</button>
-    </a>
-</form>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <h1>Edit user</h1>
+    <form method="POST" action="#" th:action="@{/admin/user/edit}" th:object="${user}">
+        <p><input type="text" th:field="*{username}" placeholder="Username" required="true" minlength="5"
+                  hidden="true"/></p>
+        <p><input type="text" th:field="*{firstName}" placeholder="First name" required="true" minlength="5"/></p>
+        <p><input type="text" th:field="*{lastName}" placeholder="Last name" required="true" minlength="5"/></p>
+        <p><input type="email" th:field="*{email}" placeholder="Email" required="true" hidden="true"/></p>
+        <p>Authories: <br/>
+            <input type="checkbox" th:field="*{authorities}" value="ROLE_STUDENT" hidden="true"/><br/>
+            <input type="checkbox" th:field="*{authorities}" value="ROLE_MANAGER"/>Manager <br/>
+            <input type="checkbox" th:field="*{authorities}" value="ROLE_COORDINATOR"/>Coordinator<br/>
+            <input type="checkbox" th:field="*{authorities}" value="ROLE_ADMIN"/>Admin</p>
+        <button type="submit">Save</button>
+        <a href="/admin/user">
+            <button type="button">Cancel</button>
+        </a>
+    </form>
+</div>
 </body>
 </html>

@@ -1,42 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>assessments</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
+    <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <title>Assessment</title>
 </head>
 <body>
-<h1>All assessments</h1>
-<a href="/admin/assessment/new">
-    <button>New assessment</button>
-</a>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Items</th>
-        <th></th>
-        <th></th>
-    </tr>
-    <tr th:each="assessment : ${assessments}">
-        <td>
-            <a th:href="'/admin/assessment/detail/' + ${assessment.crn}">
-                <span th:text="${assessment.crn}"></span>
-            </a>
-        </td>
-        <td th:text="${assessment.title}"></td>
-        <td>
-            <a th:if="${assessment.assessItems.size() > 0}" th:href="'/admin/assessment/items/' + ${assessment.crn}">
-                <span th:text="${assessment.assessItems.size()}"></span>
-            </a>
-            <span th:if="${assessment.assessItems.size() == 0}" th:text="${assessment.assessItems.size()}"></span>
-        </td>
-        <td><a th:href="'/admin/assessment/edit/' + ${assessment.crn}">edit</a></td>
-        <td>
-            <form method="post" th:action="'/admin/assessment/delete/' + ${assessment.crn}">
-                <button type="submit">delete now</button>
-            </form>
-        </td>
-    </tr>
-</table>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <h1>All assessments</h1>
+    <a href="/admin/assessment/new">
+        <button>New assessment</button>
+    </a>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Course</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="assessment : ${assessments}">
+            <td>
+                <a th:href="'/admin/assessment/detail/' + ${assessment.crn}">
+                    <span th:text="${assessment.crn}"></span>
+                </a>
+            </td>
+            <td th:text="${assessment.title}"></td>
+            <td th:text="${assessment.course.title}"></td>
+            <td><a th:href="'/admin/assessment/edit/' + ${assessment.crn}">edit</a></td>
+            <td>
+                <form method="post" th:action="'/admin/assessment/delete/' + ${assessment.crn}">
+                    <button type="submit">delete now</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

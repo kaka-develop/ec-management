@@ -82,7 +82,10 @@ public class CourseController {
 
     @PostMapping("/delete/{code}")
     public String deleteCourse(@PathVariable String code) {
-        courseService.delete(code);
+        try{
+            courseService.delete(code);
+        }catch (Exception e){}
+
         return REDIRECT_INDEX;
     }
 }

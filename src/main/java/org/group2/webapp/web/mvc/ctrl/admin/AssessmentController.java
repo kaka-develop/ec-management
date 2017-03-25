@@ -1,7 +1,6 @@
 package org.group2.webapp.web.mvc.ctrl.admin;
 
 import org.group2.webapp.entity.Assessment;
-import org.group2.webapp.service.AssessItemService;
 import org.group2.webapp.service.AssessmentService;
 import org.group2.webapp.util.ConvertUntil;
 import org.slf4j.Logger;
@@ -40,26 +39,9 @@ public class AssessmentController {
         if (assessment == null)
             return REDIRECT_INDEX;
         model.addAttribute("assessment", assessment);
-        model.addAttribute("items",assessmentService.getNotExistedItems(assessment));
         return "admin/assessment/detail";
     }
 
-    @GetMapping("/items/{crn}")
-    public String getItems(@PathVariable String crn, Model model) {
-        Assessment assessment = assessmentService.findOne(crn);
-        if (assessment == null)
-            return REDIRECT_INDEX;
-        model.addAttribute("items", assessment.getAssessItems());
-        return "admin/assessment/items";
-    }
-
-    @PostMapping("/items/new")
-    public String addItem(@RequestParam String itemId, @RequestParam(required = false) String crn) {
-        if (assessmentService.addItem(ConvertUntil.covertStringToLong(itemId), crn))
-            return REDIRECT_INDEX;
-        else
-            return "admin/assessment/detail";
-    }
 
     @GetMapping("/new")
     public String newAssessment(Model model) {
@@ -99,7 +81,10 @@ public class AssessmentController {
 
     @PostMapping("/delete/{crn}")
     public String deleteAssessment(@PathVariable String crn) {
-        assessmentService.delete(crn);
+        try{
+            assessmentService.delete(crn);
+        }catch (Exception e){}
+
         return REDIRECT_INDEX;
     }
 }

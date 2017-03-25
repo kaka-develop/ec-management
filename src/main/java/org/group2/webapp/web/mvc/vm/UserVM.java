@@ -10,7 +10,7 @@ import java.util.*;
 
 public class UserVM extends UserDTO {
 
-    public static final int PASSWORD_MIN_LENGTH = 4;
+    public static final int PASSWORD_MIN_LENGTH = 3;
 
     public static final int PASSWORD_MAX_LENGTH = 100;
 
@@ -34,6 +34,8 @@ public class UserVM extends UserDTO {
     public UserVM(UserDTO userDTO) {
         super(userDTO.getUsername(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
                 userDTO.getCreatedDate(), userDTO.getAuthorities());
+
+        this.setFaculty(userDTO.getFaculty());
     }
 
 
@@ -41,4 +43,7 @@ public class UserVM extends UserDTO {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
