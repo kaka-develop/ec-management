@@ -51,6 +51,7 @@
 
 	</table>
 	<a href="#" th:href="@{/student/claim/add}">Submit new claim</a>
+	
 	</div>
 	<div th:replace="fragments/footer :: footer"></div>
 </body>
@@ -60,7 +61,7 @@
 		window.location.href = "http://localhost:8080/student/claim/detail?id="+$(this).find(".claimId").html()
 		</th:block>		
 		<th:block sec:authorize="hasRole('ROLE_MANAGER')">
-		window.location.href = "http://localhost:8080/eccoordinator/claim/process?id="+$(this).find(".claimId").html()
+		window.location.href = "http://localhost:8080/eccoordinator/claim/pro?id="+$(this).find(".claimId").html()
 		</th:block>		
  		
  		

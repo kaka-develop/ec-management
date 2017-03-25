@@ -51,7 +51,7 @@ public class ECCoordinatorController {
 		return "claim/claims";
 	}
 
-	@GetMapping("/claim/process")
+	@GetMapping("/claim/pro")
 	public String index(long id, HttpServletRequest req) {
 		// User currentUser =
 		// SessionUtils.getCurrentUserSession(userRepo).get();
@@ -60,10 +60,10 @@ public class ECCoordinatorController {
 		req.setAttribute("claim", claim);
 		return index(req);
 	}
-	
+
 	@PostMapping("/claim/process")
-	public String process(long claimId, int status, HttpServletRequest req, String decision){
-		Claim claim=claimRepo.findOne(claimId);
+	public String process(long claimId, int status, HttpServletRequest req, String decision) {
+		Claim claim = claimRepo.findOne(claimId);
 		claim.setStatus(status);
 		claim.setDecision(decision);
 		claimRepo.save(claim);
