@@ -19,6 +19,9 @@
 			<!-- 			Your are: <span th:text="${session.user.firstName}"></span> -->
 		</h2>
 		<form th:action="@{/student/claim/add}" method="post" class="form-horizontal">
+			<div class="alert alert-danger" role="alert" th:each="err : ${errors}" th:text="${err.getField()+' '+err.getDefaultMessage()}"></div>
+			
+		
 			<div class="form-group">
 				<div class="col-lg-6">
 					<label>Choose assessments</label>

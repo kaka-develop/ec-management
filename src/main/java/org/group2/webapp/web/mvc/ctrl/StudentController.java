@@ -88,7 +88,8 @@ public class StudentController {
 					.ifPresent(ec -> MailUtils.sendInformNewClaimForECCoordinator(ec, claim));
 			return "claim/success";
 		} else {
-			req.setAttribute("errors", result.getAllErrors());
+			
+			req.setAttribute("errors", result.getFieldErrors());
 			addClaim(req);
 		}
 		return addClaim(req);
