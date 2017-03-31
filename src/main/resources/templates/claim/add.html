@@ -2,56 +2,90 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 <title>Add claim</title>
-<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
-<link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
-<link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
-<script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
-<script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../static/css/core.css" th:href="@{/css/core.css}" />
 
+<link rel="stylesheet" href="../../static/lib/adminlte/css/AdminLTE.min.css" />
+<link rel="stylesheet" href="../../static/lib/adminlte/css/skins/skin-blue.css" />
+<link rel="stylesheet" href="../../static/lib/iCheck/all.css" />
+
+<!-- <link rel="stylesheet" href="../../static/lib/iCheck/flat/blue.css" /> -->
+
+
+<script src="../../static/lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
+<script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../../static/lib/adminlte/js/app.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../../static/lib/iCheck/icheck.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+<!-- <script src="../../static/lib/adminlte/js/app.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script> -->
+<!-- <script src="../../static/lib/adminlte/js/app.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script> -->
 </head>
 <body>
 	<div th:replace="fragments/header :: header"></div>
 	<div class="container">
 
-		<h1>Submit new claim</h1>
-		<h2>
-			<!-- 			Your are: <span th:text="${session.user.firstName}"></span> -->
-		</h2>
-		<form th:action="@{/student/claim/add}" method="post" class="form-horizontal">
-			<div class="form-group">
-				<div class="col-lg-6">
-					<label>Choose assessments</label>
-					<div th:each="ass : ${allAssessments}" class="checkbox">
-						<label><input type="checkbox" name="assessments" th:value="${ass.crn}" /><span th:text="${ass.title}"></span></label>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<label>Choose circumstances</label>
-					<div th:each="cir : ${allCircumstances}" class="checkbox">
-						<label><input type="checkbox" name="circumstances" th:value="${cir.id}" /><span th:text="${cir.title}"></span></label>
-					</div>
-				</div>
+<section class="content-header">
+		<h1>Create a new EC Claim</h1>
+</section>
+<section class="content">
+		<div class="box box-success">
+			<div class="box-header">
+				<h3 class="box-title">Select assessments & circumstances</h3>
 			</div>
-			<div class="form-group">
+			<div class="box-body">
+				<form th:action="@{/student/claim/add}" method="post" class="form-horizontal">
 
-				<label>Content</label>
-				<div>
-					<textarea class="form-control" rows="4" cols="50" name="content"></textarea>
-				</div>
-			</div>
-			<div class="form-group">
-				<label>Evidence</label>
-				<div>
-					<input type="file" name="evidenceFiles" accept="image/*" multiple="true" />
-				</div>
-			</div>
-			<div class="form-group">
-				<input type="submit" class="btn btn-primary" value="Submit claim" />
-			</div>
+					<div class="form-group col-lg-12">
+						<label>Choose assessments</label>
+						<div th:each="ass : ${allAssessments}">
+							<label><input type="checkbox" class="myCheckbox" name="assessments" th:value="${ass.crn}" /> <span th:text="${ass.title}">Check
+									1</span></label>
+						</div>
+					</div>
+					<div class="form-group col-lg-12">
+						<label>Choose circumstances</label>
+						<div th:each="cir : ${allCircumstances}">
+							<label><input type="checkbox" class="myCheckbox" name="circumstances" th:value="${cir.id}" /> <span th:text="${cir.title}">Check
+									2</span></label>
+						</div>
+					</div>
 
-		</form>
+					<div class="form-group col-lg-12">
+						<label>Content</label>
+						<div>
+							<textarea id="contentEditor" name="content" rows="10" cols="80"></textarea>
+						</div>
+					</div>
+					<div class="form-group col-lg-12">
+						<label>Attach files</label>
+						<div>
+							<input type="file" name="evidenceFiles" accept="image/*" multiple="true" />
+						</div>
+					</div>
+					<div class="form-group col-lg-12">
+						<input type="submit" class="btn btn-primary" value="Submit claim" />
+					</div>
+
+				</form>
+			</div>
+		</div>
+		</section>
 	</div>
 	<div th:replace="fragments/footer :: footer"></div>
+
+	<script>
+	 $(function () {
+		$('input.myCheckbox').iCheck({
+			checkboxClass: 'icheckbox_minimal-blue',
+			radioClass: 'iradio_minimal-blue'
+		});
+		CKEDITOR.replace('contentEditor',{
+			
+		});
+	 })
+	</script>
 </body>
 </html>
