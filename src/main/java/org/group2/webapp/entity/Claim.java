@@ -20,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -71,12 +72,12 @@ public class Claim implements Serializable {
 	@ManyToOne
 	private User user;
 
+	@ManyToOne
+	private Item item;
+
 	@JsonIgnore
-	@ManyToMany
-	@JoinTable(name = "assessment_claim", joinColumns = {
-			@JoinColumn(name = "claim_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "assessment_crn", referencedColumnName = "crn") })
-	private Set<Assessment> assessment = new HashSet<>();
+	@OneToMany(mappedBy = "claim")
+	private Set<Evidence> evidences = new HashSet<>();
 
 	@JsonIgnore
 	@ManyToMany
@@ -94,14 +95,6 @@ public class Claim implements Serializable {
 
 	public void setCircumstances(Set<Circumstance> circumstances) {
 		this.circumstances = circumstances;
-	}
-
-	public Set<Assessment> getAssessment() {
-		return assessment;
-	}
-
-	public void setAssessment(Set<Assessment> assessment) {
-		this.assessment = assessment;
 	}
 
 	public Long getId() {
@@ -208,5 +201,13 @@ public class Claim implements Serializable {
 
 	public void setDecision(String decision) {
 		this.decision = decision;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
 	}
 }

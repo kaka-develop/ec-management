@@ -22,6 +22,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "faculty")
 public class Faculty implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -37,7 +42,7 @@ public class Faculty implements Serializable {
 
 	@OneToMany(mappedBy = "faculty")
 	@JsonIgnore
-	private Set<Course> courses;
+	private Set<Assessment> courses;
 
 	public Faculty() {
 	}
@@ -47,11 +52,11 @@ public class Faculty implements Serializable {
 		this.title = title;
 	}
 
-	public Set<Course> getCourses() {
+	public Set<Assessment> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(Set<Course> courses) {
+	public void setCourses(Set<Assessment> courses) {
 		this.courses = courses;
 	}
 

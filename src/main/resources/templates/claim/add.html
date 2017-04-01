@@ -36,7 +36,7 @@
 					<div class="form-group col-lg-12">
 						<label>Choose assessments</label>
 						<div th:each="ass : ${allAssessments}">
-							<label><input type="checkbox" class="myCheckbox" name="assessments" th:value="${ass.crn}" /> <span th:text="${ass.title}">Check
+							<label><input type="checkbox" class="myCheckbox" name="assessments" th:value="${ass.code}" /> <span th:text="${ass.title}">Check
 									1</span></label>
 						</div>
 					</div>

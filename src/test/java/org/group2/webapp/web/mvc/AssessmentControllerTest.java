@@ -1,7 +1,7 @@
 package org.group2.webapp.web.mvc;
 
 import org.group2.webapp.EcManagementApplication;
-import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.entity.Item;
 import org.group2.webapp.service.AssessmentService;
 import org.group2.webapp.web.mvc.ctrl.admin.AssessmentController;
 import org.junit.After;
@@ -32,7 +32,7 @@ public class AssessmentControllerTest {
     private final String ASSESS_CRN = "AAAAAAAA";
     private final String ASSESS_TITLE = "AAAAAAAA";
 
-    private Assessment assessment;
+    private Item assessment;
 
 
     @Before
@@ -43,7 +43,7 @@ public class AssessmentControllerTest {
 
     @Before
     public void initTest() {
-        assessment = new Assessment();
+        assessment = new Item();
         assessment.setCrn(ASSESS_CRN);
         assessment.setTitle(ASSESS_TITLE);
     }
