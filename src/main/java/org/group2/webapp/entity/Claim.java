@@ -26,12 +26,10 @@ public class Claim implements Serializable {
     private Long id;
 
 
-    @Size(min = 1, max = 100)
     @Column(columnDefinition = "TEXT", unique = true, nullable = true)
     private String evidence;
 
     @NotNull
-    @Size(min = 1, max = 100)
     @Column(columnDefinition = "TEXT", unique = true, nullable = true)
     private String content;
 
@@ -43,7 +41,7 @@ public class Claim implements Serializable {
     private Date created_time = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "processed_time", nullable = false)
+    @Column(name = "processed_time")
     private Date processed_time;
 
     @Temporal(TemporalType.TIMESTAMP)

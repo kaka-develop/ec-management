@@ -3,11 +3,21 @@
  */
 package org.group2.webapp;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
+import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.entity.Authority;
+import org.group2.webapp.entity.Circumstance;
+import org.group2.webapp.entity.Claim;
+import org.group2.webapp.entity.Course;
 import org.group2.webapp.entity.Faculty;
 import org.group2.webapp.entity.User;
+import org.group2.webapp.repository.AssessmentRepository;
 import org.group2.webapp.repository.AuthorityRepository;
+import org.group2.webapp.repository.CircumstanceRepository;
+import org.group2.webapp.repository.ClaimRepository;
+import org.group2.webapp.repository.CourseRepository;
 import org.group2.webapp.repository.FacultyRepository;
 import org.group2.webapp.repository.UserRepository;
 import org.group2.webapp.service.FacultyService;
@@ -36,19 +46,33 @@ public class SampleData {
 	@Autowired
 	private FacultyRepository facultyRepository;
 	@Autowired
+	private AssessmentRepository assessmentRepository;
+	@Autowired
+	private CourseRepository courseRepository;
+	@Autowired
+	private CircumstanceRepository circumstanceRepository;
+	@Autowired
+	private ClaimRepository claimRepository;
+	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
 
 	public SampleData() {
 		super();
 	}
 
 	public void run() {
-		if (userRepository.findAll().size() > 0) {
+		if (claimRepository.findAll().size() > 0) {
 			return;
 		} else {
+			claimRepository.deleteAll();
+			assessmentRepository.deleteAll();
+			circumstanceRepository.deleteAll();
 			userRepository.deleteAll();
-			authorityRepository.deleteAll();
+			courseRepository.deleteAll();
 			facultyRepository.deleteAll();
+			authorityRepository.deleteAll();
 		}
 
 		logger.info("Initializing sample data...");
@@ -115,6 +139,75 @@ public class SampleData {
 		userRepository.save(s2);
 		userRepository.save(s3);
 		userRepository.save(s4);
+
+		Course c1 = new Course("COMP-1108", "Project", f1);
+		Course c2 = new Course("COMP-1639", "Database Engineering", f2);
+		Course c3 = new Course("COMP-1640", "Enterprise Web Software Dev", f2);
+		Course c4 = new Course("COMP-1661", "Application Dev for Mobile Dev", f1);
+		Course c5 = new Course("COMP-1649", "Interaction Design", f3);
+		Course c6 = new Course("COMP-1714", "Software Engineeing Mgmnt", f3);
+		Course c7 = new Course("COMP-1648", "Dev Framework & Methods", f1);
+
+		courseRepository.save(c1);
+		courseRepository.save(c2);
+		courseRepository.save(c3);
+		courseRepository.save(c4);
+		courseRepository.save(c5);
+		courseRepository.save(c6);
+		courseRepository.save(c7);
+
+		Assessment ass1 = new Assessment("23718", c1, "COMP 1108 Demonstration");
+		Assessment ass2 = new Assessment("23717", c1, "COMP 1108 Final Report");
+		Assessment ass3 = new Assessment("24761", c2, "COMP 1639 Exam");
+		Assessment ass4 = new Assessment("24760", c2, "COMP 1639 Practical Coursework");
+		Assessment ass5 = new Assessment("24767", c3, "COMP 1640 Coureswork");
+		Assessment ass6 = new Assessment("25042", c7, "COMP 1648 Coursework");
+		Assessment ass7 = new Assessment("25045", c5, "COMP 1649 Coursework");
+		Assessment ass8 = new Assessment("25066", c4, "COMP 1661 Coursework");
+		Assessment ass9 = new Assessment("25067", c4, "COMP 1661 Logbook");
+		Assessment ass10 = new Assessment("25391", c6, "COMP 1714 Coursework");
+		Assessment ass11 = new Assessment("25392", c6, "COMP 1714 Exam");
+
+		assessmentRepository.save(ass1);
+		assessmentRepository.save(ass2);
+		assessmentRepository.save(ass3);
+		assessmentRepository.save(ass4);
+		assessmentRepository.save(ass5);
+		assessmentRepository.save(ass6);
+		assessmentRepository.save(ass7);
+		assessmentRepository.save(ass8);
+		assessmentRepository.save(ass9);
+		assessmentRepository.save(ass10);
+		assessmentRepository.save(ass11);
+
+		Circumstance cir1 = new Circumstance("Accident");
+		Circumstance cir2 = new Circumstance("Bereavement");
+		Circumstance cir3 = new Circumstance("Harassment or Assault");
+		Circumstance cir4 = new Circumstance("Jury Service");
+		Circumstance cir5 = new Circumstance("Medical");
+		Circumstance cir6 = new Circumstance("Organisational maladministration");
+		Circumstance cir7 = new Circumstance("Unexpected personal or family difficulties");
+		Circumstance cir8 = new Circumstance("Work (part-time and placement studends only)");
+		Circumstance cir9 = new Circumstance("Other");
+
+		circumstanceRepository.save(cir1);
+		circumstanceRepository.save(cir2);
+		circumstanceRepository.save(cir3);
+		circumstanceRepository.save(cir4);
+		circumstanceRepository.save(cir5);
+		circumstanceRepository.save(cir6);
+		circumstanceRepository.save(cir7);
+		circumstanceRepository.save(cir8);
+		circumstanceRepository.save(cir9);
+
+		Claim cl1 = new Claim();
+		cl1.getAssessment().add(ass1);
+		cl1.getCircumstances().add(cir1);
+		cl1.setUser(s1);
+		cl1.setProcessed_time(new Date());
+		cl1.setContent("hello world");
+
+		claimRepository.save(cl1);
 
 		logger.info("Sample data ready!");
 	}

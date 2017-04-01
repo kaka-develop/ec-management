@@ -42,7 +42,12 @@ public class Circumstance implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public Circumstance(String title) {
+		super();
+		this.title = title;
+	}
+
+	public void setId(Long id) {
         this.id = id;
     }
 
