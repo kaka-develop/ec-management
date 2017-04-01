@@ -83,12 +83,14 @@ public class UserController {
 
 
     @PostMapping("/delete/{username}")
-    public String deleteUser(@PathVariable String username) {
+    public String deleteUser(Model model,@PathVariable String username) {
         try {
             userService.deleteUser(username);
         } catch (Exception e) {
+            model.addAttribute("error","Cannot delete this user! Had claims");
         }
-        return REDIRECT_INDEX;
+        model.addAttribute("users", userService.getAllManagedUsers());
+        return "admin/user/users";
     }
 
 }

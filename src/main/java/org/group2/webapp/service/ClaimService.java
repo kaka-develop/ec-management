@@ -29,9 +29,9 @@ public class ClaimService {
         return claimRepository.save(claim);
     }
 
-    public Claim update(Claim claim){
+    public Claim update(Claim claim) {
         log.debug("Request to update Claim : {}", claim.getId());
-        if(claim.getId() == null)
+        if (claim.getId() == null)
             return null;
         return claimRepository.save(claim);
     }
@@ -54,6 +54,7 @@ public class ClaimService {
         return claim;
     }
 
+    @Transactional
     public void delete(Long id) {
         log.debug("Request to delete Claim : {}", id);
         if (id == null || claimRepository.findOne(id) == null)
@@ -61,17 +62,31 @@ public class ClaimService {
         claimRepository.delete(id);
     }
 
+    @Transactional(readOnly = true)
     public List<Claim> findClaimsPerFaculty(Long facultyId) {
         log.debug("Request to get all Claims per Faculty : {}", facultyId);
         List<Claim> result = claimRepository.findAllByFacultyId(facultyId);
         return result;
     }
 
-    public List<Claim> findClaimsByYear(int year){
+    @Transactional(readOnly = true)
+    public List<Claim> findClaimsByYear(int year) {
         log.debug("Request to get all Claims by year : {}", year);
         List<Claim> result = claimRepository.findAllByYear(year);
         return result;
     }
 
+    @Transactional(readOnly = true)
+    public List<Claim> findProcessedClaimsPerFaculty(Long facultyId) {
+        log.debug("Request to get all processed claims per Faculty : {}", facultyId);
+        List<Claim> result = claimRepository.findAllProcessedByFacultyId(facultyId);
+        return result;
+    }
 
+    @Transactional(readOnly = true)
+    public List<Claim> findClaimsPerCircumstance(Long circumstanceId) {
+        log.debug("Request to get all Claims per Circumstance : {}", circumstanceId);
+        List<Claim> result = claimRepository.findAllByCircumstanceId(circumstanceId);
+        return result;
+    }
 }

@@ -13,11 +13,15 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/adminbar :: adminbar"></div>
 <div class="container">
     <h1>All faculties</h1>
     <a href="/admin/faculty/new">
         <button>New faculty</button>
     </a>
+    <p>
+        <span class="m-error" th:if="${error}" th:text="${error}"></span>
+    </p>
     <table border="1">
         <tr>
             <th>ID</th>

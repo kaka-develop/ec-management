@@ -5,6 +5,8 @@
  */
 package org.group2.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +30,7 @@ public class Circumstance implements Serializable {
     @Column(columnDefinition = "TEXT", unique = true, nullable = true)
     private String title;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "claim_circumstance",

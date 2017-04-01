@@ -128,10 +128,10 @@ public class CircumstanceControllerTest {
         createCircumstance();
 
         restCircumstanceMockMvc.perform(post("/admin/circumstance/delete/" + circumstance.getId().toString()))
-                .andExpect(view().name(CircumstanceController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/circumstance/circumstances"));
 
         restCircumstanceMockMvc.perform(post("/admin/circumstance/delete/" + "BBBBBBB"))
-                .andExpect(view().name(CircumstanceController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/circumstance/circumstances"));
     }
 
     @After

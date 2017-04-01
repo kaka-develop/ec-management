@@ -23,33 +23,14 @@
             <th>Claims</th>
         </tr>
         <tr th:each="map : ${claimsPerFaculty}">
-            <td th:text="${map.key.title}"></td>
+            <td th:text="${map.key}"></td>
 
             <td>
-                <b style="color: blue;" th:text="${map.value.size() + ' claims'}"></b>
-                <div th:if="${map.value.size() > 0}">
-                    <table border="1">
-                        <tr>
-                            <th>Evident</th>
-                            <th>Content</th>
-                            <th>Status</th>
-                            <th>Dateline</th>
-                            <th>Overdue</th>
-                        </tr>
-                        <tr th:each="claim : ${map.value}">
-                            <td th:text="${claim.evidence}"></td>
-                            <td th:text="${claim.content}"></td>
-                            <td th:text="${claim.status}"></td>
-                            <td th:text="${claim.closedDate}"></td>
-                            <td th:text="${claim.isMissClosedDate() ? 'yes' : 'no'}"></td>
-                        </tr>
-                    </table>
-                </div>
-
+                <b style="color: blue;" th:text="${map.value + ' claims'}"></b>
             </td>
         </tr>
     </table>
-
+    <div id="cpfChart" style="width: 600px; height: 400px;"></div>
 
     <h3>Claims per year</h3>
     <table border="1">
@@ -61,30 +42,57 @@
             <td th:text="${map.key}"></td>
 
             <td>
-                <b style="color: blue;" th:text="${map.value.size() + ' claims'}"></b>
-                <div th:if="${map.value.size() > 0}">
-                    <table border="1">
-                        <tr>
-
-                            <th>Evident</th>
-                            <th>Content</th>
-                            <th>Status</th>
-                            <th>Dateline</th>
-                            <th>Overdue</th>
-                        </tr>
-                        <tr th:each="claim : ${map.value}">
-                            <td th:text="${claim.evidence}"></td>
-                            <td th:text="${claim.content}"></td>
-                            <td th:text="${claim.status}"></td>
-                            <td th:text="${claim.closedDate}"></td>
-                            <td th:text="${claim.isMissClosedDate() ? 'yes' : 'no'}"></td>
-                        </tr>
-                    </table>
-                </div>
-
+                <b style="color: blue;" th:text="${map.value+ ' claims'}"></b>
             </td>
         </tr>
     </table>
+    <div id="cpyChart" style="width: 600px; height: 400px;"></div>
 </div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script th:inline="javascript">
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(drawclaimsPerFacultyChart);
+    google.charts.setOnLoadCallback(drawclaimsPerYearChart);
+
+    function drawclaimsPerFacultyChart() {
+        var map = [[${claimsPerFaculty}]];
+        var mapData = [['Faculty', 'Claims']];
+        for (var key in map) {
+            mapData.push([key, map[key]]);
+        }
+
+        var data = google.visualization.arrayToDataTable(mapData);
+
+        var options = {
+            title: 'Claims per faculty'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('cpfChart'));
+
+        chart.draw(data, options);
+    }
+
+    function drawclaimsPerYearChart() {
+        var map = [[${claimsPerYear}]];
+        var mapData = [['Year', 'Claims']];
+        for (var key in map) {
+            mapData.push([key, map[key]]);
+        }
+
+        var data = google.visualization.arrayToDataTable(mapData);
+
+        var options = {
+            title: 'Claims per faculty'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('cpyChart'));
+
+        chart.draw(data, options);
+    }
+
+
+</script>
 </body>
 </html>

@@ -11,6 +11,7 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/adminbar :: adminbar"></div>
 <div class="container">
 <h1>Add user</h1>
 <form method="POST" action="#" th:action="@{/admin/user/new}" th:object="${user}">

@@ -73,12 +73,44 @@ public class ManagerControllerTest {
 
     @Test
     @Transactional
-    public void testShaveHaveViewForAllStatistics() throws Exception{
-        restManagerMockMvc.perform(get("/manager/statistics"))
-                .andExpect(model().attributeExists("claimsPerFaculty"))
-                .andExpect(model().attributeExists("claimsPerYear"))
-                .andExpect(view().name("manager/statistics"));
+    public void testShaveHaveViewAllClaimsByFaculty() throws Exception{
+        restManagerMockMvc.perform(get("/manager/claims/faculty"))
+                .andExpect(model().attributeExists("claims"))
+                .andExpect(view().name("manager/claims-faculty"));
     }
+
+    @Test
+    @Transactional
+    public void testShaveHaveViewAllClaimsByYear() throws Exception{
+        restManagerMockMvc.perform(get("/manager/claims/year"))
+                .andExpect(model().attributeExists("claims"))
+                .andExpect(view().name("manager/claims-year"));
+    }
+
+    @Test
+    @Transactional
+    public void testShaveHaveViewProcessedClaimsByFaculty() throws Exception{
+        restManagerMockMvc.perform(get("/manager/claims/faculty/processed"))
+                .andExpect(model().attributeExists("claims"))
+                .andExpect(view().name("manager/claims-faculty-processed"));
+    }
+
+    @Test
+    @Transactional
+    public void testShaveHaveViewClaimsByCircumstance() throws Exception{
+        restManagerMockMvc.perform(get("/manager/claims/circumstance"))
+                .andExpect(model().attributeExists("claims"))
+                .andExpect(view().name("manager/claims-circumstance"));
+    }
+
+    @Test
+    @Transactional
+    public void testShaveHaveViewClaimsValidAndInvalid() throws Exception{
+        restManagerMockMvc.perform(get("/manager/claims/validation"))
+                .andExpect(model().attributeExists("claims"))
+                .andExpect(view().name("manager/claims-validation"));
+    }
+
 
     @After
     public void after() {

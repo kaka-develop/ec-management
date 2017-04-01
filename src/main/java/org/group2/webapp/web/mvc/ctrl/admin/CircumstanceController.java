@@ -81,11 +81,13 @@ public class CircumstanceController {
 
 
     @PostMapping("/delete/{id}")
-    public String deleteCircumstance(@PathVariable String id) {
+    public String deleteCircumstance(Model model,@PathVariable String id) {
         try {
             circumstanceService.delete(ConvertUntil.covertStringToLong(id));
-        }catch (Exception e){}
-
-        return REDIRECT_INDEX;
+        }catch (Exception e){
+            model.addAttribute("error","Cannot delete this circumstance! Had claim");
+        }
+        model.addAttribute("circumstances", circumstanceService.findAll());
+        return "admin/circumstance/circumstances";
     }
 }
