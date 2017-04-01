@@ -80,8 +80,6 @@ public class StudentController {
 	@PostMapping("/claim/add")
 	public String addClaim(String[] assessments, long[] circumstances, @Valid Claim claim, BindingResult result,
 			HttpServletRequest req, @RequestParam("file") MultipartFile[] files) {
-		
-		
 		if (assessments != null && circumstances != null && !result.hasErrors()) {
 			for (String ass : assessments) {
 				claim.getAssessment().add(assessmentRepo.getOne(ass));
@@ -94,11 +92,10 @@ public class StudentController {
 			claim.setUser(currentUser);
 			claim.setEvidence("file.pdf;anh.img");
 			claimRepo.save(claim);
-			
-			
-			
-//			getECProcessClaim(currentUser.getFaculty().getId())
-//					.ifPresent(ec -> MailUtils.sendInformNewClaimForECCoordinator(ec, claim));
+
+			// getECProcessClaim(currentUser.getFaculty().getId())
+			// .ifPresent(ec -> MailUtils.sendInformNewClaimForECCoordinator(ec,
+			// claim));
 			return "claim/success";
 		} else {
 
