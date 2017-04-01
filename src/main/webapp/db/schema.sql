@@ -67,7 +67,7 @@ CREATE TABLE assessment (
 
 CREATE TABLE claim (
   id             INT NOT NULL AUTO_INCREMENT,
-  user_id        INT,
+  user_id        INT ,
   evidence       TEXT,
   content        TEXT,
   decision TEXT,
@@ -141,30 +141,44 @@ INSERT INTO user (username, password_hash, first_name, last_name, email, created
   ('student1', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent1', 'lstudent1',
    'sondcgc00681@fpt.edu.vn', NOW(),1),
   ('student2', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent2', 'lstudent2',
-   'ainvgc00704@fpt.edu.vn', NOW(),1),
+   'ainvgc00704@fpt.edu.vn', NOW(),2),
   ('student3', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent3', 'lstudent3',
-   'namnhgc00683@fpt.edu.vn', NOW(),1),
+   'namnhgc00683@fpt.edu.vn', NOW(),3),
   ('student4', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstuden4', 'lstudent4',
-   'anhndgc00893@fpt.edu.vn', NOW(),1),
+   'anhndgc00893@fpt.edu.vn', NOW(),4),
   ('student5', '$2a$06$FBK.uNoEF.5H1W2.pE3MB.rrr1JsNDuH3fZJr1RS0esFKzYWAn/3K', 'fstudent5', 'lstudent5',
-   'anhndgc00893@fpt.edu.vn', NOW(),1);
+   'anhndgc00893@fpt.edu.vn', NOW(),4);
 INSERT INTO user_authority (user_id, authority_name) VALUES
   (1, 'ROLE_USER'),
   (2, 'ROLE_STUDENT'), (2, 'ROLE_USER'),
-  (3, 'ROLE_MANAGER'), (3, 'ROLE_USER'), (3, 'ROLE_STUDENT'),
-  (4, 'ROLE_COORDINATOR'), (4, 'ROLE_USER'), (4, 'ROLE_STUDENT'), (4, 'ROLE_MANAGER'),
+  (3, 'ROLE_MANAGER'), (3, 'ROLE_USER'),
+  (4, 'ROLE_COORDINATOR'), (4, 'ROLE_USER'),
   (5, 'ROLE_ADMIN'), (5, 'ROLE_USER'), (5, 'ROLE_STUDENT'), (5, 'ROLE_MANAGER'), (5, 'ROLE_COORDINATOR');
 
 -- INSERT SAMPLE DATA FOR CLAIMS --
 INSERT INTO claim (evidence, content, created_time, processed_time, status, user_id, closed_date) VALUES
   ('Evidence1', 'Content1', NOW(), NOW(), 1, 2,NOW()),
-  ('Evidence2', 'Content2', NOW(), NOW(), 1, 2,'2017-05-05'),
-  ('Evidence3', 'Content3', NOW(), NOW(), 1, 2,NOW());
+  ('Evidence2', 'Content2', NOW(), NULL, 1, 2,'2017-05-05'),
+  ('Evidence3', 'Content3', '2016-05-05', NULL , 1, 2,NOW()),
+  ('Evidence4', 'Content4', NOW(), NOW(), 1, 6,'2017-04-28'),
+  ('Evidence5', 'Content5', NOW(), NULL, 1, 6,'2017-04-30'),
+  ('Evidence6', 'Content6','2015-05-05', NOW(), 1, 7,'2017-04-06'),
+  ('Evidence7', 'Content7', '2015-05-05', NOW(), 1, 7,'2017-06-20'),
+  ('Evidence8', 'Content8', NOW(),NULL, 1, 8,'2017-04-01');
 
-INSERT INTO circumstance (title)
-VALUES ('Accident'), ('Bereavement'), ('Harassment or Assault'), ('Jury Service'), ('Medical'),
+INSERT INTO circumstance (title) VALUES
+  ('Accident'), ('Bereavement'), ('Harassment or Assault'), ('Jury Service'), ('Medical'),
   ('Organisational maladministration'), ('Unexpected personal or family difficulties'),
   ('Work (part-time and placement studends only)'), ('Other');
+
+INSERT INTO claim_circumstance(claim_id, circumstance_id) VALUES
+  (1,1),  (1,2),  (1,3),
+  (2,2),  (2,3),  (2,4),
+  (3,4),  (3,5),
+  (4,5),  (4,6),
+  (5,6),  (5,7),
+  (6,6),  (6,8),
+  (7,1),  (7,2);
 
 INSERT INTO course (code, title,faculty_id) VALUES
   ('COMP-1108', 'Project',1), ('COMP-1639', 'Database Engineering',2),

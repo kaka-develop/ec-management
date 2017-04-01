@@ -131,10 +131,10 @@ public class CourseControllerTest {
         createCourse();
 
         restCourseMockMvc.perform(post("/admin/course/delete/" + course.getCode()))
-                .andExpect(view().name(CourseController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/course/courses"));
 
         restCourseMockMvc.perform(post("/admin/course/delete/" + "BBBBBBB"))
-                .andExpect(view().name(CourseController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/course/courses"));
     }
 
     @After

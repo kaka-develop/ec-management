@@ -5,6 +5,7 @@
  */
 package org.group2.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -37,13 +38,13 @@ public class Claim implements Serializable {
 
     @Column(columnDefinition = "TEXT", nullable = true)
     private String decision;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_time", nullable = false)
     private Date created_time = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "processed_time", nullable = false)
+    @Column(name = "processed_time")
     private Date processed_time;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -58,6 +59,7 @@ public class Claim implements Serializable {
     @ManyToOne
     private User user;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "assessment_claim",
@@ -65,6 +67,8 @@ public class Claim implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "assessment_crn", referencedColumnName = "crn")})
     private Set<Assessment> assessment = new HashSet<>();
 
+
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "claim_circumstance",
@@ -158,7 +162,21 @@ public class Claim implements Serializable {
     public boolean isMissClosedDate() {
         if (this.closedDate == null)
             return false;
-        if (this.closedDate.getTime() >= Calendar.getInstance().getTime().getTime())
+        if (this.closedDate.getTime() > Calendar.getInstance().getTime().getTime())
+            return false;
+        return true;
+    }
+
+    public boolean isLackOfEvidence() {
+        if (evidence == null)
+            return true;
+        return false;
+    }
+
+    public boolean isValid() {
+        if (isMissClosedDate())
+            return false;
+        if (evidence == null)
             return false;
         return true;
     }
@@ -175,11 +193,11 @@ public class Claim implements Serializable {
                 '}';
     }
 
-	public String getDecision() {
-		return decision;
-	}
+    public String getDecision() {
+        return decision;
+    }
 
-	public void setDecision(String decision) {
-		this.decision = decision;
-	}
+    public void setDecision(String decision) {
+        this.decision = decision;
+    }
 }

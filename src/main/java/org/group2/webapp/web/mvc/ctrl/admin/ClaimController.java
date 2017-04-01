@@ -75,11 +75,13 @@ public class ClaimController {
 
 
     @PostMapping("/delete/{id}")
-    public String deleteClaim(@PathVariable String id) {
+    public String deleteClaim(Model model,@PathVariable String id) {
         try{
             claimService.delete(ConvertUntil.covertStringToLong(id));
-        }catch (Exception e){}
-
-        return REDIRECT_INDEX;
+        }catch (Exception e){
+            model.addAttribute("error","Cannot delete this claim! Had circumstance or assessment");
+        }
+        model.addAttribute("claims", claimService.findAll());
+        return "admin/claim/claims";
     }
 }

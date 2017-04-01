@@ -129,10 +129,10 @@ public class FacultyControllerTest {
         createFaculty();
 
         restFacultyMockMvc.perform(post("/admin/faculty/delete/" + faculty.getId().toString()))
-                .andExpect(view().name(FacultyController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/faculty/faculties"));
 
         restFacultyMockMvc.perform(post("/admin/faculty/delete/" + "BBBBBBB"))
-                .andExpect(view().name(FacultyController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/faculty/faculties"));
     }
 
     @After

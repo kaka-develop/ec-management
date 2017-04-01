@@ -32,10 +32,16 @@ public class ClaimServiceTest {
     @Autowired
     private ClaimService claimService;
 
+    @Autowired
+    private FacultyService facultyService;
+
 
     private final String CLAIM_EVIDENCE = "AAAAAAAA";
     private final String CLAIM_CONTENT = "AAAAAAAA";
     private final Integer CLAIM_STATUS = 1;
+
+
+    private final String FACULTY_TITLE = "AAAAAAAA";
 
     private Claim claim;
 
@@ -57,15 +63,25 @@ public class ClaimServiceTest {
 
     @Test
     public void testShouldHaveOneClaimByID() {
-        assertThat(claimRepository.findOne(claim.getId())!= null);
-        assertThat(claimService.findOne(claim.getId())!= null);
+        assertThat(claimRepository.findOne(claim.getId()) != null);
+        assertThat(claimService.findOne(claim.getId()) != null);
 
-        assertThat(claimRepository.findOne(new Long(11111))== null);
-        assertThat(claimService.findOne(new Long(11111))== null);
+        assertThat(claimRepository.findOne(new Long(11111)) == null);
+        assertThat(claimService.findOne(new Long(11111)) == null);
     }
 
     @Test
     public void testShouldHaveAllClaimsByYear() {
+        Calendar calendar = Calendar.getInstance();
+        Integer year = calendar.get(Calendar.YEAR);
+
+        assertThat(!claimRepository.findAllByYear(year).isEmpty());
+        assertThat(!claimService.findClaimsByYear(year).isEmpty());
+    }
+
+
+    @Test
+    public void testShouldHaveAllClaimsByFaculty() {
         Calendar calendar = Calendar.getInstance();
         Integer year = calendar.get(Calendar.YEAR);
 

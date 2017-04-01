@@ -32,13 +32,13 @@ public class ManagerAPI {
 
 
     @GetMapping("/claims/faculty")
-    public HashMap<Faculty,List<Claim>> getAllClaimsPerFaculty() {
+    public HashMap<String,Integer> getAllClaimsPerFaculty() {
         log.debug("REST request to get all Claims per faulty");
         return managerService.getClaimsPerFaculty();
     }
 
     @GetMapping("/claims/year")
-    public HashMap<Integer,List<Claim>> getAllClaimsPerYear() {
+    public HashMap<Integer,Integer> getAllClaimsPerYear() {
         log.debug("REST request to get all Claims per year");
         return managerService.getClamsPerYear();
     }
