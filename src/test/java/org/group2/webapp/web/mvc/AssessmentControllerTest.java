@@ -134,10 +134,10 @@ public class AssessmentControllerTest {
         createAssessment();
 
         restAssessmentMockMvc.perform(post("/admin/assessment/delete/" + assessment.getCrn().toString()))
-                .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/assessment/assessments"));
 
         restAssessmentMockMvc.perform(post("/admin/assessment/delete/" + "BBBBBBB"))
-                .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/assessment/assessments"));
     }
 
     @After

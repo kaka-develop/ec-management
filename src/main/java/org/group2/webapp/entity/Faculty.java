@@ -42,6 +42,11 @@ public class Faculty implements Serializable {
 	public Faculty() {
 	}
 
+	public Faculty(String title) {
+		super();
+		this.title = title;
+	}
+
 	public Set<Course> getCourses() {
 		return courses;
 	}

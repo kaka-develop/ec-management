@@ -156,10 +156,10 @@ public class UserControllerTest {
         createUser();
 
         restUserMockMvc.perform(post("/admin/user/delete/" + USER_NAME))
-                .andExpect(view().name(UserController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/user/users"));
 
         restUserMockMvc.perform(post("/admin/user/delete/" + "BBBBBBBB"))
-                .andExpect(view().name(UserController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/user/users"));
     }
 
     @After

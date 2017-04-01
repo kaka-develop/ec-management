@@ -37,8 +37,38 @@ public class ManagerController {
 
     @GetMapping("/statistics")
     public String getClaimStatistics(Model model) {
-        model.addAttribute("claimsPerFaculty", managerService.getClaimsPerFaculty());
-        model.addAttribute("claimsPerYear", managerService.getClamsPerYear());
+
+
         return "manager/statistics";
+    }
+
+    @GetMapping("/claims/faculty")
+    public String getClaimsByFaculty(Model model) {
+        model.addAttribute("claims", managerService.getClaimsPerFaculty());
+        return "manager/claims-faculty";
+    }
+
+    @GetMapping("/claims/year")
+    public String getClaimsByYear(Model model) {
+        model.addAttribute("claims", managerService.getClamsPerYear());
+        return "manager/claims-year";
+    }
+
+    @GetMapping("/claims/faculty/processed")
+    public String getProcessedClaimsByFaculty(Model model) {
+        model.addAttribute("claims", managerService.getProcessedClaimsPerFaculty());
+        return "manager/claims-faculty-processed";
+    }
+
+    @GetMapping("/claims/circumstance")
+    public String getClaimsByCircumstance(Model model) {
+        model.addAttribute("claims", managerService.getClaimsPerCircumstance());
+        return "manager/claims-circumstance";
+    }
+
+    @GetMapping("/claims/validation")
+    public String getClaimsByValidation(Model model) {
+        model.addAttribute("claims", managerService.getValidAndInvalidClaims());
+        return "manager/claims-validation";
     }
 }

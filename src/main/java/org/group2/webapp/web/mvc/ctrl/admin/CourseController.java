@@ -81,11 +81,13 @@ public class CourseController {
 
 
     @PostMapping("/delete/{code}")
-    public String deleteCourse(@PathVariable String code) {
+    public String deleteCourse(Model model,@PathVariable String code) {
         try{
             courseService.delete(code);
-        }catch (Exception e){}
-
-        return REDIRECT_INDEX;
+        }catch (Exception e){
+            model.addAttribute("error","Cannot delete this course! Had assessment");
+        }
+        model.addAttribute("courses", courseService.findAll());
+        return "admin/course/courses";
     }
 }

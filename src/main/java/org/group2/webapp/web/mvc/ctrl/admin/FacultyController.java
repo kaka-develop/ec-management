@@ -81,10 +81,15 @@ public class FacultyController {
 
 
     @PostMapping("/delete/{id}")
-    public String deleteFaculty(@PathVariable String id) {
+    public String deleteFaculty(Model model,@PathVariable String id) {
         try {
             facultyService.delete(ConvertUntil.covertStringToLong(id));
-        }catch (Exception e){}
-        return REDIRECT_INDEX;
+        }catch (Exception e){
+            model.addAttribute("error","Cannot delete this faculty! Had course or user");
+        }
+
+        model.addAttribute("faculties", facultyService.findAll());
+
+        return "admin/faculty/faculties";
     }
 }

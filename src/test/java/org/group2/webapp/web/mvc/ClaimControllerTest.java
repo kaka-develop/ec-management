@@ -136,10 +136,10 @@ public class ClaimControllerTest {
         createClaim();
 
         restClaimMockMvc.perform(post("/admin/claim/delete/" +  claim.getId().toString()))
-                .andExpect(view().name(ClaimController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/claim/claims"));
 
         restClaimMockMvc.perform(post("/admin/claim/delete/" + "BBBBBBB"))
-                .andExpect(view().name(ClaimController.REDIRECT_INDEX));
+                .andExpect(view().name("admin/claim/claims"));
     }
 
     @After

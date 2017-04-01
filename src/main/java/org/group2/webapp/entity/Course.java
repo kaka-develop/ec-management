@@ -38,7 +38,14 @@ public class Course implements Serializable {
     @ManyToOne
     private Faculty faculty;
 
-    @OneToMany(mappedBy = "course")
+    public Course(String code, String title, Faculty faculty) {
+		super();
+		this.code = code;
+		this.title = title;
+		this.faculty = faculty;
+	}
+
+	@OneToMany(mappedBy = "course")
     @JsonIgnore
     private Set<Assessment> assessments = new HashSet<>();
 

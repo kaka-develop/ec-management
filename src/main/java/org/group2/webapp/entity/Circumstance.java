@@ -5,6 +5,8 @@
  */
 package org.group2.webapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +30,7 @@ public class Circumstance implements Serializable {
     @Column(columnDefinition = "TEXT", unique = true, nullable = true)
     private String title;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "claim_circumstance",
@@ -42,7 +45,12 @@ public class Circumstance implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public Circumstance(String title) {
+		super();
+		this.title = title;
+	}
+
+	public void setId(Long id) {
         this.id = id;
     }
 

@@ -80,11 +80,14 @@ public class AssessmentController {
 
 
     @PostMapping("/delete/{crn}")
-    public String deleteAssessment(@PathVariable String crn) {
+    public String deleteAssessment(Model model,@PathVariable String crn) {
         try{
             assessmentService.delete(crn);
-        }catch (Exception e){}
+        }catch (Exception e){
+            model.addAttribute("error","Cannot delete this assessment! Had claim");
+        }
 
-        return REDIRECT_INDEX;
+        model.addAttribute("assessments", assessmentService.findAll());
+        return "admin/assessment/assessments";
     }
 }
