@@ -57,7 +57,7 @@ public class Claim implements Serializable {
 	private Date created_time = new Date();
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "processed_time", nullable = true)
+	@Column(name = "processed_time")
 	private Date processed_time;
 
 	@Temporal(TemporalType.TIMESTAMP)

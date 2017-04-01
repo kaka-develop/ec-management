@@ -27,7 +27,7 @@
 						<li><a href="#" th:href="@{/eccoordinator/claim}">View EC claims</a></li>
 					</th:block>
 
-					<li sec:authorize="hasRole('ROLE_COORDINATOR')"><a href="#" th:href="@{/manager}">Management</a></li>
+					<li sec:authorize="hasRole('ROLE_MANAGER')"><a href="#" th:href="@{/manager}">Management</a></li>
 					<li sec:authorize="hasRole('ROLE_ADMIN')"><a href="#" th:href="@{/admin}">Administration</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">

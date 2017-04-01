@@ -22,11 +22,14 @@ import org.group2.webapp.security.AuthoritiesConstants;
 import org.group2.webapp.security.SecurityUtils;
 import org.group2.webapp.web.util.MailUtils;
 import org.group2.webapp.web.util.SessionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Dam Cao Son
@@ -36,9 +39,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/student")
 public class StudentController {
+	@Autowired
 	private final UserRepository userRepo;
+	@Autowired
 	private final AssessmentRepository assessmentRepo;
+	@Autowired
 	private final ClaimRepository claimRepo;
+	@Autowired
 	private final CircumstanceRepository circumRepo;
 
 	public StudentController(UserRepository userRepo, AssessmentRepository assessmentRepo, ClaimRepository claimRepo,
@@ -72,7 +79,9 @@ public class StudentController {
 
 	@PostMapping("/claim/add")
 	public String addClaim(String[] assessments, long[] circumstances, @Valid Claim claim, BindingResult result,
-			HttpServletRequest req) {
+			HttpServletRequest req, @RequestParam("file") MultipartFile[] files) {
+		
+		
 		if (assessments != null && circumstances != null && !result.hasErrors()) {
 			for (String ass : assessments) {
 				claim.getAssessment().add(assessmentRepo.getOne(ass));
@@ -83,18 +92,22 @@ public class StudentController {
 			claim.setStatus(1);
 			User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
 			claim.setUser(currentUser);
+			claim.setEvidence("file.pdf;anh.img");
 			claimRepo.save(claim);
-			getECProcessClaim(currentUser.getFaculty().getId())
-					.ifPresent(ec -> MailUtils.sendInformNewClaimForECCoordinator(ec, claim));
+			
+			
+			
+//			getECProcessClaim(currentUser.getFaculty().getId())
+//					.ifPresent(ec -> MailUtils.sendInformNewClaimForECCoordinator(ec, claim));
 			return "claim/success";
 		} else {
-			
+
 			req.setAttribute("errors", result.getFieldErrors());
 			addClaim(req);
 		}
 		return addClaim(req);
 	}
-	
+
 	@GetMapping("/claim/detail")
 	public String index(long id, HttpServletRequest req) {
 		// User currentUser =
