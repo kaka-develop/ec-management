@@ -2,7 +2,7 @@ package org.group2.webapp.web.rest;
 
 import org.group2.webapp.EcManagementApplication;
 
-import org.group2.webapp.entity.Course;
+import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.repository.CourseRepository;
 import org.group2.webapp.service.CourseService;
 
@@ -49,7 +49,7 @@ public class CourseAPITest {
 
     private MockMvc restCourseMockMvc;
 
-    private Course course;
+    private Assessment course;
 
     @Before
     public void setup() {
@@ -58,8 +58,8 @@ public class CourseAPITest {
         this.restCourseMockMvc = MockMvcBuilders.standaloneSetup(courseAPI).build();
     }
 
-    public static Course createEntity(EntityManager em) {
-        Course course = new Course();
+    public static Assessment createEntity(EntityManager em) {
+        Assessment course = new Assessment();
         course.setCode(COURSE_CODE);
         course.setTitle(COURSE_TITLE);
         return course;
@@ -81,9 +81,9 @@ public class CourseAPITest {
                 .content(TestUtil.convertObjectToJsonBytes(course)))
                 .andExpect(status().isOk());
 
-        List<Course> courseList = courseRepository.findAll();
+        List<Assessment> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeCreate + 1);
-        Course testCourse = courseRepository.findOne(course.getCode());
+        Assessment testCourse = courseRepository.findOne(course.getCode());
         assertThat(testCourse.getTitle()).isEqualTo(COURSE_TITLE);
     }
 
@@ -92,7 +92,7 @@ public class CourseAPITest {
     public void testShouldResponseCourseWithExistingCode() throws Exception {
         int databaseSizeBeforeCreate = courseRepository.findAll().size();
 
-        Course existingCourse = new Course();
+        Assessment existingCourse = new Assessment();
         existingCourse.setCode(COURSE_CODE);
 
         restCourseMockMvc.perform(post("/api/admin/courses")
@@ -100,7 +100,7 @@ public class CourseAPITest {
                 .content(TestUtil.convertObjectToJsonBytes(existingCourse)))
                 .andExpect(status().isBadRequest());
 
-        List<Course> courseList = courseRepository.findAll();
+        List<Assessment> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeCreate);
     }
 
@@ -115,7 +115,7 @@ public class CourseAPITest {
                 .content(TestUtil.convertObjectToJsonBytes(course)))
                 .andExpect(status().isBadRequest());
 
-        List<Course> courseList = courseRepository.findAll();
+        List<Assessment> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeTest);
     }
 
@@ -162,7 +162,7 @@ public class CourseAPITest {
         int databaseSizeBeforeUpdate = courseRepository.findAll().size();
 
         // Update the course
-        Course updatedCourse = courseRepository.findOne(course.getCode());
+        Assessment updatedCourse = courseRepository.findOne(course.getCode());
         updatedCourse
                 .setTitle(COURSE_TITLE + COURSE_TITLE);
 
@@ -171,9 +171,9 @@ public class CourseAPITest {
                 .content(TestUtil.convertObjectToJsonBytes(updatedCourse)))
                 .andExpect(status().isOk());
 
-        List<Course> courseList = courseRepository.findAll();
+        List<Assessment> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeUpdate);
-        Course testCourse =courseRepository.findOne(course.getCode());
+        Assessment testCourse =courseRepository.findOne(course.getCode());
         assertThat(testCourse.getTitle()).isEqualTo(COURSE_TITLE + COURSE_TITLE);
     }
 
@@ -188,7 +188,7 @@ public class CourseAPITest {
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
-        List<Course> courseList = courseRepository.findAll();
+        List<Assessment> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeDelete - 1);
     }
 

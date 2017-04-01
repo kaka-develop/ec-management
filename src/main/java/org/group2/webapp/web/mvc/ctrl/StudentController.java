@@ -11,16 +11,14 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.group2.webapp.entity.Authority;
+import org.apache.log4j.Logger;
+import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.entity.User;
-import org.group2.webapp.repository.AssessmentRepository;
+import org.group2.webapp.repository.AssessmentRepository2;
 import org.group2.webapp.repository.CircumstanceRepository;
 import org.group2.webapp.repository.ClaimRepository;
 import org.group2.webapp.repository.UserRepository;
-import org.group2.webapp.security.AuthoritiesConstants;
-import org.group2.webapp.security.SecurityUtils;
-import org.group2.webapp.web.util.MailUtils;
 import org.group2.webapp.web.util.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,23 +37,15 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping("/student")
 public class StudentController {
+	private static final Logger logger = Logger.getLogger(StudentController.class);
 	@Autowired
-	private final UserRepository userRepo;
+	private UserRepository userRepo;
 	@Autowired
-	private final AssessmentRepository assessmentRepo;
+	private AssessmentRepository2 assessmentRepo;
 	@Autowired
-	private final ClaimRepository claimRepo;
+	private ClaimRepository claimRepo;
 	@Autowired
-	private final CircumstanceRepository circumRepo;
-
-	public StudentController(UserRepository userRepo, AssessmentRepository assessmentRepo, ClaimRepository claimRepo,
-			CircumstanceRepository circumRepo) {
-		super();
-		this.userRepo = userRepo;
-		this.assessmentRepo = assessmentRepo;
-		this.claimRepo = claimRepo;
-		this.circumRepo = circumRepo;
-	}
+	private CircumstanceRepository circumRepo;
 
 	@GetMapping("/claim")
 	public String viewClaim(HttpServletRequest req) {
@@ -72,8 +62,12 @@ public class StudentController {
 
 	@GetMapping("/claim/add")
 	public String addClaim(HttpServletRequest req) {
-		req.setAttribute("allAssessments", assessmentRepo.findAll());
+		List<Assessment> suitableAssessment = assessmentRepo.findAll().stream()
+				.filter(ass -> ass.getFaculty().getId() == SessionUtils.getCurrentUserSession(userRepo).get().getFaculty().getId())
+				.collect(Collectors.toList());
+		req.setAttribute("allAssessments", suitableAssessment);
 		req.setAttribute("allCircumstances", circumRepo.findAll());
+		logger.debug("suitableAssessment: " + suitableAssessment.size());
 		return "claim/add";
 	}
 
@@ -82,7 +76,7 @@ public class StudentController {
 			HttpServletRequest req, @RequestParam("file") MultipartFile[] files) {
 		if (assessments != null && circumstances != null && !result.hasErrors()) {
 			for (String ass : assessments) {
-				claim.getAssessment().add(assessmentRepo.getOne(ass));
+				// claim.getAssessment().add(assessmentRepo.getOne(ass));
 			}
 			for (long cid : circumstances) {
 				claim.getCircumstances().add(circumRepo.getOne(cid));

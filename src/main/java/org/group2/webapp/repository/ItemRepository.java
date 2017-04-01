@@ -3,8 +3,6 @@
  */
 package org.group2.webapp.repository;
 
-import java.io.Serializable;
-
 import org.group2.webapp.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,6 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Contact kunedo1104@gmail.com
  *
  */
-public interface AssessmentRepository extends JpaRepository<Item, String> {
-	
+public interface ItemRepository extends JpaRepository<Item, String> {
+
 }

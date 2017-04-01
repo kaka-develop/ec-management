@@ -1,6 +1,6 @@
 package org.group2.webapp.web.rest.admin;
 
-import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.entity.Item;
 import org.group2.webapp.service.AssessmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,38 +27,38 @@ public class AssessmentAPI {
 
 
     @PostMapping("/assessments")
-    public ResponseEntity<Assessment> createAssessment(@Valid @RequestBody Assessment assessment) throws URISyntaxException {
+    public ResponseEntity<Item> createAssessment(@Valid @RequestBody Item assessment) throws URISyntaxException {
         log.debug("REST request to save Assessment : {}", assessment);
         if (assessment.getCrn() == null || assessmentService.findOne(assessment.getCrn()) != null) {
             return ResponseEntity.badRequest().build();
         }
-        Assessment result = assessmentService.create(assessment);
+        Item result = assessmentService.create(assessment);
         return ResponseEntity.ok(result);
     }
 
 
     @PutMapping("/assessments")
-    public ResponseEntity<Assessment> updateAssessment(@Valid @RequestBody Assessment assessment) throws URISyntaxException {
+    public ResponseEntity<Item> updateAssessment(@Valid @RequestBody Item assessment) throws URISyntaxException {
         log.debug("REST request to update Assessment : {}", assessment);
         if (assessment.getCrn() == null) {
             return createAssessment(assessment);
         }
-        Assessment result = assessmentService.update(assessment);
+        Item result = assessmentService.update(assessment);
         return ResponseEntity.ok(result);
     }
 
 
     @GetMapping("/assessments")
-    public List<Assessment> getAllAssessments() {
+    public List<Item> getAllAssessments() {
         log.debug("REST request to get all Assessments");
         return assessmentService.findAll();
     }
 
 
     @GetMapping("/assessments/{crn}")
-    public ResponseEntity<Assessment> getAssessment(@PathVariable String crn) {
+    public ResponseEntity<Item> getAssessment(@PathVariable String crn) {
         log.debug("REST request to get Assessment : {}", crn);
-        Assessment assessment = assessmentService.findOne(crn);
+        Item assessment = assessmentService.findOne(crn);
         if(assessment == null)
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(assessment);

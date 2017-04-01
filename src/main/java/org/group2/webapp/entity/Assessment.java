@@ -22,77 +22,75 @@ import javax.validation.constraints.Size;
 @Table(name = "assessment")
 public class Assessment implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@NotNull
-	@Size(min = 0, max = 50)
-	@Id
-	@Column(length = 50, unique = true, nullable = false)
-	private String crn;
+    @NotNull
+    @Size(min = 0, max = 50)
+    @Id
+    @Column(length = 50, unique = true, nullable = false)
+    private String code;
 
-	@NotNull
-	@Size(min = 1, max = 100)
-	@Column(length = 100, unique = true, nullable = false)
-	private String title;
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(length = 100, unique = true, nullable = false)
+    private String title;
 
-	@ManyToOne
-	private Course course;
+    @ManyToOne
+    private Faculty faculty;
+    
+	@OneToMany(mappedBy = "assessment")
+    @JsonIgnore
+    private Set<Item> items = new HashSet<>();
 
-	@JsonIgnore
-	@ManyToMany
-	@JoinTable(name = "assessment_claim", joinColumns = {
-			@JoinColumn(name = "assessment_crn", referencedColumnName = "crn") }, inverseJoinColumns = {
-					@JoinColumn(name = "claim_id", referencedColumnName = "id") })
-	private Set<Claim> claim = new HashSet<>();
-
-	public Assessment() {
-	}
-
-	public Set<Claim> getClaim() {
-		return claim;
-	}
-
-	public void setClaim(Set<Claim> claim) {
-		this.claim = claim;
-	}
-
-	public Assessment(String crn, Course course, String title) {
+    public Assessment(String code, String title, Faculty faculty) {
 		super();
-		this.crn = crn;
+		this.code = code;
 		this.title = title;
-		this.course = course;
+		this.faculty = faculty;
 	}
 
-	public String getCrn() {
-		return crn;
-	}
 
-	public void setCrn(String crn) {
-		this.crn = crn;
-	}
 
-	public String getTitle() {
-		return title;
-	}
+    public Assessment() {
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public Set<Item> getAssessments() {
+        return items;
+    }
 
-	public Course getCourse() {
-		return course;
-	}
+    public void setAssessments(Set<Item> assessments) {
+        this.items = assessments;
+    }
 
-	public void setCourse(Course course) {
-		this.course = course;
-	}
+    public Faculty getFaculty() {
+        return faculty;
+    }
 
-	@Override
-	public String toString() {
-		return "Assessment{" +
-				"crn='" + crn + '\'' +
-				", title='" + title + '\'' +
-				", course=" + course +
-				'}';
-	}
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "code='" + code + '\'' +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }

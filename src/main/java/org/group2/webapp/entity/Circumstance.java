@@ -21,61 +21,60 @@ import javax.validation.constraints.Size;
 @Table(name = "circumstance")
 public class Circumstance implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(columnDefinition = "TEXT", unique = true, nullable = true)
-    private String title;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "claim_circumstance",
-            joinColumns = {@JoinColumn(name = "circumstance_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "claim_id", referencedColumnName = "id")})
-    private Set<Claim> claims = new HashSet<>();
+	@NotNull
+	@Size(min = 1, max = 100)
+	@Column(columnDefinition = "TEXT", unique = true, nullable = true)
+	private String title;
 
-    public Circumstance() {
-    }
+	@ManyToMany(mappedBy = "circumstances")
+	private Set<Claim> claims = new HashSet<>();
 
-    public Long getId() {
-        return id;
-    }
+	public Circumstance() {
+	}
 
-    public Circumstance(String title) {
+	public Long getId() {
+		return id;
+	}
+
+	public Circumstance(String title) {
 		super();
 		this.title = title;
 	}
 
 	public void setId(Long id) {
-        this.id = id;
-    }
+		this.id = id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public Set<Claim> getClaims() {
-        return claims;
-    }
+	public Set<Claim> getClaims() {
+		return claims;
+	}
 
-    public void setClaims(Set<Claim> claims) {
-        this.claims = claims;
-    }
+	public void setClaims(Set<Claim> claims) {
+		this.claims = claims;
+	}
 
-
-    @Override
-    public String toString() {
-        return "Circumstance{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "Circumstance{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				'}';
+	}
 }
