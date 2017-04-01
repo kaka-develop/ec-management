@@ -8,20 +8,15 @@
 <link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
 <link rel="stylesheet" href="../../static/css/core.css" th:href="@{/css/core.css}" />
 
-<link rel="stylesheet" href="../../static/lib/adminlte/css/AdminLTE.min.css" />
-<link rel="stylesheet" href="../../static/lib/adminlte/css/skins/skin-blue.css" />
-<link rel="stylesheet" href="../../static/lib/iCheck/all.css" />
-
-<!-- <link rel="stylesheet" href="../../static/lib/iCheck/flat/blue.css" /> -->
-
+<link rel="stylesheet" href="../../static/lib/adminlte/css/AdminLTE.min.css" th:href="@{/lib/adminlte/css/AdminLTE.min.css}" />
+<link rel="stylesheet" href="../../static/lib/adminlte/css/skins/skin-blue.css"  th:href="@{/lib/adminlte/css/skins/skin-blue.css}" />
+<link rel="stylesheet" href="../../static/lib/iCheck/all.css"  th:href="@{/lib/iCheck/all.css}" />
 
 <script src="../../static/lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
 <script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script src="../../static/lib/adminlte/js/app.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script src="../../static/lib/iCheck/icheck.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../../static/lib/adminlte/js/app.min.js" th:src="@{/lib/adminlte/js/app.min.js}"></script>
+<script src="../../static/lib/iCheck/icheck.min.js"  th:src="@{/lib/iCheck/icheck.min.js}"></script>
 <script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
-<!-- <script src="../../static/lib/adminlte/js/app.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script> -->
-<!-- <script src="../../static/lib/adminlte/js/app.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script> -->
 </head>
 <body>
 	<div th:replace="fragments/header :: header"></div>
@@ -33,7 +28,7 @@
 <section class="content">
 		<div class="box box-success">
 			<div class="box-header">
-				<h3 class="box-title">Select assessments & circumstances</h3>
+				<h3 class="box-title">Select assessments and circumstances</h3>
 			</div>
 			<div class="box-body">
 				<form th:action="@{/student/claim/add}" method="post" class="form-horizontal">
