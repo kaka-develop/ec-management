@@ -4,6 +4,7 @@
 package org.group2.webapp;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.group2.webapp.entity.Assessment;
@@ -20,6 +21,7 @@ import org.group2.webapp.repository.ClaimRepository;
 import org.group2.webapp.repository.FacultyRepository;
 import org.group2.webapp.repository.ItemRepository;
 import org.group2.webapp.repository.UserRepository;
+import org.group2.webapp.security.AuthoritiesConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -205,4 +207,14 @@ public class SampleData {
 		logger.info("Sample data ready!");
 	}
 
+	/**
+	 * ${tags}
+	 */
+	public void test() {
+//		List<Assessment> assessments = assessmentRepository.findAll();
+//		System.out.println("assessments: " + assessments.size());
+//		for (Assessment ass : assessments) {
+//			System.out.println("Item of assessment(" + ass.getTitle() + "): " + ass.getItems().size());
+//		}
+	}
 }

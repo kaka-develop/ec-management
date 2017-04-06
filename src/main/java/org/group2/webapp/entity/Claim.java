@@ -68,6 +68,9 @@ public class Claim implements Serializable {
 
 	@Column(name = "status")
 	private int status;
+	
+	@Column(name="seen")
+	private Boolean seen;
 
 	@ManyToOne
 	private User user;
@@ -185,14 +188,10 @@ public class Claim implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Claim{" +
-				"id=" + id +
-				", evidence='" + evidence + '\'' +
-				", content='" + content + '\'' +
-				", created_time=" + created_time +
-				", processed_time=" + processed_time +
-				", status=" + status +
-				'}';
+		return "Claim [id=" + id + ", evidence=" + evidence + ", content=" + content + ", decision=" + decision
+				+ ", created_time=" + created_time + ", processed_time=" + processed_time + ", closedDate=" + closedDate
+				+ ", status=" + status + ", user=" + user + ", item=" + item + ", evidences=" + evidences
+				+ ", circumstances=" + circumstances + "]";
 	}
 
 	public String getDecision() {
@@ -209,5 +208,13 @@ public class Claim implements Serializable {
 
 	public void setItem(Item item) {
 		this.item = item;
+	}
+
+	public boolean isSeen() {
+		return seen;
+	}
+
+	public void setSeen(boolean seen) {
+		this.seen = seen;
 	}
 }

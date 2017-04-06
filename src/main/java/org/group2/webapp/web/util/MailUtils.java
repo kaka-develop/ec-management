@@ -3,6 +3,7 @@
  */
 package org.group2.webapp.web.util;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -39,19 +40,21 @@ public class MailUtils {
 		}
 	}
 
-	public static void sendInformNewClaimForECCoordinator(User user, Claim claim) {
+	public static void sendClaimNewsForCoordinators(Claim claim, List<User> users) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("You have new EC claim from student!\n");
 		sb.append("<a href='localhost:8080'>Click here to see</a>");
-		sendMail(user.getEmail(), "New EC Claim", sb.toString());
+		for (User user : users) {
+			sendMail(user.getEmail(), "New EC Claim", sb.toString());
+		}
 	}
 
-	public static void sendInformNewClaimProcessForStudent(User user, Claim claim) {
+	public static void sendClaimNewsForStudent(Claim claim) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Your EC claim has final decision!\n");
 		sb.append("<a href='localhost:8080'>Click here to see</a>");
 
-		sendMail(user.getEmail(), "EC Claim", sb.toString());
+		sendMail(claim.getUser().getEmail(), "EC Claim", sb.toString());
 	}
 
 	public static void sendMail(String to, String subject, String content) {
@@ -72,10 +75,11 @@ public class MailUtils {
 		}).start();
 
 	}
+
 	public static void main(String[] args) {
 		MailUtils.sendMail("sondcgc00681@fpt.edu.vn", "Title", "<a href='#'>Click vao day</a>");
 	}
-	
+
 }
 
 class OurAuthentication extends Authenticator {

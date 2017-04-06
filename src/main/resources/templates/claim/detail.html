@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
 <link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap-theme.min.css}" />
 <link rel="stylesheet" href="../../static/css/core.css" th:href="@{/css/core.css}" />
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <link rel="stylesheet" href="../../static/lib/adminlte/css/AdminLTE.min.css" th:href="@{/lib/adminlte/css/AdminLTE.min.css}" />
 <link rel="stylesheet" href="../../static/lib/adminlte/css/skins/skin-blue.css" th:href="@{/lib/adminlte/css/skins/skin-blue.css}" />
 <link rel="stylesheet" href="../../static/lib/iCheck/all.css" th:href="@{/lib/iCheck/all.css}" />
@@ -41,11 +41,7 @@
 					</div>
 
 					<div class="form-group">
-						<label>Assessments: </label><br />
-						<div th:each="ass : ${claim.assessment}" th:text="${ass.title}">
-							<label> <input type="checkbox" class="myCheckbox" checked disabled /> <span th:text="${ass.title}">assessment</span>
-							</label>
-						</div>
+						<label>Claim for: </label> <span th:text="${claim.item.title}">Title</span>
 					</div>
 					<div class="form-group">
 						<label>Circumstances: </label><br />
@@ -57,56 +53,48 @@
 					</div>
 					<div class="form-group">
 						<label>Decision</label>
-						<textarea id="" class="form-control" style="resize: vertical;" th:text="${claim.content}" name="decision" rows="10" cols="80"
+						<textarea id="ckeditor" class="form-control" style="resize: vertical;" th:text="${claim.content}" name="decision" rows="10" cols="80"
 							readonly="readonly"></textarea>
 					</div>
-
-
+					<div class="form-group">
+						<label>Evidences: </label>
+						<div>
+							<img width="128" src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" />
+						</div>
+					</div>
 					<form>
 						<div class="form-group">
-							<label>Upload evidents: </label> <input type="file" multiple="true" />
+							<label>Upload more evidents: </label> <input type="file" multiple="true" />
 						</div>
 						<div class="form-group">
 							<input class="btn btn-primary" type="submit" value="Upload" />
 						</div>
 					</form>
 				</div>
+
 			</div>
+
+
 		</section>
 	</div>
 
 	<div th:replace="fragments/footer :: footer"></div>
 
-	<!-- 	<table class="table table-striped"> -->
-	<!-- 		<thead> -->
-	<!-- 			<tr> -->
-	<!-- 				<th>Claim ID</th> -->
-	<!-- 				<th>Assessments</th> -->
-	<!-- 				<th>Circumstances</th> -->
-	<!-- 				<th>Submit date</th> -->
-	<!-- 				<th>Status</th> -->
-	<!-- 								<th>Evidences</th> -->
-	<!-- 			</tr> -->
-	<!-- 		</thead> -->
-
-	<!-- 		<tbody> -->
-	<!-- 			<tr th:each="cl : ${claims}" class="clickableRow"> -->
-	<!-- 				<td th:text="${cl.id}" class="claimId"></td> -->
-	<!-- 				<td><p th:each="ass : ${cl.assessment}" th:text="${ass.title}"></p></td> -->
-	<!-- 				<td><p th:each="cir : ${cl.circumstances}" th:text="${cir.title}"></p></td> -->
-
-	<!-- 				<td th:text="${cl.created_time}"></td> -->
-	<!-- 				<td th:text="${cl.status}">fds</td> -->
-
-	<!-- 			</tr> -->
-	<!-- 		</tbody> -->
-
-	<!-- 	</table> -->
-	<!-- 	<a href="#" th:href="@{/student/claim/add}">Submit new claim</a> -->
-</body>
-<script>
-	// 	$(".clickableRow").on("click", function() {
-	//  		window.location.href = "http://localhost:8080/eccoordinator/claim/detail?id="+$(this).find(".claimId").html()
-	// 	})
+	<script>
+$('input[type="checkbox"]').iCheck({
+    checkboxClass: 'icheckbox_square-blue',
+    radioClass: 'iradio_square-blue',
+  });
+  CKEDITOR.replace( 'ckeditor' );
 </script>
+</body>
+
 </html>

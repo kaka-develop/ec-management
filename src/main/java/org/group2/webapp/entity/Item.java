@@ -76,7 +76,7 @@ public class Item implements Serializable {
 		this.title = title;
 	}
 
-	public Assessment getCourse() {
+	public Assessment getAssessment() {
 		return assessment;
 	}
 

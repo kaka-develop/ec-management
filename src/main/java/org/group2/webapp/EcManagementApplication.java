@@ -9,6 +9,8 @@ public class EcManagementApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(EcManagementApplication.class, args);
-		ctx.getBean(SampleData.class).run();
+		SampleData sampleData=ctx.getBean(SampleData.class);
+		sampleData.run();
+		sampleData.test();
 	}
 }

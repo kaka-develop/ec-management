@@ -4,67 +4,185 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
 <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
-<link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
+<link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}" />
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="../../static/lib/iCheck/all.css" th:href="@{/lib/iCheck/all.css}" />
+<link rel="stylesheet" href="../../static/lib/adminlte/css/AdminLTE.min.css" th:href="@{/lib/adminlte/css/AdminLTE.min.css}" />
+<link rel="stylesheet" href="../../static/lib/adminlte/css/skins/skin-blue.css" th:href="@{/lib/adminlte/css/skins/skin-blue.css}" />
 <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
 <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-
+<script src="../../static/lib/iCheck/icheck.min.js" th:src="@{/lib/iCheck/icheck.min.js}"></script>
 <title>Claims</title>
 </head>
 
 <div th:replace="fragments/header :: header"></div>
 <body>
-<!-- 	<div sec:authorize="isAuthenticated()"> -->
-<!--   This content is only shown to authenticated users. -->
-<!-- </div> -->
-<!-- <th:block sec:authorize="hasRole('ROLE_STUDENT')"> -->
-<!--   This content is only shown to ROLE_STUDENT. -->
-<!-- </th:block> -->
-<!-- <div sec:authorize="hasRole('ROLE_MANAGER')"> -->
-<!--   This content is only shown to ROLE_MANAGER. -->
-<!-- </div> -->
+	<!-- 	<div sec:authorize="isAuthenticated()"> -->
+	<!--   This content is only shown to authenticated users. -->
+	<!-- </div> -->
+	<!-- <th:block sec:authorize="hasRole('ROLE_STUDENT')"> -->
+	<!--   This content is only shown to ROLE_STUDENT. -->
+	<!-- </th:block> -->
+	<!-- <div sec:authorize="hasRole('ROLE_MANAGER')"> -->
+	<!--   This content is only shown to ROLE_MANAGER. -->
+	<!-- </div> -->
 
-<div class="container">
-	<span th:field="${claims.size()}"></span>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Claim ID</th>
-				<th>Assessments</th>
-				<th>Circumstances</th>
-				<th>Submit date</th>
-				<th>Status</th>
-				<!-- 				<th>Evidences</th> -->
-			</tr>
-		</thead>
+	<div class="container">
 
-		<tbody>
-			<tr th:each="cl : ${claims}" class="clickableRow">
-				<td th:text="${cl.id}" class="claimId"></td>
-				<td><p th:each="ass : ${cl.assessment}" th:text="${ass.title}"></p></td>
-				<td><p th:each="cir : ${cl.circumstances}" th:text="${cir.title}"></p></td>
 
-				<td th:text="${cl.created_time}"></td>
-				<td th:text="${cl.status}">fds</td>
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">
+					My claims [<span th:text="${claims.size()}"></span>]
+				</h3>
 
-			</tr>
-		</tbody>
+				<div class="box-tools pull-right">
+					<div class="has-feedback">
+						<input type="text" class="form-control input-sm" placeholder="Search claim"> <span
+							class="glyphicon glyphicon-search form-control-feedback"></span>
+					</div>
+				</div>
+				<!-- /.box-tools -->
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body no-padding">
+				<div class="mailbox-controls">
+					<!-- Check all button -->
+					<button type="button" class="btn btn-default btn-sm checkbox-toggle">
+						<i class="fa fa-square-o"></i>
+					</button>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default btn-sm">
+							<i class="fa fa-trash-o"></i>
+						</button>
+						<button type="button" class="btn btn-default btn-sm">
+							<i class="fa fa-reply"></i>
+						</button>
+						<button type="button" class="btn btn-default btn-sm">
+							<i class="fa fa-share"></i>
+						</button>
+					</div>
+					<!-- /.btn-group -->
+					<button type="button" class="btn btn-default btn-sm">
+						<i class="fa fa-refresh"></i>
+					</button>
+					<div class="pull-right">
+						1-50/200
+						<div class="btn-group">
+							<button type="button" class="btn btn-default btn-sm">
+								<i class="fa fa-chevron-left"></i>
+							</button>
+							<button type="button" class="btn btn-default btn-sm">
+								<i class="fa fa-chevron-right"></i>
+							</button>
+						</div>
+						<!-- /.btn-group -->
+					</div>
+					<!-- /.pull-right -->
+				</div>
+				<div class="table-responsive mailbox-messages">
+					<table class="table table-hover table-striped">
+						<tbody>
+							<tr style="cursor: pointer;" th:each="cl : ${claims}" class="claimRow">
+								
+								<input type="hidden" class="claimId" value="Submit" th:value="${cl.id}" />
+								<td ><input type="checkbox"></td>
+								<td class="mailbox-date" th:text="${cl.status}">5 mins ago</td>
+								<td class="mailbox-name" th:text="${cl.item.assessment.title}"></td>
+								<td class="mailbox-subject" th:text="${cl.item.title}"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...</td>
+								<td class="mailbox-attachment"></td>
+								<td class="mailbox-date">5 mins ago</td>
+								
+							</tr>
+						</tbody>
+					</table>
+					<!-- /.table -->
+				</div>
+				<!-- /.mail-box-messages -->
+			</div>
+			<!-- /.box-body -->
+			<div class="box-footer no-padding">
+				<div class="mailbox-controls">
+					<!-- Check all button -->
+					<button type="button" class="btn btn-default btn-sm checkbox-toggle">
+						<i class="fa fa-square-o"></i>
+					</button>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default btn-sm">
+							<i class="fa fa-trash-o"></i>
+						</button>
+						<button type="button" class="btn btn-default btn-sm">
+							<i class="fa fa-reply"></i>
+						</button>
+						<button type="button" class="btn btn-default btn-sm">
+							<i class="fa fa-share"></i>
+						</button>
+					</div>
+					<!-- /.btn-group -->
+					<button type="button" class="btn btn-default btn-sm">
+						<i class="fa fa-refresh"></i>
+					</button>
+					<div class="pull-right">
+						1-50/200
+						<div class="btn-group">
+							<button type="button" class="btn btn-default btn-sm">
+								<i class="fa fa-chevron-left"></i>
+							</button>
+							<button type="button" class="btn btn-default btn-sm">
+								<i class="fa fa-chevron-right"></i>
+							</button>
+						</div>
+						<!-- /.btn-group -->
+					</div>
+					<!-- /.pull-right -->
+				</div>
+			</div>
+		</div>
+		<!-- /. box -->
+		<a href="#" th:href="@{/student/claim/add}">Submit new claim</a>
 
-	</table>
-	<a href="#" th:href="@{/student/claim/add}">Submit new claim</a>
-	
 	</div>
 	<div th:replace="fragments/footer :: footer"></div>
+
+	<script>
+    $('.mailbox-messages input[type="checkbox"]').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+      });
+    //Handle starring for glyphicon and font awesome
+    $(".mailbox-star").click(function (e) {
+      e.preventDefault();
+      //detect type
+      var $this = $(this).find("a > i");
+      var glyph = $this.hasClass("glyphicon");
+      var fa = $this.hasClass("fa");
+
+      //Switch states
+      if (glyph) {
+        $this.toggleClass("glyphicon-star");
+        $this.toggleClass("glyphicon-star-empty");
+      }
+
+      if (fa) {
+        $this.toggleClass("fa-star");
+        $this.toggleClass("fa-star-o");
+      }
+    });
+	</script>
 </body>
-<script>
-	$(".clickableRow").on("click", function() {
-		<th:block sec:authorize="hasRole('ROLE_STUDENT')">
-		window.location.href = "http://localhost:8080/student/claim/detail?id="+$(this).find(".claimId").html()
-		</th:block>		
-		<th:block sec:authorize="hasRole('ROLE_MANAGER')">
-		window.location.href = "http://localhost:8080/eccoordinator/claim/pro?id="+$(this).find(".claimId").html()
-		</th:block>		
- 		
- 		
-	})
+<script th:inline="javascript">
+$(".claimRow").on("click", function() {
+	claimId=$(this).find(".claimId").val()
+	
+// <th:block sec:authorize="hasRole('ROLE_STUDENT')">
+ 		window.location.href = "http://localhost:8080/student/claim/detail?id="+claimId
+//  		</th:block>	
+// <th:block sec:authorize="hasRole('ROLE_MANAGER')">
+//  		window.location.href = "http://localhost:8080/eccoordinator/claim/pro?id="+clamId
+//  		</th:block>
+})
 </script>
 </html>

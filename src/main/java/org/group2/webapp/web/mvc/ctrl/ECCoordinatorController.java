@@ -67,7 +67,7 @@ public class ECCoordinatorController {
 		claim.setStatus(status);
 		claim.setDecision(decision);
 		claimRepo.save(claim);
-		MailUtils.sendInformNewClaimProcessForStudent(claim.getUser(), claim);
+		MailUtils.sendClaimNewsForStudent(claim);
 		return "claim/success";
 	}
 

@@ -22,75 +22,77 @@ import javax.validation.constraints.Size;
 @Table(name = "assessment")
 public class Assessment implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @NotNull
-    @Size(min = 0, max = 50)
-    @Id
-    @Column(length = 50, unique = true, nullable = false)
-    private String code;
+	@NotNull
+	@Size(min = 0, max = 50)
+	@Id
+	@Column(length = 50, unique = true, nullable = false)
+	private String code;
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(length = 100, unique = true, nullable = false)
-    private String title;
+	@NotNull
+	@Size(min = 1, max = 100)
+	@Column(length = 100, unique = true, nullable = false)
+	private String title;
 
-    @ManyToOne
-    private Faculty faculty;
-    
-	@OneToMany(mappedBy = "assessment")
-    @JsonIgnore
-    private Set<Item> items = new HashSet<>();
+	@ManyToOne
+	private Faculty faculty;
 
-    public Assessment(String code, String title, Faculty faculty) {
+	@OneToMany(mappedBy = "assessment", fetch = FetchType.EAGER)
+	@JsonIgnore
+	private Set<Item> items = new HashSet<>();
+
+	public Assessment(String code, String title, Faculty faculty) {
 		super();
 		this.code = code;
 		this.title = title;
 		this.faculty = faculty;
 	}
 
+	public Assessment() {
+	}
 
+	public void setAssessments(Set<Item> assessments) {
+		this.items = assessments;
+	}
 
-    public Assessment() {
-    }
+	public Faculty getFaculty() {
+		return faculty;
+	}
 
-    public Set<Item> getAssessments() {
-        return items;
-    }
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
+	}
 
-    public void setAssessments(Set<Item> assessments) {
-        this.items = assessments;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public Faculty getFaculty() {
-        return faculty;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	@Override
+	public String toString() {
+		return "Course{" +
+				"code='" + code + '\'' +
+				", title='" + title + '\'' +
+				'}';
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public Set<Item> getItems() {
+		return items;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "code='" + code + '\'' +
-                ", title='" + title + '\'' +
-                '}';
-    }
+	public void setItems(Set<Item> items) {
+		this.items = items;
+	}
 }
