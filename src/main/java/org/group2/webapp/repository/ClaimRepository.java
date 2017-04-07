@@ -20,4 +20,10 @@ public interface ClaimRepository extends JpaRepository<Claim, Long> {
 
     @Query("select c from Claim c join c.circumstances cir where cir.id = ?1")
     List<Claim> findAllByCircumstanceId(Long circumstanceId);
+
+    @Query("select c from Claim c where MONTH(c.created_time) = ?1 and YEAR(c.created_time) = ?2")
+    List<Claim> findAllByThisMonth(int month,int year);
+
+    @Query("select c from Claim c where WEEK(c.created_time) = ?1 and MONTH(c.created_time) = ?2 and YEAR(c.created_time) = ?3")
+    List<Claim> findAllByThisWeek(int week,int month,int year);
 }

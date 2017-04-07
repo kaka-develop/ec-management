@@ -16,6 +16,13 @@ public class ConvertUntil {
             return null;
     }
 
+    public static Integer convertStringToInteger(String str){
+        if(StringUtils.isNumeric(str))
+            return Integer.parseInt(str);
+        else
+            return 0;
+    }
+
     public static Set<String> convertRoleIntoAuthories(String role){
         Set<String> authorities = new HashSet<>();
         if(role == null)

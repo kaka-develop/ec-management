@@ -89,6 +89,27 @@ public class ClaimServiceTest {
         assertThat(!claimService.findClaimsByYear(year).isEmpty());
     }
 
+    @Test
+    public void testShouldHaveAllClaimsInThisMonth() {
+        Calendar calendar = Calendar.getInstance();
+        Integer year = calendar.get(Calendar.YEAR);
+        Integer month = calendar.get(Calendar.MONTH) + 1;
+        assertThat(!claimRepository.findAllByThisMonth(month,year).isEmpty());
+        assertThat(!claimService.findClaimsInThisMonth().isEmpty());
+    }
+
+    @Test
+    public void testShouldHaveAllClaimsInThisWeek() {
+        Calendar calendar = Calendar.getInstance();
+        Integer year = calendar.get(Calendar.YEAR);
+        Integer month = calendar.get(Calendar.MONTH) + 1;
+        Integer week = calendar.get(Calendar.WEEK_OF_MONTH);
+        assertThat(!claimRepository.findAllByThisWeek(week,month,year).isEmpty());
+        assertThat(!claimService.findClaimsInThisWeek().isEmpty());
+    }
+
+
+
     @After
     public void after() {
         claimService.delete(claim.getId());
