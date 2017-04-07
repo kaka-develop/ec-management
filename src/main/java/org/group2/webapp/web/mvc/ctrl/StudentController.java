@@ -5,6 +5,7 @@ package org.group2.webapp.web.mvc.ctrl;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,7 +39,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-@RequestMapping("/student")
+@RequestMapping("/student/claim")
 public class StudentController {
 	private static final Logger logger = Logger.getLogger(StudentController.class);
 	@Autowired
@@ -52,7 +53,7 @@ public class StudentController {
 	@Autowired
 	private ItemRepository itemRepo;
 
-	@GetMapping("/claim")
+	@GetMapping("/view")
 	public String viewClaim(HttpServletRequest req) {
 		User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
 		List<String> str = Collections.list(req.getSession().getAttributeNames());
@@ -60,24 +61,35 @@ public class StudentController {
 			System.out.println("session name: " + s);
 			System.out.println("value of: " + req.getSession().getAttribute(s));
 		}
-		List<Claim> claims = getAllClaimOfStudent(currentUser);
+		List<Claim> claims = claimRepo.findAllByUserId(currentUser.getId());
+		Collections.sort(claims, new Comparator<Claim>() {
+
+			@Override
+			public int compare(Claim o1, Claim o2) {
+				
+				return o2.getCreated_time().compareTo(o1.getCreated_time());
+			}
+		});
+		
+		
 		req.setAttribute("claims", claims);
 		return "claim/claims";
 	}
 
-	@GetMapping("/claim/add")
+	@GetMapping("/add")
 	public String addClaim(HttpServletRequest req) {
 		List<Assessment> suitableAssessment = assessmentRepo.findAll().stream()
 				.filter(ass -> ass.getFaculty().getId() == SessionUtils.getCurrentUserSession(userRepo).get()
 						.getFaculty().getId())
 				.collect(Collectors.toList());
+
 		req.setAttribute("allAssessments", suitableAssessment);
 		req.setAttribute("allCircumstances", circumRepo.findAll());
 		logger.debug("suitableAssessment: " + suitableAssessment.size());
 		return "claim/add";
 	}
 
-	@PostMapping("/claim/add")
+	@PostMapping("/add")
 	public String addClaim(String[] itemCrns, Long[] circumstances, String content,
 			HttpServletRequest req) {
 		if (itemCrns != null && circumstances != null && content != null) {
@@ -97,6 +109,7 @@ public class StudentController {
 				MailUtils.sendClaimNewsForCoordinators(myClaim,
 						userRepo.findAllUserByAuthority(AuthoritiesConstants.COORDINATOR));
 			}
+			req.setAttribute("claimAdded", true);
 			return viewClaim(req);
 		} else {
 			return addClaim(req);
@@ -104,27 +117,11 @@ public class StudentController {
 
 	}
 
-	@GetMapping("/claim/detail")
-	public String index(long id, HttpServletRequest req) {
-		// User currentUser =
-		// SessionUtils.getCurrentUserSession(userRepo).get();
+	@GetMapping("/detail")
+	public String index(Long id, HttpServletRequest req) {
 		Claim claim = claimRepo.findOne(id);
 		System.out.println("claim: " + claim);
 		req.setAttribute("claim", claim);
 		return "claim/detail";
-	}
-
-	public List<Claim> getAllClaimOfStudent(User student) {
-		List<Claim> claims = claimRepo.findAll();
-		return claims.stream().filter(cl -> cl.getUser().getId() == student.getId()).collect(Collectors.toList());
-	}
-
-	public Optional<User> getECProcessClaim(long facultyId) {
-		for (User user : userRepo.findAll()) {
-			if (user.getFaculty().getId() == facultyId) {
-				return Optional.of(user);
-			}
-		}
-		return Optional.empty();
 	}
 }

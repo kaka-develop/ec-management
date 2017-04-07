@@ -5,9 +5,12 @@
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 <title>Add claim</title>
 <link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
-<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap-theme.min.css}" />
+<!-- <link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap-theme.min.css}" /> -->
 <link rel="stylesheet" href="../../static/css/core.css" th:href="@{/css/core.css}" />
-
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <link rel="stylesheet" href="../../static/lib/adminlte/css/AdminLTE.min.css" th:href="@{/lib/adminlte/css/AdminLTE.min.css}" />
 <link rel="stylesheet" href="../../static/lib/adminlte/css/skins/skin-blue.css" th:href="@{/lib/adminlte/css/skins/skin-blue.css}" />
 <link rel="stylesheet" href="../../static/lib/iCheck/all.css" th:href="@{/lib/iCheck/all.css}" />
@@ -30,10 +33,15 @@
 					<h3 class="box-title">Select assessments and circumstances</h3>
 				</div>
 				<div class="box-body">
-					<form th:action="@{/student/claim/add}" method="post" class="form-horizontal">
-
-						<div class="form-group col-lg-12">
-							<label>Choose assessments</label>
+					<form th:action="@{/student/claim/add}" id="add-form" method="post" class="form-horizontal">
+						<div style="display:none;" class="alert alert-danger">
+							<h4>
+								<i class="icon fa fa-ban"></i> Claim form error!
+							</h4>
+							Some fields are not correct!
+						</div>
+						<div class="form-group col-lg-12 group-item">
+							<label>Choose assessments</label> <span style="display: none;" class="help-block">You have to select at least one item of assessment!</span>
 							<div th:each="ass : ${allAssessments}">
 								<label th:text="${ass.code}+' '+${ass.title}"> </label>
 
@@ -45,18 +53,19 @@
 								<br />
 							</div>
 						</div>
-						<div class="form-group col-lg-12">
-							<label>Choose circumstances</label>
+						<div class="form-group col-lg-12 group-circumstance">
+							<label>Choose circumstances</label> <span style="display: none;" class="help-block">You have to select at least one circumstance!</span>
 							<div th:each="cir : ${allCircumstances}">
 								<label><input type="checkbox" class="myCheckbox" name="circumstances" th:value="${cir.id}" /> <span th:text="${cir.title}"></span></label>
 							</div>
 						</div>
 
-						<div class="form-group col-lg-12">
-							<label>Content</label>
+						<div class="form-group col-lg-12 group-content">
+							<label>Content</label> <span style="display: none;" class="help-block">The content cannot blank</span>
 							<div>
 								<textarea id="contentEditor" name="content" rows="10" cols="80"></textarea>
 							</div>
+
 						</div>
 						<div class="form-group col-lg-12">
 							<label>Attach files</label>
@@ -76,16 +85,41 @@
 	<div th:replace="fragments/footer :: footer"></div>
 
 	<script>
-	 $(function () {
-		$('input.myCheckbox, input.myRadio').iCheck({
-			checkboxClass: 'icheckbox_minimal-blue',
-			radioClass: 'iradio_minimal-blue',
-			cursor: true
-		});
-		CKEDITOR.replace('contentEditor',{
-			
-		});
-	 })
+	
+	$("#add-form").submit(function(e){
+		
+		valid=true
+		if($("input[name=itemCrns]:checked").length==0){
+			$(".group-item").addClass("has-error")
+			$(".group-item").find(".help-block").show()
+			valid=false;
+		}
+		if($("input[name=circumstances]:checked").length==0){
+			$(".group-circumstance").addClass("has-error")
+			$(".group-circumstance").find(".help-block").show()
+			valid=false;
+		}
+
+		if(CKEDITOR.instances.contentEditor.document.getBody().getText().length<=1){
+			$(".group-content").addClass("has-error")
+			$(".group-content").find(".help-block").show()
+			valid=false;
+		}
+		if(!valid){
+			e.preventDefault()
+			$(".alert-danger").show();
+			window.scrollTo(0, 0);
+		}
+	})
+	$('input.myCheckbox, input.myRadio').iCheck({
+		checkboxClass: 'icheckbox_minimal-blue',
+		radioClass: 'iradio_minimal-blue',
+		cursor: true
+	});
+	CKEDITOR.replace('contentEditor',{
+		
+	});
+	 
 	</script>
 </body>
 </html>

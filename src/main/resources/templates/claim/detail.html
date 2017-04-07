@@ -33,7 +33,19 @@
 			<div class="box box-success">
 				<div class="box-header with-border">
 					<h3 class="box-title">Claim 2017-04-05</h3>
-					<div class="label label-error pull-right">Disabled</div>
+					<div class="pull-right">
+						<th:block th:switch="${claim.status}">
+							<div th:case="0">
+								<span class="label label-success">Done</span>
+							</div>
+							<div th:case="1">
+								<span class="label label-warning">Pending</span>
+							</div>
+							<div th:case="2">
+								<span class="label label-danger">Disabled</span>
+							</div>
+						</th:block>
+					</div>
 				</div>
 				<div class="box-body">
 					<div class="form-group">
@@ -52,8 +64,13 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label>Content</label>
+						<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.content}" name="decision" rows="10" cols="80"
+							readonly="readonly"></textarea>
+					</div>
+					<div th:if="${claim.decision != null}" class="form-group">
 						<label>Decision</label>
-						<textarea id="ckeditor" class="form-control" style="resize: vertical;" th:text="${claim.content}" name="decision" rows="10" cols="80"
+						<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.decision}" name="decision" rows="10" cols="80"
 							readonly="readonly"></textarea>
 					</div>
 					<div class="form-group">
@@ -89,12 +106,14 @@
 	<div th:replace="fragments/footer :: footer"></div>
 
 	<script>
-$('input[type="checkbox"]').iCheck({
-    checkboxClass: 'icheckbox_square-blue',
-    radioClass: 'iradio_square-blue',
-  });
-  CKEDITOR.replace( 'ckeditor' );
-</script>
+		$('input[type="checkbox"]').iCheck({
+		    checkboxClass: 'icheckbox_square-blue',
+		    radioClass: 'iradio_square-blue',
+		  });
+	  	CKEDITOR.replace("ckeditor");
+
+	  	
+	</script>
 </body>
 
 </html>

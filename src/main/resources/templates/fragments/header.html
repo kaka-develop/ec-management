@@ -20,7 +20,7 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<th:block sec:authorize="hasRole('ROLE_STUDENT')">
-						<li><a href="#" th:href="@{/student/claim}">My EC claims</a></li>
+						<li><a href="#" th:href="@{/student/claim/view}">My EC claims</a></li>
 						<li><a href="#" th:href="@{/student/claim/add}">Request new EC claim</a></li>
 					</th:block>
 					<th:block sec:authorize="hasRole('ROLE_COORDINATOR')">

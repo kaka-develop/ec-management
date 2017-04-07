@@ -217,4 +217,8 @@ public class SampleData {
 //			System.out.println("Item of assessment(" + ass.getTitle() + "): " + ass.getItems().size());
 //		}
 	}
+	
+	public static void main(String[] args) {
+		
+	}
 }
