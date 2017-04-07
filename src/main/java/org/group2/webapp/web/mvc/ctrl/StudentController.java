@@ -97,7 +97,7 @@ public class StudentController {
 				MailUtils.sendClaimNewsForCoordinators(myClaim,
 						userRepo.findAllUserByAuthority(AuthoritiesConstants.COORDINATOR));
 			}
-			return "claim/success";
+			return viewClaim(req);
 		} else {
 			return addClaim(req);
 		}
