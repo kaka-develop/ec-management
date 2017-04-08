@@ -104,6 +104,22 @@ public class Claim implements Serializable {
 		this.status = status;
 	}
 
+	public Claim(String evidence, String content, Date created_time, Date processed_time, int status, User user,Date closedDate) {
+		this.evidence = evidence;
+		this.content = content;
+		this.created_time = created_time;
+		this.processed_time = processed_time;
+		this.closedDate = closedDate;
+		this.status = status;
+		this.user = user;
+	}
+	public void addCircumstance(Circumstance circumstance) {
+		this.circumstances.add(circumstance);
+	}
+
+	public void clearCircumstances() {
+		this.circumstances.clear();
+	}
 
 	public Set<Circumstance> getCircumstances() {
 		return circumstances;
