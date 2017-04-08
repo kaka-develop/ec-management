@@ -19,8 +19,8 @@ import javax.validation.constraints.Size;
  * @author dfChicken
  */
 @Entity
-@Table(name = "assessment")
-public class Assessment implements Serializable {
+@Table(name = "item")
+public class Item implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class Assessment implements Serializable {
 	@Size(min = 0, max = 50)
 	@Id
 	@Column(length = 50, unique = true, nullable = false)
-	private String code;
+	private String crn;
 
 	@NotNull
 	@Size(min = 1, max = 100)
@@ -36,40 +36,36 @@ public class Assessment implements Serializable {
 	private String title;
 
 	@ManyToOne
-	private Faculty faculty;
+	private Assessment assessment;
 
-	@OneToMany(mappedBy = "assessment", fetch = FetchType.EAGER)
 	@JsonIgnore
-	private Set<Item> items = new HashSet<>();
+	@OneToMany(mappedBy = "item")
+	private Set<Claim> claim = new HashSet<>();
 
-	public Assessment(String code, String title, Faculty faculty) {
+	public Item() {
+	}
+
+	public Set<Claim> getClaim() {
+		return claim;
+	}
+
+	public void setClaim(Set<Claim> claim) {
+		this.claim = claim;
+	}
+
+	public Item(String crn, Assessment course, String title) {
 		super();
-		this.code = code;
+		this.crn = crn;
 		this.title = title;
-		this.faculty = faculty;
+		this.assessment = course;
 	}
 
-	public Assessment() {
+	public String getCrn() {
+		return crn;
 	}
 
-	public void setAssessments(Set<Item> assessments) {
-		this.items = assessments;
-	}
-
-	public Faculty getFaculty() {
-		return faculty;
-	}
-
-	public void setFaculty(Faculty faculty) {
-		this.faculty = faculty;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
+	public void setCrn(String crn) {
+		this.crn = crn;
 	}
 
 	public String getTitle() {
@@ -80,19 +76,20 @@ public class Assessment implements Serializable {
 		this.title = title;
 	}
 
+	public Assessment getAssessment() {
+		return assessment;
+	}
+
+	public void setCourse(Assessment course) {
+		this.assessment = course;
+	}
+
 	@Override
 	public String toString() {
-		return "Course{" +
-				"code='" + code + '\'' +
+		return "Assessment{" +
+				"crn='" + crn + '\'' +
 				", title='" + title + '\'' +
+				", course=" + assessment +
 				'}';
-	}
-
-	public Set<Item> getItems() {
-		return items;
-	}
-
-	public void setItems(Set<Item> items) {
-		this.items = items;
 	}
 }

@@ -5,17 +5,17 @@
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 
 <link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
-<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap-theme.min.css}" />
 <link rel="stylesheet" href="../../static/css/core.css" th:href="@{/css/core.css}" />
-
-<link rel="stylesheet" href="../../static/lib/adminlte/css/AdminLTE.min.css" />
-<link rel="stylesheet" href="../../static/lib/adminlte/css/skins/skin-blue.css" />
-<link rel="stylesheet" href="../../static/lib/iCheck/all.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="../../static/lib/adminlte/css/AdminLTE.min.css" th:href="@{/lib/adminlte/css/AdminLTE.min.css}" />
+<link rel="stylesheet" href="../../static/lib/adminlte/css/skins/skin-blue.css" th:href="@{/lib/adminlte/css/skins/skin-blue.css}" />
+<link rel="stylesheet" href="../../static/lib/iCheck/all.css" th:href="@{/lib/iCheck/all.css}" />
 
 <script src="../../static/lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
 <script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script src="../../static/lib/adminlte/js/app.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script src="../../static/lib/iCheck/icheck.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script src="../../static/lib/adminlte/js/app.min.js" th:src="@{/lib/adminlte/js/app.min.js}"></script>
+<script src="../../static/lib/iCheck/icheck.min.js" th:src="@{/lib/iCheck/icheck.min.js}"></script>
 <script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
 <title>Detail claim</title>
 </head>
@@ -33,19 +33,27 @@
 			<div class="box box-success">
 				<div class="box-header with-border">
 					<h3 class="box-title">Claim 2017-04-05</h3>
-					<div class="label label-error pull-right">Disabled</div>
+					<div class="pull-right">
+						<th:block th:switch="${claim.status}">
+							<div th:case="0">
+								<span class="label label-success">Done</span>
+							</div>
+							<div th:case="1">
+								<span class="label label-warning">Pending</span>
+							</div>
+							<div th:case="2">
+								<span class="label label-danger">Disabled</span>
+							</div>
+						</th:block>
+					</div>
 				</div>
 				<div class="box-body">
 					<div class="form-group">
 						<label>Claim ID#:</label> <span th:text="${claim.id}">1111</span>
 					</div>
-					
+
 					<div class="form-group">
-						<label>Assessments: </label><br />
-						<div th:each="ass : ${claim.assessment}" th:text="${ass.title}">
-							<label> <input type="checkbox" class="myCheckbox" checked disabled /> <span th:text="${ass.title}">assessment</span>
-							</label>
-						</div>
+						<label>Claim for: </label> <span th:text="${claim.item.title}">Title</span>
 					</div>
 					<div class="form-group">
 						<label>Circumstances: </label><br />
@@ -56,57 +64,56 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label>Decision</label>
-						<textarea id="" class="form-control" style="resize: vertical;" th:text="${claim.content}" name="decision" rows="10" cols="80"
+						<label>Content</label>
+						<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.content}" name="decision" rows="10" cols="80"
 							readonly="readonly"></textarea>
 					</div>
-					
-
+					<div th:if="${claim.decision != null}" class="form-group">
+						<label>Decision</label>
+						<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.decision}" name="decision" rows="10" cols="80"
+							readonly="readonly"></textarea>
+					</div>
+					<div class="form-group">
+						<label>Evidences: </label>
+						<div>
+							<img width="128" src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" />
+						</div>
+					</div>
 					<form>
 						<div class="form-group">
-							<label>Upload evidents: </label> <input type="file" multiple="true" />
+							<label>Upload more evidents: </label> <input type="file" multiple="true" />
 						</div>
 						<div class="form-group">
 							<input class="btn btn-primary" type="submit" value="Upload" />
 						</div>
 					</form>
 				</div>
+
 			</div>
+
+
 		</section>
 	</div>
 
 	<div th:replace="fragments/footer :: footer"></div>
 
-	<!-- 	<table class="table table-striped"> -->
-	<!-- 		<thead> -->
-	<!-- 			<tr> -->
-	<!-- 				<th>Claim ID</th> -->
-	<!-- 				<th>Assessments</th> -->
-	<!-- 				<th>Circumstances</th> -->
-	<!-- 				<th>Submit date</th> -->
-	<!-- 				<th>Status</th> -->
-	<!-- 								<th>Evidences</th> -->
-	<!-- 			</tr> -->
-	<!-- 		</thead> -->
+	<script>
+		$('input[type="checkbox"]').iCheck({
+		    checkboxClass: 'icheckbox_square-blue',
+		    radioClass: 'iradio_square-blue',
+		  });
+	  	CKEDITOR.replace("ckeditor");
 
-	<!-- 		<tbody> -->
-	<!-- 			<tr th:each="cl : ${claims}" class="clickableRow"> -->
-	<!-- 				<td th:text="${cl.id}" class="claimId"></td> -->
-	<!-- 				<td><p th:each="ass : ${cl.assessment}" th:text="${ass.title}"></p></td> -->
-	<!-- 				<td><p th:each="cir : ${cl.circumstances}" th:text="${cir.title}"></p></td> -->
-
-	<!-- 				<td th:text="${cl.created_time}"></td> -->
-	<!-- 				<td th:text="${cl.status}">fds</td> -->
-
-	<!-- 			</tr> -->
-	<!-- 		</tbody> -->
-
-	<!-- 	</table> -->
-	<!-- 	<a href="#" th:href="@{/student/claim/add}">Submit new claim</a> -->
+	  	
+	</script>
 </body>
-<script>
-	// 	$(".clickableRow").on("click", function() {
-	//  		window.location.href = "http://localhost:8080/eccoordinator/claim/detail?id="+$(this).find(".claimId").html()
-	// 	})
-</script>
+
 </html>

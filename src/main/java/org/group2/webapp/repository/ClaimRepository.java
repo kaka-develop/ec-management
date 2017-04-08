@@ -20,4 +20,7 @@ public interface ClaimRepository extends JpaRepository<Claim, Long> {
 
     @Query("select c from Claim c join c.circumstances cir where cir.id = ?1")
     List<Claim> findAllByCircumstanceId(Long circumstanceId);
+    
+    @Query("select c from Claim c where c.user.id=?1")
+    List<Claim> findAllByUserId(Long userId);
 }

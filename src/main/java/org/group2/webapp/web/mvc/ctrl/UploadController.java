@@ -9,6 +9,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import javax.servlet.ServletContext;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,7 @@ public class UploadController {
 
     @PostMapping("/multiupload")
     public @ResponseBody
-    String uploadMultipleFileHandler(@RequestParam("file") MultipartFile[] files) {
+    String uploadMultipleFileHandler(@RequestParam("evidenceFiles") MultipartFile[] files) {
 
 //        if (files.length != names.length) {
 //            return "Mandatory information missing";
@@ -100,6 +101,8 @@ public class UploadController {
                 long time = System.currentTimeMillis();
                 java.sql.Timestamp timestmp = new java.sql.Timestamp(time);
                 name = "evidence" + i + "_" + timestmp.getTime();
+                
+                 logger.info(FilenameUtils.getExtension(file.getOriginalFilename()));
 
                 // Creating the directory to store file
                 String actualPath = servletContext.getRealPath("");

@@ -1,7 +1,7 @@
 package org.group2.webapp.service;
 
 import org.group2.webapp.EcManagementApplication;
-import org.group2.webapp.entity.Course;
+import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.repository.CourseRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -34,11 +34,11 @@ public class CourseServiceTest {
     private final String COURSE_CODE = "AAAAAAAA";
     private final String COURSE_TITLE = "AAAAAAAA";
 
-    private Course course;
+    private Assessment course;
 
     @Before
     public void before() {
-        course = new Course();
+        course = new Assessment();
         course.setCode(COURSE_CODE);
         course.setTitle(COURSE_TITLE);
         course = courseService.create(course);
