@@ -87,9 +87,10 @@
 								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" />
 						</div>
 					</div>
-					<form>
+					<form th:action="@{/student/claim/update}" id="update-form" method="post" class="form-horizontal" enctype="multipart/form-data">
 						<div class="form-group">
-							<label>Upload more evidents: </label> <input type="file" multiple="true" />
+                                                    <input type="hidden" name="id" th:value="${claim.id}"/>
+							<label>Upload more evidents: </label> <input type="file" name="evidenceFiles" multiple="true" />
 						</div>
 						<div class="form-group">
 							<input class="btn btn-primary" type="submit" value="Upload" />

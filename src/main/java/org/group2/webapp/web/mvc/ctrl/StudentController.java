@@ -137,11 +137,20 @@ public class StudentController {
         req.setAttribute("claim", claim);
         return "claim/detail";
     }
-    
-    @PostMapping("/update")
-    public String update(Long id, HttpServletRequest req){
-    	Claim claim = claimRepo.findOne(id);
-    	return viewClaim(req);
+
+    @PostMapping(path = "/update", headers = "Content-Type=multipart/*", consumes = "application/x-www-form-urlencoded")
+    public String update(Long id, HttpServletRequest req, @RequestParam("evidenceFiles") MultipartFile[] files) {
+        Claim claim = claimRepo.findOne(id);
+
+       String evidences =  claim.getEvidence() + ";" + getEvidencesFromFileArray(files);
+       
+       logger.info(evidences);
+       
+       claim.setEvidence(evidences);
+       
+       claimRepo.save(claim);
+       
+        return viewClaim(req);
     }
 
     public String getEvidencesFromFileArray(MultipartFile[] files) {
