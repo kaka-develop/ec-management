@@ -1,7 +1,7 @@
 package org.group2.webapp.web.mvc;
 
 import org.group2.webapp.EcManagementApplication;
-import org.group2.webapp.entity.Course;
+import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.service.CourseService;
 import org.group2.webapp.web.mvc.ctrl.admin.CourseController;
 import org.junit.After;
@@ -31,7 +31,7 @@ public class CourseControllerTest {
     private final String COURSE_CODE = "AAAAAAAA";
     private final String COURSE_TITLE = "AAAAAAAA";
 
-    private Course course;
+    private Assessment course;
 
 
     @Before
@@ -42,7 +42,7 @@ public class CourseControllerTest {
 
     @Before
     public void initTest() {
-        course = new Course();
+        course = new Assessment();
         course.setCode(COURSE_CODE);
         course.setTitle(COURSE_TITLE);
     }

@@ -1,6 +1,6 @@
 package org.group2.webapp.service;
 
-import org.group2.webapp.entity. Course;
+import org.group2.webapp.entity. Assessment;
 import org.group2.webapp.repository. CourseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,19 +23,19 @@ public class  CourseService {
 
 
     @Transactional(readOnly = true)
-    public List< Course> findAll() {
+    public List< Assessment> findAll() {
         log.debug("Request to get all  Courses");
-        List< Course> result =  courseRepository.findAll();
+        List< Assessment> result =  courseRepository.findAll();
 
         return result;
     }
 
     @Transactional(readOnly = true)
-    public  Course findOne(String code) {
+    public  Assessment findOne(String code) {
         log.debug("Request to get  Course : {}", code);
         if(code == null)
             return null;
-         Course  course =  courseRepository.findOne(code);
+         Assessment  course =  courseRepository.findOne(code);
         return  course;
     }
 
@@ -46,12 +46,12 @@ public class  CourseService {
          courseRepository.delete(code);
     }
 
-    public  Course create( Course  course) {
+    public  Assessment create( Assessment  course) {
         log.debug("Request to create  course: {}",  course);
         return  courseRepository.save( course);
     }
 
-    public  Course update( Course  course) {
+    public  Assessment update( Assessment  course) {
         log.debug("Request to update  course: {}",  course.getCode());
         if( course.getCode() == null)
             return null;

@@ -1,32 +1,47 @@
 /**
- * 
+ *
  */
 package org.group2.webapp.web.mvc.ctrl;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
+import javax.servlet.ServletContext;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import org.apache.commons.io.FilenameUtils;
 
-import org.group2.webapp.entity.Authority;
+import org.apache.log4j.Logger;
+import org.group2.webapp.constraints.ClaimStatusContraints;
+import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.entity.Circumstance;
 import org.group2.webapp.entity.Claim;
+import org.group2.webapp.entity.Item;
 import org.group2.webapp.entity.User;
-import org.group2.webapp.repository.AssessmentRepository;
+import org.group2.webapp.repository.AssessmentRepository2;
 import org.group2.webapp.repository.CircumstanceRepository;
 import org.group2.webapp.repository.ClaimRepository;
+import org.group2.webapp.repository.ItemRepository;
 import org.group2.webapp.repository.UserRepository;
 import org.group2.webapp.security.AuthoritiesConstants;
-import org.group2.webapp.security.SecurityUtils;
 import org.group2.webapp.web.util.MailUtils;
 import org.group2.webapp.web.util.SessionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Dam Cao Son
@@ -34,87 +49,145 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-@RequestMapping("/student")
+@RequestMapping("/student/claim")
 public class StudentController {
-	private final UserRepository userRepo;
-	private final AssessmentRepository assessmentRepo;
-	private final ClaimRepository claimRepo;
-	private final CircumstanceRepository circumRepo;
 
-	public StudentController(UserRepository userRepo, AssessmentRepository assessmentRepo, ClaimRepository claimRepo,
-			CircumstanceRepository circumRepo) {
-		super();
-		this.userRepo = userRepo;
-		this.assessmentRepo = assessmentRepo;
-		this.claimRepo = claimRepo;
-		this.circumRepo = circumRepo;
-	}
+    private static final Logger logger = Logger.getLogger(StudentController.class);
+    @Autowired
+    ServletContext servletContext;
+    @Autowired
+    private UserRepository userRepo;
+    @Autowired
+    private AssessmentRepository2 assessmentRepo;
+    @Autowired
+    private ClaimRepository claimRepo;
+    @Autowired
+    private CircumstanceRepository circumRepo;
+    @Autowired
+    private ItemRepository itemRepo;
 
-	@GetMapping("/claim")
-	public String viewClaim(HttpServletRequest req) {
-		User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
-		List<String> str = Collections.list(req.getSession().getAttributeNames());
-		for (String s : str) {
-			System.out.println("session name: " + s);
-			System.out.println("value of: " + req.getSession().getAttribute(s));
-		}
-		List<Claim> claims = getAllClaimOfStudent(currentUser);
-		req.setAttribute("claims", claims);
-		return "claim/claims";
-	}
+    @GetMapping("/view")
+    public String viewClaim(HttpServletRequest req) {
+        User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
+        List<String> str = Collections.list(req.getSession().getAttributeNames());
+        for (String s : str) {
+            System.out.println("session name: " + s);
+            System.out.println("value of: " + req.getSession().getAttribute(s));
+        }
+        List<Claim> claims = claimRepo.findAllByUserId(currentUser.getId());
+        Collections.sort(claims, new Comparator<Claim>() {
 
-	@GetMapping("/claim/add")
-	public String addClaim(HttpServletRequest req) {
-		req.setAttribute("allAssessments", assessmentRepo.findAll());
-		req.setAttribute("allCircumstances", circumRepo.findAll());
-		return "claim/add";
-	}
+            @Override
+            public int compare(Claim o1, Claim o2) {
 
-	@PostMapping("/claim/add")
-	public String addClaim(String[] assessments, long[] circumstances, @Valid Claim claim, BindingResult result,
-			HttpServletRequest req) {
-		if (assessments != null && circumstances != null && !result.hasErrors()) {
-			for (String ass : assessments) {
-				claim.getAssessment().add(assessmentRepo.getOne(ass));
-			}
-			for (long cid : circumstances) {
-				claim.getCircumstances().add(circumRepo.getOne(cid));
-			}
-			claim.setStatus(1);
-			User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
-			claim.setUser(currentUser);
-			claimRepo.save(claim);
-			getECProcessClaim(currentUser.getFaculty().getId())
-					.ifPresent(ec -> MailUtils.sendInformNewClaimForECCoordinator(ec, claim));
-			return "claim/success";
-		} else {
-			req.setAttribute("errors", result.getAllErrors());
-			addClaim(req);
-		}
-		return addClaim(req);
-	}
-	
-	@GetMapping("/claim/detail")
-	public String index(long id, HttpServletRequest req) {
-		// User currentUser =
-		// SessionUtils.getCurrentUserSession(userRepo).get();
-		Claim claim = claimRepo.findOne(id);
-		System.out.println("claim: " + claim);
-		req.setAttribute("claim", claim);
-		return "claim/detail";
-	}
+                return o2.getCreated_time().compareTo(o1.getCreated_time());
+            }
+        });
 
-	public List<Claim> getAllClaimOfStudent(User student) {
-		List<Claim> claims = claimRepo.findAll();
-		return claims.stream().filter(cl -> cl.getUser().getId() == student.getId()).collect(Collectors.toList());
-	}
+        req.setAttribute("claims", claims);
+        return "claim/claims";
+    }
 
-	public Optional<User> getECProcessClaim(long facultyId) {
-		for (User user : userRepo.findAll()) {
-			if (user.getFaculty().getId() == facultyId) {
-				return Optional.of(user);
-			}
-		}
-		return Optional.empty();
-	}
+    @GetMapping("/add")
+    public String addClaim(HttpServletRequest req) {
+        List<Assessment> suitableAssessment = assessmentRepo.findAll().stream()
+                .filter(ass -> ass.getFaculty().getId() == SessionUtils.getCurrentUserSession(userRepo).get()
+                        .getFaculty().getId())
+                .collect(Collectors.toList());
+
+        req.setAttribute("allAssessments", suitableAssessment);
+        req.setAttribute("allCircumstances", circumRepo.findAll());
+        logger.debug("suitableAssessment: " + suitableAssessment.size());
+        return "claim/add";
+    }
+
+    @PostMapping(path = "/add", headers = "Content-Type=multipart/*", consumes = "application/x-www-form-urlencoded")
+    public String addClaim(String[] itemCrns, Long[] circumstances, String content,
+            HttpServletRequest req, @RequestParam("evidenceFiles") MultipartFile[] files) {
+        if (itemCrns != null && circumstances != null && content != null) {
+            List<Circumstance> myCirumstance = circumRepo.findAll(Arrays.asList(circumstances));
+            User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
+            for (String ass : itemCrns) {
+                Item item = itemRepo.findOne(ass);
+                Claim myClaim = new Claim();
+                myClaim.setStatus(ClaimStatusContraints.PENDING);
+                myClaim.setUser(currentUser);
+                //upload evidences
+                String evidences = getEvidencesFromFileArray(files);
+                logger.info(evidences);
+                myClaim.setEvidence(evidences);
+
+                myClaim.setContent(content);
+                myClaim.setItem(item);
+                myClaim.getCircumstances().addAll(myCirumstance);
+                claimRepo.save(myClaim);
+                System.out.println("Claim chuan bi save: " + myClaim);
+                MailUtils.sendClaimNewsForCoordinators(myClaim,
+                        userRepo.findAllUserByAuthority(AuthoritiesConstants.COORDINATOR));
+            }
+            req.setAttribute("claimAdded", true);
+            return viewClaim(req);
+        } else {
+            return addClaim(req);
+        }
+
+    }
+
+    @GetMapping("/detail")
+    public String index(Long id, HttpServletRequest req) {
+        Claim claim = claimRepo.findOne(id);
+        System.out.println("claim: " + claim);
+        req.setAttribute("claim", claim);
+        return "claim/detail";
+    }
+
+    public String getEvidencesFromFileArray(MultipartFile[] files) {
+        int length = files.length;
+        String evidences = "";
+
+        for (int i = 0; i < length; i++) {
+            String name;
+            MultipartFile file = files[i];
+            try {
+                byte[] bytes = file.getBytes();
+
+                long time = System.currentTimeMillis();
+                java.sql.Timestamp timestmp = new java.sql.Timestamp(time);
+                name = "evidence" + i + "_" + timestmp.getTime() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
+
+                // Creating the directory to store file
+                String actualPath = servletContext.getRealPath("");
+                String fileLocation = actualPath + File.separator + "evidents";
+
+                File dir = new File(fileLocation);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                // Create the file on server
+                File serverFile = new File(dir.getAbsolutePath()
+                        + File.separator + name);
+
+                BufferedOutputStream stream = new BufferedOutputStream(
+                        new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+
+                if (i == 0) {
+                    evidences = evidences + name;
+                } else if (i > 0) {
+                    evidences = evidences + ";" + name;
+                }
+
+                logger.info("Saved to: "
+                        + serverFile.getAbsolutePath());
+
+            } catch (FileNotFoundException ex) {
+                logger.info(ex.getMessage());
+            } catch (IOException ex) {
+                logger.info(ex.getMessage());
+            }
+        }
+        return evidences;
+    }
 }

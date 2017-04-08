@@ -1,7 +1,7 @@
 package org.group2.webapp.service;
 
 import org.group2.webapp.EcManagementApplication;
-import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.entity.Item;
 import org.group2.webapp.repository.AssessmentRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -35,11 +35,11 @@ public class AssessmentServiceTest {
     private final String ASSESS_CRN = "AAAAAAAA";
     private final String ASSESS_TITLE = "AAAAAAAA";
 
-    private Assessment assessment;
+    private Item assessment;
 
     @Before
     public void before() {
-        assessment = new Assessment();
+        assessment = new Item();
         assessment.setCrn(ASSESS_CRN);
         assessment.setTitle(ASSESS_TITLE);
         assessment = assessmentService.create(assessment);

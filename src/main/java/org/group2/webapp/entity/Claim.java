@@ -5,79 +5,73 @@
  */
 package org.group2.webapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "claim")
 public class Claim implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Size(min = 1, max = 100)
-    @Column(columnDefinition = "TEXT", unique = true, nullable = true)
-    private String evidence;
+	@Column(columnDefinition = "TEXT", unique = true, nullable = true)
+	private String evidence;
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(columnDefinition = "TEXT", unique = true, nullable = true)
-    private String content;
+	@NotNull
+	@Column(columnDefinition = "TEXT", unique = true, nullable = true)
+	private String content;
 
-    @Column(columnDefinition = "TEXT", nullable = true)
-    private String decision;
+	@Column(columnDefinition = "TEXT", nullable = true)
+	private String decision;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_time", nullable = false)
-    private Date created_time = new Date();
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_time", nullable = false)
+	private Date created_time = new Date();
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "processed_time")
-    private Date processed_time;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "processed_time")
+	private Date processed_time;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "closed_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date closedDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "closed_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date closedDate;
 
-    @Column(name = "status")
-    private int status;
+	@Column(name = "status")
+	private int status;
+	
+	@Column(name="seen")
+	private Boolean seen;
 
-
-    @ManyToOne
-    private User user;
-
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "assessment_claim",
-            joinColumns = {@JoinColumn(name = "claim_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "assessment_crn", referencedColumnName = "crn")})
-    private Set<Assessment> assessment = new HashSet<>();
-
-
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "claim_circumstance",
-            joinColumns = {@JoinColumn(name = "claim_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "circumstance_id", referencedColumnName = "id")})
-    private Set<Circumstance> circumstances = new HashSet<>();
-
-    public Claim() {
-    }
 
     public Claim(Long id,String evidence, String content, String decision, Date created_time, Date processed_time, Date closedDate, int status) {
         this.id = id;
@@ -90,125 +84,151 @@ public class Claim implements Serializable {
         this.status = status;
     }
 
-    public Set<Circumstance> getCircumstances() {
-        return circumstances;
-    }
 
-    public void setCircumstances(Set<Circumstance> circumstances) {
-        this.circumstances = circumstances;
-    }
 
-    public Set<Assessment> getAssessment() {
-        return assessment;
-    }
+	@ManyToOne
+	private User user;
 
-    public void setAssessment(Set<Assessment> assessment) {
-        this.assessment = assessment;
-    }
+	@ManyToOne
+	private Item item;
 
-    public Long getId() {
-        return id;
-    }
+	@JsonIgnore
+	@OneToMany(mappedBy = "claim")
+	private Set<Evidence> evidences = new HashSet<>();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "claim_circumstance", joinColumns = {
+			@JoinColumn(name = "claim_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "circumstance_id", referencedColumnName = "id") })
+	private Set<Circumstance> circumstances = new HashSet<>();
 
-    public User getUser() {
-        return user;
-    }
+	public Claim() {
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public Set<Circumstance> getCircumstances() {
+		return circumstances;
+	}
 
-    public String getEvidence() {
-        return evidence;
-    }
+	public void setCircumstances(Set<Circumstance> circumstances) {
+		this.circumstances = circumstances;
+	}
 
-    public void setEvidence(String evidence) {
-        this.evidence = evidence;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public Date getCreated_time() {
-        return created_time;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public void setCreated_time(Date created_time) {
-        this.created_time = created_time;
-    }
+	public String getEvidence() {
+		return evidence;
+	}
 
-    public Date getProcessed_time() {
-        return processed_time;
-    }
+	public void setEvidence(String evidence) {
+		this.evidence = evidence;
+	}
 
-    public void setProcessed_time(Date processed_time) {
-        this.processed_time = processed_time;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public int getStatus() {
-        return status;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	public Date getCreated_time() {
+		return created_time;
+	}
 
-    public Date getClosedDate() {
-        return closedDate;
-    }
+	public void setCreated_time(Date created_time) {
+		this.created_time = created_time;
+	}
 
-    public void setClosedDate(Date closedDate) {
-        this.closedDate = closedDate;
-    }
+	public Date getProcessed_time() {
+		return processed_time;
+	}
 
-    public boolean isMissClosedDate() {
-        if (this.closedDate == null)
-            return false;
-        if (this.closedDate.getTime() > Calendar.getInstance().getTime().getTime())
-            return false;
-        return true;
-    }
+	public void setProcessed_time(Date processed_time) {
+		this.processed_time = processed_time;
+	}
 
-    public boolean isLackOfEvidence() {
-        if (evidence == null)
-            return true;
-        return false;
-    }
+	public int getStatus() {
+		return status;
+	}
 
-    public boolean isValid() {
-        if (isMissClosedDate())
-            return false;
-        if (evidence == null)
-            return false;
-        return true;
-    }
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
-    @Override
-    public String toString() {
-        return "Claim{" +
-                "id=" + id +
-                ", evidence='" + evidence + '\'' +
-                ", content='" + content + '\'' +
-                ", created_time=" + created_time +
-                ", processed_time=" + processed_time +
-                ", status=" + status +
-                '}';
-    }
+	public Date getClosedDate() {
+		return closedDate;
+	}
 
-    public String getDecision() {
-        return decision;
-    }
+	public void setClosedDate(Date closedDate) {
+		this.closedDate = closedDate;
+	}
 
-    public void setDecision(String decision) {
-        this.decision = decision;
-    }
+	public boolean isMissClosedDate() {
+		if (this.closedDate == null)
+			return false;
+		if (this.closedDate.getTime() > Calendar.getInstance().getTime().getTime())
+			return false;
+		return true;
+	}
+
+	public boolean isLackOfEvidence() {
+		if (evidence == null)
+			return true;
+		return false;
+	}
+
+	public boolean isValid() {
+		if (isMissClosedDate())
+			return false;
+		if (evidence == null)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Claim [id=" + id + ", evidence=" + evidence + ", content=" + content + ", decision=" + decision
+				+ ", created_time=" + created_time + ", processed_time=" + processed_time + ", closedDate=" + closedDate
+				+ ", status=" + status + ", user=" + user + ", item=" + item + ", evidences=" + evidences
+				+ ", circumstances=" + circumstances + "]";
+	}
+
+	public String getDecision() {
+		return decision;
+	}
+
+	public void setDecision(String decision) {
+		this.decision = decision;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public Boolean getSeen() {
+		return seen;
+	}
+
+	public void setSeen(Boolean seen) {
+		this.seen = seen;
+	}
 }

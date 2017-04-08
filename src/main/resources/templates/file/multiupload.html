@@ -10,23 +10,8 @@ and open the template in the editor.
     </head>
     <body>
         <form th:action="@{/file/multiupload}" method="POST" enctype="multipart/form-data">
-            <div id="fileSection">
-                <h1>Multiple File Upload Demo Application</h1>
-                <table>
-                    <tr>
-                        <td>Evidence 1:</td>
-                        <td><input type="file" name="infoFile" size="45" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Evidence 2:</td>
-                        <td><input type="file" name="imgFile" size="45" />
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <p />
-            <input type="submit" value="Upload" />
+            <input type="file" name="evidenceFiles" accept="image/*" multiple="true" />
+            <input type="submit" value="Upload"> Press here to upload the file!
         </form>
     </body>
 </html>
