@@ -38,7 +38,7 @@ public class ManagerAPI {
     }
 
     @GetMapping("/claims/year")
-    public HashMap<Integer,Integer> getAllClaimsPerYear() {
+    public HashMap<String,Integer> getAllClaimsPerYear() {
         log.debug("REST request to get all Claims per year");
         return managerService.getClamsPerYear();
     }

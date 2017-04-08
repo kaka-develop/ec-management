@@ -33,9 +33,9 @@ public class AssessmentController {
         return "admin/assessment/assessments";
     }
 
-    @GetMapping("/detail/{crn}")
-    public String detail(@PathVariable String crn, Model model) {
-        Assessment assessment = assessmentService.findOne(crn);
+    @GetMapping("/detail/{code}")
+    public String detail(@PathVariable String code, Model model) {
+        Assessment assessment = assessmentService.findOne(code);
         if (assessment == null)
             return REDIRECT_INDEX;
         model.addAttribute("assessment", assessment);
@@ -58,9 +58,9 @@ public class AssessmentController {
         return REDIRECT_INDEX;
     }
 
-    @GetMapping("/edit/{crn}")
-    public String editAssessment(@PathVariable String crn, Model model) {
-        Assessment assessment = assessmentService.findOne(crn);
+    @GetMapping("/edit/{code}")
+    public String editAssessment(@PathVariable String code, Model model) {
+        Assessment assessment = assessmentService.findOne(code);
         if (assessment == null)
             return REDIRECT_INDEX;
 
@@ -70,7 +70,6 @@ public class AssessmentController {
 
     @PostMapping("/edit")
     public String editAssessment(@Valid @ModelAttribute Assessment assessment, BindingResult bindingResult) {
-        log.debug("");
         if (bindingResult.hasErrors())
             return "admin/assessment/edit";
         else
@@ -79,10 +78,10 @@ public class AssessmentController {
     }
 
 
-    @PostMapping("/delete/{crn}")
-    public String deleteAssessment(Model model,@PathVariable String crn) {
+    @PostMapping("/delete/{code}")
+    public String deleteAssessment(Model model,@PathVariable String code) {
         try{
-            assessmentService.delete(crn);
+            assessmentService.delete(code);
         }catch (Exception e){
             model.addAttribute("error","Cannot delete this assessment! Had claim");
         }

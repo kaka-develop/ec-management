@@ -72,6 +72,7 @@ public class Claim implements Serializable {
 	@Column(name="seen")
 	private Boolean seen;
 
+
 	@ManyToOne
 	private User user;
 

@@ -5,10 +5,13 @@ import org.group2.webapp.entity.Claim;
 import org.group2.webapp.repository.ClaimRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -89,4 +92,26 @@ public class ClaimService {
         List<Claim> result = claimRepository.findAllByCircumstanceId(circumstanceId);
         return result;
     }
+
+    @Transactional(readOnly = true)
+    public List<Claim> findClaimsInThisMonth() {
+        log.debug("Request to get all Claims in this month");
+        Calendar calendar = Calendar.getInstance();
+        Integer year = calendar.get(Calendar.YEAR);
+        Integer month = calendar.get(Calendar.MONTH) + 1;
+        List<Claim> result = claimRepository.findAllByThisMonth(month,year);
+        return result;
+    }
+
+    public List<Claim> findClaimsInThisWeek() {
+        log.debug("Request to get all Claims in this week");
+        Calendar calendar = Calendar.getInstance();
+        Integer year = calendar.get(Calendar.YEAR);
+        Integer month = calendar.get(Calendar.MONTH) + 1;
+        Integer week = calendar.get(Calendar.WEEK_OF_YEAR);
+        log.debug(week + "-" + month + "-" + year);
+        List<Claim> result = claimRepository.findAllByThisWeek(week,month,year);
+        return result;
+    }
+
 }

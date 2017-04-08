@@ -76,7 +76,7 @@ public class AssessmentControllerTest {
     @Transactional
     public void testShouldPostAddingOneAssessment() throws Exception {
         restAssessmentMockMvc.perform(post("/admin/assessment/new")
-                .param("crn",ASSESS_CRN)
+                .param("code",ASSESS_CRN)
                 .param("title",ASSESS_TITLE))
                 .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
 
@@ -119,7 +119,7 @@ public class AssessmentControllerTest {
         createAssessment();
 
         restAssessmentMockMvc.perform(post("/admin/assessment/edit")
-                .param("crn",ASSESS_CRN)
+                .param("code",ASSESS_CRN)
                 .param("title",ASSESS_TITLE + ASSESS_TITLE))
                 .andExpect(view().name(AssessmentController.REDIRECT_INDEX));
 

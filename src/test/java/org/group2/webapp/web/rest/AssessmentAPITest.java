@@ -125,7 +125,7 @@ public class AssessmentAPITest {
         restAssessmentMockMvc.perform(get("/api/admin/assessments"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].crn").value(hasItem(assessment.getCode())))
+                .andExpect(jsonPath("$.[*].code").value(hasItem(assessment.getCode())))
                 .andExpect(jsonPath("$.[*].title").value(hasItem(ASSESS_TITLE.toString())));
     }
 
@@ -136,17 +136,17 @@ public class AssessmentAPITest {
         assessmentRepository.saveAndFlush(assessment);
 
         // Get the assessment
-        restAssessmentMockMvc.perform(get("/api/admin/assessments/{crn}", assessment.getCode()))
+        restAssessmentMockMvc.perform(get("/api/admin/assessments/{code}", assessment.getCode()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.crn").value(assessment.getCode()))
+                .andExpect(jsonPath("$.code").value(assessment.getCode()))
                 .andExpect(jsonPath("$.title").value(ASSESS_TITLE.toString()));
     }
 
     @Test
     @Transactional
     public void testShouldResponseAssessmentIsNotFound() throws Exception {
-        restAssessmentMockMvc.perform(get("/api/admin/assessments/{crn}", "BBBBBBBBB"))
+        restAssessmentMockMvc.perform(get("/api/admin/assessments/{code}", "BBBBBBBBB"))
                 .andExpect(status().isNotFound());
     }
 
@@ -180,7 +180,7 @@ public class AssessmentAPITest {
 
         int databaseSizeBeforeDelete = assessmentRepository.findAll().size();
 
-        restAssessmentMockMvc.perform(delete("/api/admin/assessments/{crn}", assessment.getCode())
+        restAssessmentMockMvc.perform(delete("/api/admin/assessments/{code}", assessment.getCode())
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 

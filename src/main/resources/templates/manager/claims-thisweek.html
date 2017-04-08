@@ -15,13 +15,12 @@
 <div th:replace="fragments/header :: header"></div>
 <div th:replace="fragments/managerbar :: managerbar"></div>
 <div class="container">
-    <h1>All claims</h1>
+    <h1>All claims in this week</h1>
     <table border="1">
         <tr>
             <th>Evident</th>
             <th>Content</th>
             <th>Status</th>
-            <th>Created Date</th>
             <th>Dateline</th>
             <th>Overdue</th>
             <th></th>
@@ -31,7 +30,6 @@
             <td th:text="${claim.evidence}"></td>
             <td th:text="${claim.content}"></td>
             <td th:text="${claim.status}"></td>
-            <td th:text="${claim.created_time}"></td>
             <td th:text="${claim.closedDate}"></td>
             <td th:text="${claim.isMissClosedDate() ? 'yes' : 'no'}"></td>
         </tr>

@@ -111,7 +111,29 @@ public class ManagerControllerTest {
                 .andExpect(view().name("manager/claims-validation"));
     }
 
+    @Test
+    @Transactional
+    public void testShaveHaveViewAllClaimsThisMonth() throws Exception{
+        restManagerMockMvc.perform(get("/manager/claims/thismonth"))
+                .andExpect(model().attributeExists("claims"))
+                .andExpect(view().name("manager/claims-thismonth"));
+    }
 
+    @Test
+    @Transactional
+    public void testShaveHaveViewAllClaimsThisWeek() throws Exception{
+        restManagerMockMvc.perform(get("/manager/claims/thisweek"))
+                .andExpect(model().attributeExists("claims"))
+                .andExpect(view().name("manager/claims-thisweek"));
+    }
+
+
+    @Test
+    @Transactional
+    public void testShaveHaveViewCustomClaimsReport() throws Exception{
+        restManagerMockMvc.perform(get("/manager/claims/custom"))
+                .andExpect(view().name("manager/claims-custom"));
+    }
     @After
     public void after() {
         claimService.delete(claim.getId());
