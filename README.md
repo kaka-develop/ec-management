@@ -2,12 +2,12 @@
 
 ## Developed by Scrum team (group2)
 ###### Scrum master:
-	- Phan Tiến Tùng (tungptseven)
+	- Phan Tiến Tùng (tungptseven): product owner, product tester
 ###### Scrum members:
-	- Nguyễn Đức Anh (ducanhz135)
-	- Đàm Cao Sơn (DamCaoSon)
- 	- Nguyễn Hải Nam (dfChicken)
-	- Nguyễn Văn Ái (ainguyenkaka)
+	- Nguyễn Đức Anh (ducanhz135): product tester
+	- Đàm Cao Sơn (DamCaoSon): programmer, designer
+ 	- Nguyễn Hải Nam (dfChicken): programmer, designer
+	- Nguyễn Văn Ái (ainguyenkaka): programmer, unit tester
 
 ## Project Management
 ```
