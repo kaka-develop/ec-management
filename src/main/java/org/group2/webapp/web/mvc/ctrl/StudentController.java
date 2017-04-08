@@ -130,15 +130,20 @@ public class StudentController {
         } else {
             return addClaim(req);
         }
-
     }
 
     @GetMapping("/detail")
-    public String index(Long id, HttpServletRequest req) {
+    public String detail(Long id, HttpServletRequest req) {
         Claim claim = claimRepo.findOne(id);
         System.out.println("claim: " + claim);
         req.setAttribute("claim", claim);
         return "claim/detail";
+    }
+    
+    @PostMapping("/update")
+    public String update(Long id, HttpServletRequest req){
+    	Claim claim = claimRepo.findOne(id);
+    	return viewClaim(req);
     }
 
     public String getEvidencesFromFileArray(MultipartFile[] files) {

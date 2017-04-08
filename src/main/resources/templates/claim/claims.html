@@ -203,20 +203,19 @@
     
     $(".claimRow").on("click", function() {
         console.log("ngu roi a`")
-//     	claimId=$(this).find(".claimId").val()
-//     	pathname=window.location.pathname
-//     	if(pathname.indexOf("eccoordinator"))
-//     	{
-//      		window.location.replace("http://localhost:8080/eccoordinator/claim/process?id="+claimId);
-//      		console.log(pathname)
-//     	}else if(pathname.indexOf("student")){
-//     		window.location.replace("http://localhost:8080/student/claim/detail?id="+clamId);
-//     		console.log(pathname)
-//     	}		
+    	claimId=$(this).find(".claimId").val()
+    	pathname=window.location.pathname
+    	if(pathname.indexOf("eccoordinator"))
+    	{
+     		window.location.replace("http://localhost:8080/eccoordinator/claim/process?id="+claimId);
+     		console.log(pathname)
+    	}else if(pathname.indexOf("student")){
+    		window.location.replace("http://localhost:8080/student/claim/detail?id="+clamId);
+    		console.log(pathname)
+    	}		
     })
 	</script>
 </body>
-<
 
 
 </html>
