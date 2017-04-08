@@ -1,6 +1,6 @@
 package org.group2.webapp.web.rest.admin;
 
-import org.group2.webapp.entity.Item;
+import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.service.AssessmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,38 +27,38 @@ public class AssessmentAPI {
 
 
     @PostMapping("/assessments")
-    public ResponseEntity<Item> createAssessment(@Valid @RequestBody Item assessment) throws URISyntaxException {
+    public ResponseEntity<Assessment> createAssessment(@Valid @RequestBody Assessment assessment) throws URISyntaxException {
         log.debug("REST request to save Assessment : {}", assessment);
-        if (assessment.getCrn() == null || assessmentService.findOne(assessment.getCrn()) != null) {
+        if (assessment.getCode() == null || assessmentService.findOne(assessment.getCode()) != null) {
             return ResponseEntity.badRequest().build();
         }
-        Item result = assessmentService.create(assessment);
+        Assessment result = assessmentService.create(assessment);
         return ResponseEntity.ok(result);
     }
 
 
     @PutMapping("/assessments")
-    public ResponseEntity<Item> updateAssessment(@Valid @RequestBody Item assessment) throws URISyntaxException {
+    public ResponseEntity<Assessment> updateAssessment(@Valid @RequestBody Assessment assessment) throws URISyntaxException {
         log.debug("REST request to update Assessment : {}", assessment);
-        if (assessment.getCrn() == null) {
+        if (assessment.getCode() == null) {
             return createAssessment(assessment);
         }
-        Item result = assessmentService.update(assessment);
+        Assessment result = assessmentService.update(assessment);
         return ResponseEntity.ok(result);
     }
 
 
     @GetMapping("/assessments")
-    public List<Item> getAllAssessments() {
+    public List<Assessment> getAllAssessments() {
         log.debug("REST request to get all Assessments");
         return assessmentService.findAll();
     }
 
 
     @GetMapping("/assessments/{crn}")
-    public ResponseEntity<Item> getAssessment(@PathVariable String crn) {
+    public ResponseEntity<Assessment> getAssessment(@PathVariable String crn) {
         log.debug("REST request to get Assessment : {}", crn);
-        Item assessment = assessmentService.findOne(crn);
+        Assessment assessment = assessmentService.findOne(crn);
         if(assessment == null)
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(assessment);

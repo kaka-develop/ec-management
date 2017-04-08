@@ -1,7 +1,7 @@
 package org.group2.webapp.web.mvc;
 
 import org.group2.webapp.EcManagementApplication;
-import org.group2.webapp.entity.Item;
+import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.service.AssessmentService;
 import org.group2.webapp.web.mvc.ctrl.admin.AssessmentController;
 import org.junit.After;
@@ -32,7 +32,7 @@ public class AssessmentControllerTest {
     private final String ASSESS_CRN = "AAAAAAAA";
     private final String ASSESS_TITLE = "AAAAAAAA";
 
-    private Item assessment;
+    private Assessment assessment;
 
 
     @Before
@@ -43,8 +43,8 @@ public class AssessmentControllerTest {
 
     @Before
     public void initTest() {
-        assessment = new Item();
-        assessment.setCrn(ASSESS_CRN);
+        assessment = new Assessment();
+        assessment.setCode(ASSESS_CRN);
         assessment.setTitle(ASSESS_TITLE);
     }
 
@@ -92,7 +92,7 @@ public class AssessmentControllerTest {
     public void testShouldHaveViewForOneAssessment() throws Exception {
         createAssessment();
 
-        restAssessmentMockMvc.perform(get("/admin/assessment/detail/" + assessment.getCrn()))
+        restAssessmentMockMvc.perform(get("/admin/assessment/detail/" + assessment.getCode()))
                 .andExpect(model().attributeExists("assessment"))
                 .andExpect(view().name("admin/assessment/detail"))
                 .andExpect(status().isOk());
@@ -107,7 +107,7 @@ public class AssessmentControllerTest {
     public void testShouldHaveViewForEditingAssessment() throws Exception {
         createAssessment();
 
-        restAssessmentMockMvc.perform(get("/admin/assessment/edit/" + assessment.getCrn().toString()))
+        restAssessmentMockMvc.perform(get("/admin/assessment/edit/" + assessment.getCode().toString()))
                 .andExpect(model().attributeExists("assessment"))
                 .andExpect(view().name("admin/assessment/edit"))
                 .andExpect(status().isOk());
@@ -133,7 +133,7 @@ public class AssessmentControllerTest {
     public void testShouldPostDeletingOneAssessment() throws Exception {
         createAssessment();
 
-        restAssessmentMockMvc.perform(post("/admin/assessment/delete/" + assessment.getCrn().toString()))
+        restAssessmentMockMvc.perform(post("/admin/assessment/delete/" + assessment.getCode().toString()))
                 .andExpect(view().name("admin/assessment/assessments"));
 
         restAssessmentMockMvc.perform(post("/admin/assessment/delete/" + "BBBBBBB"))
@@ -142,7 +142,7 @@ public class AssessmentControllerTest {
 
     @After
     public void after() {
-        assessmentService.delete(assessment.getCrn());
+        assessmentService.delete(assessment.getCode());
     }
 
 }

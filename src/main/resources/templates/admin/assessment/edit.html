@@ -17,7 +17,7 @@
 <div class="container">
     <h1>Edit assessment</h1>
     <form method="POST" action="#" th:action="@{/admin/assessment/edit}" th:object="${assessment}">
-        <p><input type="text" th:field="*{crn}" hcodeden="true"/></p>
+        <p><input type="text" th:field="*{code}" hcodeden="true"/></p>
         <p><input type="text" th:field="*{title}" placeholder="Title" required="true" minlength="5"/></p>
         <button type="submit">Save</button>
         <a href="/admin/assessment">

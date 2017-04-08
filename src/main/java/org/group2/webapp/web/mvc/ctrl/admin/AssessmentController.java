@@ -1,6 +1,6 @@
 package org.group2.webapp.web.mvc.ctrl.admin;
 
-import org.group2.webapp.entity.Item;
+import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.service.AssessmentService;
 import org.group2.webapp.util.ConvertUntil;
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public class AssessmentController {
 
     @GetMapping("/detail/{crn}")
     public String detail(@PathVariable String crn, Model model) {
-        Item assessment = assessmentService.findOne(crn);
+        Assessment assessment = assessmentService.findOne(crn);
         if (assessment == null)
             return REDIRECT_INDEX;
         model.addAttribute("assessment", assessment);
@@ -45,12 +45,12 @@ public class AssessmentController {
 
     @GetMapping("/new")
     public String newAssessment(Model model) {
-        model.addAttribute("assessment", new Item());
+        model.addAttribute("assessment", new Assessment());
         return "admin/assessment/add";
     }
 
     @PostMapping("/new")
-    public String newAssessment(@Valid @ModelAttribute Item assessment, BindingResult bindingResult) {
+    public String newAssessment(@Valid @ModelAttribute Assessment assessment, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "admin/assessment/add";
         else
@@ -60,7 +60,7 @@ public class AssessmentController {
 
     @GetMapping("/edit/{crn}")
     public String editAssessment(@PathVariable String crn, Model model) {
-        Item assessment = assessmentService.findOne(crn);
+        Assessment assessment = assessmentService.findOne(crn);
         if (assessment == null)
             return REDIRECT_INDEX;
 
@@ -69,7 +69,7 @@ public class AssessmentController {
     }
 
     @PostMapping("/edit")
-    public String editAssessment(@Valid @ModelAttribute Item assessment, BindingResult bindingResult) {
+    public String editAssessment(@Valid @ModelAttribute Assessment assessment, BindingResult bindingResult) {
         log.debug("");
         if (bindingResult.hasErrors())
             return "admin/assessment/edit";

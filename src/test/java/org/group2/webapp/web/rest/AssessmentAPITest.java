@@ -1,7 +1,7 @@
 package org.group2.webapp.web.rest;
 
 import org.group2.webapp.EcManagementApplication;
-import org.group2.webapp.entity.Item;
+import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.repository.AssessmentRepository;
 import org.group2.webapp.service.AssessmentService;
 import org.group2.webapp.web.rest.admin.AssessmentAPI;
@@ -45,7 +45,7 @@ public class AssessmentAPITest {
 
     private MockMvc restAssessmentMockMvc;
 
-    private Item assessment;
+    private Assessment assessment;
 
     @Before
     public void setup() {
@@ -54,9 +54,9 @@ public class AssessmentAPITest {
         this.restAssessmentMockMvc = MockMvcBuilders.standaloneSetup(assessmentAPI).build();
     }
 
-    public static Item createEntity(EntityManager em) {
-        Item assessment = new Item();
-        assessment.setCrn(ASSESS_CRN);
+    public static Assessment createEntity(EntityManager em) {
+        Assessment assessment = new Assessment();
+        assessment.setCode(ASSESS_CRN);
         assessment.setTitle(ASSESS_TITLE);
         return assessment;
     }
@@ -77,9 +77,9 @@ public class AssessmentAPITest {
                 .content(TestUtil.convertObjectToJsonBytes(assessment)))
                 .andExpect(status().isOk());
 
-        List<Item> assessmentList = assessmentRepository.findAll();
+        List<Assessment> assessmentList = assessmentRepository.findAll();
         assertThat(assessmentList).hasSize(databaseSizeBeforeCreate + 1);
-        Item testAssessment = assessmentRepository.findOne(assessment.getCrn());
+        Assessment testAssessment = assessmentRepository.findOne(assessment.getCode());
         assertThat(testAssessment.getTitle()).isEqualTo(ASSESS_TITLE);
     }
 
@@ -88,15 +88,15 @@ public class AssessmentAPITest {
     public void testShouldResponseAssessmentWithExistingCrn() throws Exception {
         int databaseSizeBeforeCreate = assessmentRepository.findAll().size();
 
-        Item existingAssessment = new Item();
-        existingAssessment.setCrn(ASSESS_CRN);
+        Assessment existingAssessment = new Assessment();
+        existingAssessment.setCode(ASSESS_CRN);
 
         restAssessmentMockMvc.perform(post("/api/admin/assessments")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(existingAssessment)))
                 .andExpect(status().isBadRequest());
 
-        List<Item> assessmentList = assessmentRepository.findAll();
+        List<Assessment> assessmentList = assessmentRepository.findAll();
         assertThat(assessmentList).hasSize(databaseSizeBeforeCreate);
     }
 
@@ -111,7 +111,7 @@ public class AssessmentAPITest {
                 .content(TestUtil.convertObjectToJsonBytes(assessment)))
                 .andExpect(status().isBadRequest());
 
-        List<Item> assessmentList = assessmentRepository.findAll();
+        List<Assessment> assessmentList = assessmentRepository.findAll();
         assertThat(assessmentList).hasSize(databaseSizeBeforeTest);
     }
 
@@ -125,7 +125,7 @@ public class AssessmentAPITest {
         restAssessmentMockMvc.perform(get("/api/admin/assessments"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].crn").value(hasItem(assessment.getCrn())))
+                .andExpect(jsonPath("$.[*].crn").value(hasItem(assessment.getCode())))
                 .andExpect(jsonPath("$.[*].title").value(hasItem(ASSESS_TITLE.toString())));
     }
 
@@ -136,10 +136,10 @@ public class AssessmentAPITest {
         assessmentRepository.saveAndFlush(assessment);
 
         // Get the assessment
-        restAssessmentMockMvc.perform(get("/api/admin/assessments/{crn}", assessment.getCrn()))
+        restAssessmentMockMvc.perform(get("/api/admin/assessments/{crn}", assessment.getCode()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.crn").value(assessment.getCrn()))
+                .andExpect(jsonPath("$.crn").value(assessment.getCode()))
                 .andExpect(jsonPath("$.title").value(ASSESS_TITLE.toString()));
     }
 
@@ -158,7 +158,7 @@ public class AssessmentAPITest {
         int databaseSizeBeforeUpdate = assessmentRepository.findAll().size();
 
         // Update the assessment
-        Item updatedAssessment = assessmentRepository.findOne(assessment.getCrn());
+        Assessment updatedAssessment = assessmentRepository.findOne(assessment.getCode());
         updatedAssessment
                 .setTitle(ASSESS_TITLE + ASSESS_TITLE);
 
@@ -167,9 +167,9 @@ public class AssessmentAPITest {
                 .content(TestUtil.convertObjectToJsonBytes(updatedAssessment)))
                 .andExpect(status().isOk());
 
-        List<Item> assessmentList = assessmentRepository.findAll();
+        List<Assessment> assessmentList = assessmentRepository.findAll();
         assertThat(assessmentList).hasSize(databaseSizeBeforeUpdate);
-        Item testAssessment =assessmentRepository.findOne(assessment.getCrn());
+        Assessment testAssessment =assessmentRepository.findOne(assessment.getCode());
         assertThat(testAssessment.getTitle()).isEqualTo(ASSESS_TITLE + ASSESS_TITLE);
     }
 
@@ -180,11 +180,11 @@ public class AssessmentAPITest {
 
         int databaseSizeBeforeDelete = assessmentRepository.findAll().size();
 
-        restAssessmentMockMvc.perform(delete("/api/admin/assessments/{crn}", assessment.getCrn())
+        restAssessmentMockMvc.perform(delete("/api/admin/assessments/{crn}", assessment.getCode())
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
-        List<Item> assessmentList = assessmentRepository.findAll();
+        List<Assessment> assessmentList = assessmentRepository.findAll();
         assertThat(assessmentList).hasSize(databaseSizeBeforeDelete - 1);
     }
 

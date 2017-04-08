@@ -92,6 +92,18 @@ public class Claim implements Serializable {
 	public Claim() {
 	}
 
+	public Claim(Long id,String evidence, String content, String decision, Date created_time, Date processed_time, Date closedDate, int status) {
+		this.id = id;
+		this.evidence = evidence;
+		this.content = content;
+		this.decision = decision;
+		this.created_time = created_time;
+		this.processed_time = processed_time;
+		this.closedDate = closedDate;
+		this.status = status;
+	}
+
+
 	public Set<Circumstance> getCircumstances() {
 		return circumstances;
 	}
@@ -210,11 +222,11 @@ public class Claim implements Serializable {
 		this.item = item;
 	}
 
-	public boolean isSeen() {
+	public Boolean getSeen() {
 		return seen;
 	}
 
-	public void setSeen(boolean seen) {
+	public void setSeen(Boolean seen) {
 		this.seen = seen;
 	}
 }

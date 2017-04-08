@@ -12,8 +12,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.logging.Level;
 import java.util.stream.Collectors;
 import javax.servlet.ServletContext;
 
@@ -27,7 +25,7 @@ import org.group2.webapp.entity.Circumstance;
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.entity.Item;
 import org.group2.webapp.entity.User;
-import org.group2.webapp.repository.AssessmentRepository2;
+import org.group2.webapp.repository.AssessmentRepository;
 import org.group2.webapp.repository.CircumstanceRepository;
 import org.group2.webapp.repository.ClaimRepository;
 import org.group2.webapp.repository.ItemRepository;
@@ -58,7 +56,7 @@ public class StudentController {
     @Autowired
     private UserRepository userRepo;
     @Autowired
-    private AssessmentRepository2 assessmentRepo;
+    private AssessmentRepository assessmentRepo;
     @Autowired
     private ClaimRepository claimRepo;
     @Autowired
