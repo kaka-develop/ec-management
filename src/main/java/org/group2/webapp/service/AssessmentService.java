@@ -1,6 +1,7 @@
 package org.group2.webapp.service;
 
-import org.group2.webapp.entity.Item;
+import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.repository.AssessmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,19 +26,19 @@ public class AssessmentService {
 
 
     @Transactional(readOnly = true)
-    public List<Item> findAll() {
+    public List<Assessment> findAll() {
         log.debug("Request to get all  Assessments");
-        List<Item> result = assessmentRepository.findAll();
+        List<Assessment> result = assessmentRepository.findAll();
 
         return result;
     }
 
     @Transactional(readOnly = true)
-    public Item findOne(String crn) {
+    public Assessment findOne(String crn) {
         log.debug("Request to get  Assessment : {}", crn);
         if (crn == null)
             return null;
-        Item assessment = assessmentRepository.findOne(crn);
+        Assessment assessment = assessmentRepository.findOne(crn);
         return assessment;
     }
 
@@ -48,14 +49,14 @@ public class AssessmentService {
         assessmentRepository.delete(crn);
     }
 
-    public Item create(Item assessment) {
+    public Assessment create(Assessment assessment) {
         log.debug("Request to create  assessment: {}", assessment);
         return assessmentRepository.save(assessment);
     }
 
-    public Item update(Item assessment) {
-        log.debug("Request to update  assessment: {}", assessment.getCrn());
-        if (assessment.getCrn() == null)
+    public Assessment update(Assessment assessment) {
+        log.debug("Request to update  assessment: {}", assessment.getCode());
+        if (assessment.getCode() == null)
             return null;
         return assessmentRepository.save(assessment);
     }

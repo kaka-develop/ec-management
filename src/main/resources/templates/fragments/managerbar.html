@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
-    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
     <script src="../../lib/jquery/jquery.js" th:src="@{/lib/bootstrap/jquery/jquery.js}"></script>
     <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.css}"></script>
 </head>
 <body>
 <!--/*  Multiple fragments may be defined in one file */-->
 <div th:fragment="managerbar" class="text-center">
-    <a href="/manager/claims">Claims</a>
-    <a href="/manager/claims/faculty">Claims/faculty</a>
-    <a href="/manager/claims/year">Claims/year</a>
-    <a href="/manager/claims/faculty/processed">Processed Claims/year</a>
-    <a href="/manager/claims/circumstance">Claims/circumstance</a>
-    <a href="/manager/claims/validation">Claims validation</a>
+    <div>
+        <a href="/manager/claims">Claims</a>
+        <a href="/manager/claims/thismonth">ClaimsThisMonth</a>
+        <a href="/manager/claims/thisweek">ClaimsThisWeek</a>
+        <a href="/manager/claims/custom">CustomClaims</a>
+    </div>
+
+    <div>
+        <a href="/manager/claims/faculty">Claims/faculty</a>
+        <a href="/manager/claims/year">Claims/year</a>
+        <a href="/manager/claims/faculty/processed">Processed Claims/year</a>
+        <a href="/manager/claims/circumstance">Claims/circumstance</a>
+        <a href="/manager/claims/validation">Claims/validation</a>
+    </div>
 </div>
 </body>
 </html>

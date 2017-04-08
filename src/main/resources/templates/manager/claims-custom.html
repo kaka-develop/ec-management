@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css"
+          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
+    <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <title>Manager</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/managerbar :: managerbar"></div>
+<div class="container">
+    <h1>Statistics</h1>
+
+    <h3>Custom Claims</h3>
+    <div class="row">
+        <div class="col-md-4">
+            <div th:if="${claims}">
+                Chart type:
+                <select id="chartType" onchange="changeChart()">
+                    <option value="pie">Pie Chart</option>
+                    <option value="column">Column Chart</option>
+                    <option value="bar">Bar chart</option>
+                </select>
+            </div>
+
+            <form method="post" th:action="@{/manager/claims/custom}">
+                <select name="reportType">
+                    <option th:value="faculty" th:selected="${param.reportType} ? ${param.reportType[0] == 'faculty'}">
+                        Claims per faculty
+                    </option>
+                    <option th:value="circumstance"
+                            th:selected="${param.reportType} ? ${param.reportType[0] == 'circumstance'}">Claims per
+                        circumstance
+                    </option>
+                    <option th:value="processed"
+                            th:selected="${param.reportType} ? ${param.reportType[0] == 'processed'}">Processed claims per
+                        faculty
+                    </option>
+                </select>
+
+                <input style="width: 100px" type="number" name="month" pattern="^\d{2}$" placeholder="Month" min="1"
+                       max="12"
+                       th:value="${param.month} ? ${param.month[0]} : null"/>
+
+
+                <input type="number" name="year" pattern="^\d{4}$" placeholder="Year" min="1900"
+                       th:value="${param.year} ? ${param.year[0]} : null"/>
+
+                <button type="submit">Report</button>
+            </form>
+            <p></p>
+            <table border="1" th:if="${claims}">
+                <tr>
+                    <th th:text="${param.reportType[0]}"></th>
+                    <th>Claims</th>
+                </tr>
+                <tr th:each="map : ${claims}">
+                    <td th:text="${map.key}"></td>
+
+                    <td>
+                        <b style="color: blue;" th:text="${map.value + ' claims'}"></b>
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+        <div class="col-md-6">
+            <div id="cpfChart" class="m-chart"></div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script th:inline="javascript" th:if="${claims}">
+
+    drawChart('pie');
+
+    function drawChart(chartType) {
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(drawclaimsPerFacultyChart);
+
+        function drawclaimsPerFacultyChart() {
+            var map = [[${claims}]];
+            var type = [[${param.reportType[0]}]];
+            var mapData = [[type, 'Claims']];
+            for (var key in map) {
+                mapData.push([key, map[key]]);
+            }
+
+            var data = google.visualization.arrayToDataTable(mapData);
+
+            var options = {
+                title: 'Claims per ' + type
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('cpfChart'));
+
+
+            if (chartType == 'bar')
+                chart = new google.visualization.BarChart(document.getElementById('cpfChart'));
+
+            if (chartType == 'column')
+                chart = new google.visualization.ColumnChart(document.getElementById('cpfChart'));
+
+
+            chart.draw(data, options);
+        }
+
+    }
+    function changeChart() {
+        var chartType = document.getElementById('chartType').value;
+        drawChart(chartType);
+    }
+
+
+</script>
+</body>
+</html>

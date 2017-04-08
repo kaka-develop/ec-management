@@ -4,7 +4,6 @@
 package org.group2.webapp;
 
 import java.util.Date;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.group2.webapp.entity.Assessment;
@@ -14,14 +13,13 @@ import org.group2.webapp.entity.Claim;
 import org.group2.webapp.entity.Faculty;
 import org.group2.webapp.entity.Item;
 import org.group2.webapp.entity.User;
-import org.group2.webapp.repository.AssessmentRepository2;
+import org.group2.webapp.repository.AssessmentRepository;
 import org.group2.webapp.repository.AuthorityRepository;
 import org.group2.webapp.repository.CircumstanceRepository;
 import org.group2.webapp.repository.ClaimRepository;
 import org.group2.webapp.repository.FacultyRepository;
 import org.group2.webapp.repository.ItemRepository;
 import org.group2.webapp.repository.UserRepository;
-import org.group2.webapp.security.AuthoritiesConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -43,7 +41,7 @@ public class SampleData {
 	@Autowired
 	private ItemRepository itemRepository;
 	@Autowired
-	private AssessmentRepository2 assessmentRepository;
+	private AssessmentRepository assessmentRepository;
 	@Autowired
 	private CircumstanceRepository circumstanceRepository;
 	@Autowired

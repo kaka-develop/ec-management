@@ -63,6 +63,16 @@ public class ManagerServiceTest {
         assertThat(!managerService.getClamsPerYear().isEmpty());
     }
 
+
+    @Test
+    public void testShouldHaveCustomClaimReport() {
+        String type  = "faculty";
+        String year = "2017";
+        String month = "04";
+        assertThat(!managerService.getCustomClaimReport(type,month,year).isEmpty());
+    }
+
+
     @After
     public void after() {
         claimService.delete(claim.getId());

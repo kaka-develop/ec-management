@@ -9,7 +9,9 @@ import org.group2.webapp.service.ManagerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -70,5 +72,28 @@ public class ManagerController {
     public String getClaimsByValidation(Model model) {
         model.addAttribute("claims", managerService.getValidAndInvalidClaims());
         return "manager/claims-validation";
+    }
+
+    @GetMapping("/claims/thismonth")
+    public String getClaimsInThisMonth(Model model) {
+        model.addAttribute("claims", managerService.findAllClaimsInThisMonth());
+        return "manager/claims-thismonth";
+    }
+
+    @GetMapping("/claims/thisweek")
+    public String getClaimsInThisWeek(Model model) {
+        model.addAttribute("claims", managerService.findAllClaimsInThisWeek());
+        return "manager/claims-thisweek";
+    }
+
+    @GetMapping("/claims/custom")
+    public String getCustomClaims() {
+        return "manager/claims-custom";
+    }
+
+    @PostMapping("/claims/custom")
+    public String postCustomClaims(Model model, @RequestParam String reportType, @RequestParam(required = false) String month, @RequestParam(required = false) String year) {
+        model.addAttribute("claims",managerService.getCustomClaimReport(reportType,month,year));
+        return "manager/claims-custom";
     }
 }

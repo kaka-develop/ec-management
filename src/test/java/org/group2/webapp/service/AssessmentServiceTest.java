@@ -1,7 +1,7 @@
 package org.group2.webapp.service;
 
 import org.group2.webapp.EcManagementApplication;
-import org.group2.webapp.entity.Item;
+import org.group2.webapp.entity.Assessment;
 import org.group2.webapp.repository.AssessmentRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -35,12 +35,12 @@ public class AssessmentServiceTest {
     private final String ASSESS_CRN = "AAAAAAAA";
     private final String ASSESS_TITLE = "AAAAAAAA";
 
-    private Item assessment;
+    private Assessment assessment;
 
     @Before
     public void before() {
-        assessment = new Item();
-        assessment.setCrn(ASSESS_CRN);
+        assessment = new Assessment();
+        assessment.setCode(ASSESS_CRN);
         assessment.setTitle(ASSESS_TITLE);
         assessment = assessmentService.create(assessment);
         log.debug("done create assessment");
@@ -55,8 +55,8 @@ public class AssessmentServiceTest {
 
     @Test
     public void testShouldHaveOneAssementByCRN() {
-        assertThat(assessmentRepository.findOne(assessment.getCrn())!= null);
-        assertThat(assessmentService.findOne(assessment.getCrn())!= null);
+        assertThat(assessmentRepository.findOne(assessment.getCode())!= null);
+        assertThat(assessmentService.findOne(assessment.getCode())!= null);
 
         assertThat(assessmentRepository.findOne("BBBBBBB")== null);
         assertThat(assessmentService.findOne( "BBBBBBB")== null);
@@ -66,7 +66,7 @@ public class AssessmentServiceTest {
 
     @After
     public void after() {
-        assessmentService.delete(assessment.getCrn());
+        assessmentService.delete(assessment.getCode());
         log.debug("done delete assessment");
     }
 }
