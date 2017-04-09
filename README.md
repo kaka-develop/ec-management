@@ -9,10 +9,16 @@
  	- Nguyễn Hải Nam (dfChicken): programmer, designer
 	- Nguyễn Văn Ái (ainguyenkaka): programmer, unit tester
 
-## Project Management
-```
-https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_dashboards
-```
+### Resource URLs
+- Repository URL: https://github.com/EnterpriseWebSoftwareDevelopmentSEM7-G2/ec-management 
+- Screencast URL: http://rebrand.ly/ewsd_g2_cw_kaka 
+- Project management: https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_dashboards 
+- Username and password: {username} – {password}
+	- Student role: student – 1234
+	- Manager role: manager – 1234
+	- Coordinator role: coordinator – 1234
+  	- Admin role: admin - 1234
+
 ## Project setup
 1. Git clone
 ```
@@ -37,9 +43,4 @@ https://www.gitbook.com/book/tungptseven/scrum-log/details
 ## Product backlog
 https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_backlogs?level=Backlog%20items&showParents=false&_a=backlog
 
-### Sprint 1
-https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_backlogs/Iteration/Sprint%201
-
-### Sprint 2
-https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_backlogs/TaskBoard/Sprint%202?_a=requirements
 
