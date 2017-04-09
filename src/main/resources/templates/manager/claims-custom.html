@@ -55,7 +55,7 @@
                 <button type="submit">Report</button>
             </form>
             <p></p>
-            <table border="1" th:if="${claims}">
+            <table class="table table-hover table-striped" th:if="${claims}">
                 <tr>
                     <th th:text="${param.reportType[0]}"></th>
                     <th>Claims</th>
@@ -71,7 +71,7 @@
 
 
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 table-responsive">
             <div id="cpfChart" class="m-chart"></div>
         </div>
     </div>

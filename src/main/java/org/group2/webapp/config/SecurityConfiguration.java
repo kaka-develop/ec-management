@@ -1,6 +1,7 @@
 package org.group2.webapp.config;
 
 import org.group2.webapp.security.AuthoritiesConstants;
+import org.group2.webapp.security.CustomAccessDeniedHandler;
 import org.group2.webapp.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -29,11 +31,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .exceptionHandling()
-                .accessDeniedPage("/error/error")
+                .accessDeniedHandler(accessDeniedHandler())
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -46,14 +54,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .rememberMe()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/student/**").hasAnyAuthority(AuthoritiesConstants.STUDENT)
-                .antMatchers("/coordinator/**").hasAnyAuthority(AuthoritiesConstants.COORDINATOR)
-                .antMatchers("/manager/**").hasAnyAuthority(AuthoritiesConstants.MANAGER)
-                .antMatchers("/admin/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
+                .mvcMatchers("/student/**").hasAnyAuthority(AuthoritiesConstants.STUDENT)
+                .mvcMatchers("/coordinator/**").hasAnyAuthority(AuthoritiesConstants.COORDINATOR)
+                .mvcMatchers("/manager/**").hasAnyAuthority(AuthoritiesConstants.MANAGER)
+                .mvcMatchers("/admin/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/api/student/**").hasAnyAuthority(AuthoritiesConstants.STUDENT)
                 .antMatchers("/api/coordinator/**").hasAnyAuthority(AuthoritiesConstants.COORDINATOR)
                 .antMatchers("/api/manager/**").hasAnyAuthority(AuthoritiesConstants.MANAGER)
                 .antMatchers("/api/admin/**").hasAnyAuthority(AuthoritiesConstants.ADMIN);
+
     }
 
     @Autowired

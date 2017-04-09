@@ -21,9 +21,9 @@
             <span th:if="${#fields.hasErrors('code')}" th:errors="*{code}">Code error</span></p>
         <p><input type="text" th:field="*{title}" placeholder="Title" required="true" minlength="3"/>
             <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</span></p>
-        <button type="submit">Save</button>
+        <button class="btn btn-default" type="submit">Save</button>
         <a href="/admin/course">
-            <button type="button">Cancel</button>
+            <button class="btn btn-default" type="button">Cancel</button>
         </a>
     </form>
 </div>

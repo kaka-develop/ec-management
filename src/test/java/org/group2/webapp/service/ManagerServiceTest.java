@@ -57,6 +57,10 @@ public class ManagerServiceTest {
     public void testShouldHaveAllClaimsByFaculty() {
         assertThat(!managerService.getClaimsPerFaculty().isEmpty());
     }
+    @Test
+    public void testShouldHaveAllValidAndInvalidClaims() {
+        assertThat(!managerService.getValidAndInvalidClaims().isEmpty());
+    }
 
     @Test
     public void testShouldHaveClaimsForEachYear() {

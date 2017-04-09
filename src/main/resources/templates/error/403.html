@@ -7,14 +7,12 @@
           th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="../static/lib/bootstrap/css/bootstrap-theme.min.css"
           th:href="@{/lib/bootstrap/css/bootstrap-theme.min.css}"/>
-
-    <title>General Error</title>
+    <title>Error 403 page</title>
     <meta charset="utf-8"></meta>
 </head>
 <body>
 <div class="container text-center">
-    <h1>Error</h1>
-    <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
+    <h1>Access Denied!</h1>
     <a class="btn btn-default" href="/" th:href="@{/}">Back to home</a>
 </div>
 </body>

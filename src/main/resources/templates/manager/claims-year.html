@@ -18,8 +18,8 @@
     <h1>Statistics</h1>
     <h3>Claims per year</h3>
     <div class="row">
-        <div class="col-md-4">
-            <table border="1">
+        <div class="col-md-4 table-responsive">
+            <table class="table table-hover table-striped">
                 <tr>
                     <th>Year</th>
                     <th>Claims</th>
@@ -55,7 +55,7 @@
         var data = google.visualization.arrayToDataTable(mapData);
 
         var options = {
-            title: 'Claims per faculty',
+            title: 'Claims per year',
             curveType: 'function',
             legend: {position: 'bottom'}
         };

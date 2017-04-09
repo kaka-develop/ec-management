@@ -19,8 +19,8 @@
 
     <h3>Processed claims per faculty</h3>
     <div class="row">
-        <div class="col-md-4">
-            <table border="1">
+        <div class="col-md-4 table-responsive">
+            <table class="table table-hover table-striped">
                 <tr>
                     <th>Faculty</th>
                     <th>Claims</th>
@@ -34,7 +34,7 @@
                 </tr>
             </table>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" >
             <div id="cpfChart" class="m-chart"></div>
         </div>
     </div>
@@ -57,8 +57,6 @@
 
         var options = {
             title: 'Processed claims per faculty',
-            width: 600,
-            height: 400,
             bar: {groupWidth: "95%"},
             legend: {position: "none"},
         };

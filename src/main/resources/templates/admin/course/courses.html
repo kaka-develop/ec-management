@@ -17,35 +17,37 @@
 <div class="container">
     <h1>All courses</h1>
     <a href="/admin/course/new">
-        <button>New course</button>
+        <button class="btn btn-default">New course</button>
     </a>
     <p>
         <span class="m-error" th:if="${error}" th:text="${error}"></span>
     </p>
-    <table border="1">
-        <tr>
-            <th>Code</th>
-            <th>Title</th>
-            <th>Faculty</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr th:each="course : ${courses}">
-            <td>
-                <a th:href="'/admin/course/detail/' + ${course.code}">
-                    <span th:text="${course.code}"></span>
-                </a>
-            </td>
-            <td th:text="${course.title}"></td>
-            <td th:text="${course.faculty.title}"></td>
-            <td><a th:href="'/admin/course/edit/' + ${course.code}">edit</a></td>
-            <td>
-                <form method="post" th:action="'/admin/course/delete/' + ${course.code}">
-                    <button type="submit">delete now</button>
-                </form>
-            </td>
-        </tr>
-    </table>
+    <div class="table-responsive ">
+        <table class="table table-hover table-striped">
+            <tr>
+                <th>Code</th>
+                <th>Title</th>
+                <th>Faculty</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="course : ${courses}">
+                <td>
+                    <a th:href="'/admin/course/detail/' + ${course.code}">
+                        <span th:text="${course.code}"></span>
+                    </a>
+                </td>
+                <td th:text="${course.title}"></td>
+                <td th:text="${course.faculty.title}"></td>
+                <td><a class="btn btn-default" th:href="'/admin/course/edit/' + ${course.code}">edit</a></td>
+                <td>
+                    <form method="post" th:action="'/admin/course/delete/' + ${course.code}">
+                        <button class="btn btn-default" type="submit">delete now</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 </body>
 </html>

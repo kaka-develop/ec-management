@@ -23,9 +23,9 @@
         <p><input type="number" th:field="*{status}" placeholder="Status" required="true" min="1"/></p>
         <p>Set dateline: <input type="date" th:field="*{closedDate}" placeholder="Closed Date" name="closedDate" required="true"/></p>
         <!--<td th:if="${#fields.hasErrors('closedDate')}" th:errors="*{closedDate}">closedDate Error</td>-->
-        <button type="submit">Save</button>
+        <button class="btn btn-default" type="submit">Save</button>
         <a href="/admin/claim">
-            <button type="button">Cancel</button>
+            <button class="btn btn-default" type="button">Cancel</button>
         </a>
     </form>
 </div>

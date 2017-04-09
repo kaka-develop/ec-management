@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+
+    <link rel="stylesheet" href="../static/lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="../static/lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap-theme.min.css}" />
+
     <title>Error 404 page</title>
     <meta charset="utf-8"></meta>
 </head>
 <body>
-    <h1>Not found</h1>
-    <h1 th:text="${httpStatus}"></h1>
-    <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
-    <a href="/" th:href="@{/}">Back to Home Page</a>
+<div class="container text-center">
+    <h1>Not Found!</h1>
+    <a class="btn btn-default" href="/" th:href="@{/}">Back to home</a>
+</div>
 </body>
 </html>

@@ -16,46 +16,48 @@
 <div th:replace="fragments/adminbar :: adminbar"></div>
 <div class="container">
     <h1>All claims</h1>
-    <p>
-        <span class="m-error" th:if="${error}" th:text="${error}"></span>
-    </p>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Evident</th>
-            <th>Content</th>
-            <th>Status</th>
-            <th>Dateline</th>
-            <th>Overdue</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr th:each="claim : ${claims}">
-            <td>
-                <a th:href="'/admin/claim/detail/' + ${claim.id}">
-                    <span th:text="${claim.id}"></span>
-                </a>
-            </td>
-            <td th:text="${claim.evidence}"></td>
-            <td th:text="${claim.content}"></td>
-            <td th:text="${claim.status}"></td>
-            <td th:text="${claim.closedDate}"></td>
-            <td th:text="${claim.isMissClosedDate() ? 'yes' : 'no'}"></td>
-            <td><a th:href="'/admin/claim/edit/' + ${claim.id}">edit</a></td>
-            <td>
-                <form method="post" th:action="'/admin/claim/delete/' + ${claim.id}">
-                    <button type="submit">delete now</button>
-                </form>
-            </td>
-        </tr>
-    </table>
-    <p></p>
     <b>Search claims by year</b>
     <form method="get" th:action="@{/admin/claim/year}">
         <input type="number" name="year" pattern="^\d{4}$" placeholder="Year" min="1900"
                th:value="${param.year} ? ${param.year[0]} : null"/>
-        <button type="submit">Search</button>
+        <button class="btn btn-default" type="submit">Search</button>
     </form>
+    <p>
+        <span class="m-error" th:if="${error}" th:text="${error}"></span>
+    </p>
+    <div class="table-responsive ">
+        <table class="table table-hover table-striped">
+            <tr>
+                <th>ID</th>
+                <th>Evident</th>
+                <th>Content</th>
+                <th>Status</th>
+                <th>Dateline</th>
+                <th>Overdue</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="claim : ${claims}">
+                <td>
+                    <a th:href="'/admin/claim/detail/' + ${claim.id}">
+                        <span th:text="${claim.id}"></span>
+                    </a>
+                </td>
+                <td th:text="${claim.evidence}"></td>
+                <td th:text="${claim.content}"></td>
+                <td th:text="${claim.status}"></td>
+                <td th:text="${claim.closedDate}"></td>
+                <td th:text="${claim.isMissClosedDate() ? 'yes' : 'no'}"></td>
+                <td><a  class="btn btn-default" th:href="'/admin/claim/edit/' + ${claim.id}">edit</a></td>
+                <td>
+                    <form method="post" th:action="'/admin/claim/delete/' + ${claim.id}">
+                        <button class="btn btn-default" type="submit">delete now</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+    </div>
 </div>
 </body>
 </html>

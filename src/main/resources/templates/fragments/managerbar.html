@@ -11,19 +11,19 @@
 <body>
 <!--/*  Multiple fragments may be defined in one file */-->
 <div th:fragment="managerbar" class="text-center">
-    <div>
-        <a href="/manager/claims">Claims</a>
-        <a href="/manager/claims/thismonth">ClaimsThisMonth</a>
-        <a href="/manager/claims/thisweek">ClaimsThisWeek</a>
-        <a href="/manager/claims/custom">CustomClaims</a>
+    <div class="btn-group">
+        <a href="/manager/claims" class="btn btn-default">Claims</a>
+        <a href="/manager/claims/thismonth" class="btn btn-default">ClaimsThisMonth</a>
+        <a href="/manager/claims/thisweek" class="btn btn-default">ClaimsThisWeek</a>
+        <a href="/manager/claims/custom" class="btn btn-default">CustomClaims</a>
     </div>
-
-    <div>
-        <a href="/manager/claims/faculty">Claims/faculty</a>
-        <a href="/manager/claims/year">Claims/year</a>
-        <a href="/manager/claims/faculty/processed">Processed Claims/year</a>
-        <a href="/manager/claims/circumstance">Claims/circumstance</a>
-        <a href="/manager/claims/validation">Claims/validation</a>
+    <br/>
+    <div class="btn-group">
+        <a href="/manager/claims/faculty" class="btn btn-default">Claims/faculty</a>
+        <a href="/manager/claims/year" class="btn btn-default">Claims/year</a>
+        <a href="/manager/claims/faculty/processed" class="btn btn-default">Processed Claims/year</a>
+        <a href="/manager/claims/circumstance" class="btn btn-default">Claims/circumstance</a>
+        <a href="/manager/claims/validation" class="btn btn-default">Claims/validation</a>
     </div>
 </div>
 </body>

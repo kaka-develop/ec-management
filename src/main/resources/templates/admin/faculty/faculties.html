@@ -17,33 +17,35 @@
 <div class="container">
     <h1>All faculties</h1>
     <a href="/admin/faculty/new">
-        <button>New faculty</button>
+        <button class="btn btn-default">New faculty</button>
     </a>
     <p>
         <span class="m-error" th:if="${error}" th:text="${error}"></span>
     </p>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr th:each="faculty : ${faculties}">
-            <td>
-                <a th:href="'/admin/faculty/detail/' + ${faculty.id}">
-                    <span th:text="${faculty.id}"></span>
-                </a>
-            </td>
-            <td th:text="${faculty.title}"></td>
-            <td><a th:href="'/admin/faculty/edit/' + ${faculty.id}">edit</a></td>
-            <td>
-                <form method="post" th:action="'/admin/faculty/delete/' + ${faculty.id}">
-                    <button type="submit">delete now</button>
-                </form>
-            </td>
-        </tr>
-    </table>
+    <div class="">
+        <table border="1" class="table-hover table-striped">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="faculty : ${faculties}">
+                <td>
+                    <a th:href="'/admin/faculty/detail/' + ${faculty.id}">
+                        <span th:text="${faculty.id}"></span>
+                    </a>
+                </td>
+                <td th:text="${faculty.title}"></td>
+                <td><a class="btn btn-default" th:href="'/admin/faculty/edit/' + ${faculty.id}">edit</a></td>
+                <td>
+                    <form method="post" th:action="'/admin/faculty/delete/' + ${faculty.id}">
+                        <button  class="btn btn-default" type="submit">delete now</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 </body>
 </html>
