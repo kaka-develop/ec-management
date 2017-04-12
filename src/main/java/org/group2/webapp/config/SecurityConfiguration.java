@@ -56,10 +56,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .mvcMatchers("/student/**").hasAnyAuthority(AuthoritiesConstants.STUDENT)
                 .mvcMatchers("/coordinator/**").hasAnyAuthority(AuthoritiesConstants.COORDINATOR)
+                .mvcMatchers("/eccoordinator/**").hasAnyAuthority(AuthoritiesConstants.COORDINATOR)
                 .mvcMatchers("/manager/**").hasAnyAuthority(AuthoritiesConstants.MANAGER)
                 .mvcMatchers("/admin/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/api/student/**").hasAnyAuthority(AuthoritiesConstants.STUDENT)
                 .antMatchers("/api/coordinator/**").hasAnyAuthority(AuthoritiesConstants.COORDINATOR)
+                .antMatchers("/api/eccoordinator/**").hasAnyAuthority(AuthoritiesConstants.COORDINATOR)
                 .antMatchers("/api/manager/**").hasAnyAuthority(AuthoritiesConstants.MANAGER)
                 .antMatchers("/api/admin/**").hasAnyAuthority(AuthoritiesConstants.ADMIN);
 
