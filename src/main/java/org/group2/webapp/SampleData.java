@@ -217,6 +217,7 @@ public class SampleData {
             cl1.addCircumstance(cir1);
             cl1.addCircumstance(cir2);
             cl1.addCircumstance(cir3);
+            cl1.setItem(item1);
             claimRepository.save(cl1);
 
             cl1 = new Claim("Evidence2", "Content2", new Date(), null, 1, s2, formatter.parse("2017-05-05"));
@@ -224,12 +225,14 @@ public class SampleData {
             cl1.addCircumstance(cir2);
             cl1.addCircumstance(cir3);
             cl1.addCircumstance(cir4);
+            cl1.setItem(item3);
             claimRepository.save(cl1);
 
             cl1 = new Claim("Evidence3", "Content3", formatter.parse("2016-05-05"), null, 1, s2, new Date());
             cl1.clearCircumstances();
             cl1.addCircumstance(cir4);
             cl1.addCircumstance(cir5);
+            cl1.setItem(item4);
             claimRepository.save(cl1);
 
 
@@ -237,24 +240,28 @@ public class SampleData {
             cl1.clearCircumstances();
             cl1.addCircumstance(cir5);
             cl1.addCircumstance(cir6);
+            cl1.setItem(item5);
             claimRepository.save(cl1);
 
             cl1 = new Claim("Evidence5", "Content5", new Date(), null, 1, s4, formatter.parse("2017-04-30"));
             cl1.clearCircumstances();
             cl1.addCircumstance(cir7);
             cl1.addCircumstance(cir6);
+            cl1.setItem(item6);
             claimRepository.save(cl1);
 
             cl1 = new Claim("Evidence6", "Content6", formatter.parse("2015-05-05"), new Date(), 1, s3, formatter.parse("2017-04-06"));
             cl1.clearCircumstances();
             cl1.addCircumstance(cir6);
             cl1.addCircumstance(cir8);
+            cl1.setItem(item7);
             claimRepository.save(cl1);
 
             cl1 = new Claim("Evidence7", "Content7", formatter.parse("2015-05-05"), new Date(), 1, s3, formatter.parse("2017-06-20"));
             cl1.clearCircumstances();
             cl1.addCircumstance(cir1);
             cl1.addCircumstance(cir2);
+            cl1.setItem(item8);
             claimRepository.save(cl1);
 
             cl1 = new Claim("Evidence8", "Content8", new Date(), null, 1, s5, formatter.parse("2017-04-01"));
