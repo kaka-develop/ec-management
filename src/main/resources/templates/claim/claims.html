@@ -45,6 +45,13 @@
 			</h4>
 			A new email will be sent to claim's student.
 		</div>
+		<div th:if="${updatedEvidence != null}" class="alert alert-success alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<h4>
+				<i class="icon fa fa-check"></i> Your evidences have been uploaded successfully!
+			</h4>
+			A new email will be sent to claim's student.
+		</div>
 		<div class="box box-primary">
 
 
@@ -202,16 +209,19 @@
     });
     
     $(".claimRow").on("click", function() {
-        console.log("ngu roi a`")
     	claimId=$(this).find(".claimId").val()
     	pathname=window.location.pathname
-    	if(pathname.indexOf("eccoordinator"))
+    	if(pathname.includes("eccoordinator"))
     	{
+        	console.log("expected:eccoordinator, actual:"+pathname)
+    		console.log("go to: http://localhost:8080/eccoordinator/claim/process?id="+claimId);
      		window.location.replace("http://localhost:8080/eccoordinator/claim/process?id="+claimId);
-     		console.log(pathname)
-    	}else if(pathname.indexOf("student")){
-    		window.location.replace("http://localhost:8080/student/claim/detail?id="+clamId);
-    		console.log(pathname)
+     		
+    	}else if(pathname.includes("student")){
+    		console.log("expected:student, actual:"+pathname)
+    		console.log("go to: http://localhost:8080/student/claim/detail?id="+claimId)
+    		window.location.replace("http://localhost:8080/student/claim/detail?id="+claimId);
+    		
     	}		
     })
 	</script>

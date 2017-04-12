@@ -48,51 +48,52 @@
 					</div>
 				</div>
 				<div class="box-body">
-					<div class="form-group">
-						<label>Claim ID#:</label> <span th:text="${claim.id}">1111</span>
-					</div>
-
-					<div class="form-group">
-						<label>Claim for: </label> <span th:text="${claim.item.title}">Title</span>
-					</div>
-					<div class="form-group">
-						<label>Circumstances: </label><br />
-						<div th:each="cir : ${claim.circumstances}">
-							<label> <input type="checkbox" class="myCheckbox" disabled checked /> <span th:text="${cir.title}">circumstances</span>
-							</label>
-
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Content</label>
-						<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.content}" name="decision" rows="10" cols="80"
-							readonly="readonly"></textarea>
-					</div>
-					<div th:if="${claim.decision != null}" class="form-group">
-						<label>Decision</label>
-						<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.decision}" name="decision" rows="10" cols="80"
-							readonly="readonly"></textarea>
-					</div>
-					<div class="form-group">
-						<label>Evidences: </label>
-						<div>
-							<img width="128" src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-								src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" />
-						</div>
-					</div>
 					<form th:action="@{/student/claim/update}" id="update-form" method="post" class="form-horizontal" enctype="multipart/form-data">
-						<div class="form-group">
-                                                    <input type="hidden" name="id" th:value="${claim.id}"/>
-							<label>Upload more evidents: </label> <input type="file" name="evidenceFiles" multiple="true" />
+						<div class="form-group col-lg-12">
+							<label>Claim ID#:</label> <span th:text="${claim.id}">1111</span>
 						</div>
-						<div class="form-group">
+
+						<div class="form-group col-lg-12">
+							<label>Claim for: </label> <span th:text="${claim.item.title}">Title</span>
+						</div>
+						<!-- 					<div class="form-group"> -->
+						<!-- 						<label>Circumstances: </label><br /> -->
+						<!-- 						<div th:each="cir : ${claim.circumstances}"> -->
+						<!-- 							<label> <input type="checkbox" class="myCheckbox" disabled checked /> <span th:text="${cir.title}">circumstances</span> -->
+						<!-- 							</label> -->
+
+						<!-- 						</div> -->
+						<!-- 					</div> -->
+						<div class="form-group col-lg-12">
+							<label>Content</label>
+							<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.content}" name="decision" rows="10" cols="80"
+								readonly="readonly"></textarea>
+						</div>
+						<div th:if="${claim.decision != null}" class="form-group col-lg-12">
+							<label>Decision</label>
+							<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.decision}" name="decision" rows="10" cols="80"
+								readonly="readonly"></textarea>
+						</div>
+						<div class="form-group col-lg-12">
+							<label>Evidences: </label>
+							<div>
+								<img width="128" src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" />
+							</div>
+						</div>
+						<div class="form-group col-lg-12">
+							<label>Upload more evidents: </label>
+							<input type="hidden" name="id" th:value="${claim.id}" />  <input type="file" name="evidenceFiles"
+								multiple="true" />
+						</div>
+						<div class="form-group col-lg-12">
 							<input class="btn btn-primary" type="submit" value="Upload" />
 						</div>
 					</form>
