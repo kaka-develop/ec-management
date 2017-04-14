@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
-<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
-
-<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
-<link rel="stylesheet" href="../../static/lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap-theme.min.css}" />
-<link rel="stylesheet" href="../../static/css/core.css" th:href="@{/css/core.css}" />
+<meta charset="UTF-8" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+<link rel="stylesheet" href="../static/lib/bootstrap/css/bootstrap.min.css" th:href="@{/lib/bootstrap/css/bootstrap.min.css}" />
+<!-- <link rel="stylesheet" href="../static/lib/bootstrap/css/bootstrap-theme.min.css" th:href="@{/lib/bootstrap/css/bootstrap-theme.min.css}" /> -->
+<!-- <link rel="stylesheet" href="../static/css/core.css" th:href="@{/css/core.css}" /> -->
+<link rel="stylesheet" href="../static/lib/adminlte/css/AdminLTE.min.css" th:href="@{/lib/adminlte/css/AdminLTE.min.css}" />
+<link rel="stylesheet" href="../static/lib/adminlte/css/skins/skin-blue.css" th:href="@{/lib/adminlte/css/skins/_all-skins.min.css}" />
+<link rel="stylesheet" href="../static/lib/iCheck/all.css" th:href="@{/lib/iCheck/all.css}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-<link rel="stylesheet" href="../../static/lib/adminlte/css/AdminLTE.min.css" th:href="@{/lib/adminlte/css/AdminLTE.min.css}" />
-<link rel="stylesheet" href="../../static/lib/adminlte/css/skins/skin-blue.css" th:href="@{/lib/adminlte/css/skins/skin-blue.css}" />
-<link rel="stylesheet" href="../../static/lib/iCheck/all.css" th:href="@{/lib/iCheck/all.css}" />
 
 <script src="../../static/lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
 <script src="../../static/lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
@@ -19,90 +18,83 @@
 <script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
 <title>Detail claim</title>
 </head>
-<body>
+<body class="hold-transition skin-green layout-top-nav">
 	<div th:replace="fragments/header :: header"></div>
 
+	<div class="content-wrapper">
+		<div class="container">
+			<section class="content-header">
+				<h1>Claim detail</h1>
+			</section>
 
-	<div class="container">
-		<section class="content-header">
-			<h1>Claim detail</h1>
-		</section>
 
-
-		<section class="content">
-			<div class="box box-success">
-				<div class="box-header with-border">
-					<h3 class="box-title">Claim 2017-04-05</h3>
-					<div class="pull-right">
-						<th:block th:switch="${claim.status}">
-							<div th:case="0">
-								<span class="label label-success">Done</span>
-							</div>
-							<div th:case="1">
-								<span class="label label-warning">Pending</span>
-							</div>
-							<div th:case="2">
-								<span class="label label-danger">Disabled</span>
-							</div>
-						</th:block>
+			<section class="content">
+				<div class="box box-success">
+					<div class="box-header with-border">
+						<h3 class="box-title">Claim 2017-04-05</h3>
+						<div class="pull-right">
+							<th:block th:switch="${claim.status}">
+								<div th:case="0">
+									<span class="label label-success">Done</span>
+								</div>
+								<div th:case="1">
+									<span class="label label-warning">Pending</span>
+								</div>
+								<div th:case="2">
+									<span class="label label-danger">Disabled</span>
+								</div>
+							</th:block>
+						</div>
 					</div>
-				</div>
-				<div class="box-body">
-					<form th:action="@{/student/claim/update}" id="update-form" method="post" class="form-horizontal" enctype="multipart/form-data">
-						<div class="form-group col-lg-12">
-							<label>Claim ID#:</label> <span th:text="${claim.id}">1111</span>
-						</div>
-
-						<div class="form-group col-lg-12">
-							<label>Claim for: </label> <span th:text="${claim.item.title}">Title</span>
-						</div>
-						<!-- 					<div class="form-group"> -->
-						<!-- 						<label>Circumstances: </label><br /> -->
-						<!-- 						<div th:each="cir : ${claim.circumstances}"> -->
-						<!-- 							<label> <input type="checkbox" class="myCheckbox" disabled checked /> <span th:text="${cir.title}">circumstances</span> -->
-						<!-- 							</label> -->
-
-						<!-- 						</div> -->
-						<!-- 					</div> -->
-						<div class="form-group col-lg-12">
-							<label>Content</label>
-							<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.content}" name="decision" rows="10" cols="80"
-								readonly="readonly"></textarea>
-						</div>
-						<div th:if="${claim.decision != null}" class="form-group col-lg-12">
-							<label>Decision</label>
-							<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.decision}" name="decision" rows="10" cols="80"
-								readonly="readonly"></textarea>
-						</div>
-						<div class="form-group col-lg-12">
-							<label>Evidences: </label>
-							<div>
-								<img width="128" src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
-									src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" />
+					<div class="box-body">
+						<form th:action="@{/student/claim/update}" id="update-form" method="post" class="form-horizontal" enctype="multipart/form-data">
+							<div class="form-group col-lg-12">
+								<label>Claim ID#:</label> <span th:text="${claim.id}">1111</span>
 							</div>
-						</div>
-						<div class="form-group col-lg-12">
-							<label>Upload more evidents: </label>
-							<input type="hidden" name="id" th:value="${claim.id}" />  <input type="file" name="evidenceFiles"
-								multiple="true" />
-						</div>
-						<div class="form-group col-lg-12">
-							<input class="btn btn-primary" type="submit" value="Upload" />
-						</div>
-					</form>
+
+							<div class="form-group col-lg-12">
+								<label>Claim for: </label> <span th:text="${claim.item.title}">Title</span>
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Content</label>
+								<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.content}" name="decision" rows="10" cols="80"
+									readonly="readonly"></textarea>
+							</div>
+							<div th:if="${claim.decision != null}" class="form-group col-lg-12">
+								<label>Decision</label>
+								<textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.decision}" name="decision" rows="10" cols="80"
+									readonly="readonly"></textarea>
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Evidences: </label>
+								<div>
+									<img width="128" src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+										src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+										src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+										src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+										src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+										src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+										src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+										src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" /> <img width="128"
+										src="https://cdn4.iconfinder.com/data/icons/CS5/512/ACP_PDF%202_file_document.png" />
+								</div>
+							</div>
+							<div class="form-group col-lg-12">
+								<label>Upload more evidents: </label> <input type="hidden" name="id" th:value="${claim.id}" /> <input type="file" name="evidenceFiles"
+									multiple="true" />
+							</div>
+							<div class="form-group col-lg-12">
+								<input class="btn btn-primary" type="submit" value="Upload" />
+							</div>
+						</form>
+					</div>
+
 				</div>
 
-			</div>
 
+			</section>
 
-		</section>
+		</div>
 	</div>
 
 	<div th:replace="fragments/footer :: footer"></div>
