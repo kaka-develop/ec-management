@@ -1,17 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
-          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css"
-          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
-    <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
-    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-    <title>Manager</title>
+     <th:block th:replace="fragments/bundle :: bundle"></th:block>  <title>Manager</title>
 </head>
-<body>
+<body class="hold-transition skin-green layout-top-nav">
 <div th:replace="fragments/header :: header"></div>
 <div th:replace="fragments/managerbar :: managerbar"></div>
 <div class="container">
