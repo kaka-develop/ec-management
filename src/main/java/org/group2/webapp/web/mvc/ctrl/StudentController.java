@@ -87,7 +87,7 @@ public class StudentController {
 
     @GetMapping("/add")
     public String addClaim(HttpServletRequest req) {
-    	User currentUser=SessionUtils.getCurrentUserSession(userRepo).get();
+        User currentUser = SessionUtils.getCurrentUserSession(userRepo).get();
         List<Assessment> suitableAssessment = assessmentRepo.findAll().stream()
                 .filter(ass -> ass.getFaculty().getId() == currentUser.getFaculty().getId())
                 .collect(Collectors.toList());
@@ -133,6 +133,11 @@ public class StudentController {
         Claim claim = claimRepo.findOne(id);
         System.out.println("claim: " + claim);
         req.setAttribute("claim", claim);
+        
+        String[] evidences = claim.getEvidence().split(";");
+        System.out.println("Evidences: " + evidences.length);
+        req.setAttribute("evidences", evidences);
+
         return "claim/detail";
     }
 
@@ -140,14 +145,14 @@ public class StudentController {
     public String update(Long id, HttpServletRequest req, @RequestParam("evidenceFiles") MultipartFile[] files) {
         Claim claim = claimRepo.findOne(id);
 
-       String evidences =  claim.getEvidence() + ";" + getEvidencesFromFileArray(files);
-       
-       logger.info(evidences);
-       
-       claim.setEvidence(evidences);
-       
-       claimRepo.save(claim);
-       req.setAttribute("updatedEvidence", true);
+        String evidences = claim.getEvidence() + ";" + getEvidencesFromFileArray(files);
+
+        logger.info(evidences);
+
+        claim.setEvidence(evidences);
+
+        claimRepo.save(claim);
+        req.setAttribute("updatedEvidence", true);
         return viewClaim(req);
     }
 
