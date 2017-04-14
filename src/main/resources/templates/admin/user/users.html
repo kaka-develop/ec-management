@@ -1,57 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
-          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css"
-          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
-    <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
-    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-    <title>Admin</title>
+<th:block th:replace="fragments/bundle :: bundle"></th:block>
+<title>Admin</title>
 </head>
-<body>
-<div th:replace="fragments/header :: header"></div>
-<div th:replace="fragments/adminbar :: adminbar"></div>
-<div class="container">
-    <h1>All users</h1>
-    <a href="/admin/user/new">
-        <button class="btn btn-default">New user</button>
-    </a>
-    <p>
-        <span class="m-error" th:if="${error}" th:text="${error}"></span>
-    </p>
-    <div class="table-responsive ">
-        <table class="table table-hover table-striped">
-            <tr>
-                <th>Username</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
-                <th>Faculty</th>
-                <th></th>
-                <th></th>
-            </tr>
-            <tr th:each="user : ${users}" th:if="${#authentication.getPrincipal().getUsername() != user.username}">
-                <td>
-                    <a th:href="'/admin/user/detail/' + ${user.username}">
-                        <span th:text="${user.username}"></span>
-                    </a>
-                </td>
-                <td th:text="${user.firstName}"></td>
-                <td th:text="${user.lastName}"></td>
-                <td th:text="${user.email}"></td>
-                <td th:text="${user.faculty}"></td>
-                <td><a class="btn btn-default" th:href="'/admin/user/edit/' + ${user.username}">edit</a></td>
-                <td>
-                    <form method="post" th:action="'/admin/user/delete/' + ${user.username}">
-                        <button class="btn btn-default" type="submit">delete now</button>
-                    </form>
-                </td>
-            </tr>
-        </table>
-    </div>
-</div>
+<body class="hold-transition skin-green layout-top-nav">
+	<div th:replace="fragments/header :: header"></div>
+	<div th:replace="fragments/adminbar :: adminbar"></div>
+	<div class="container">
+		<h1>All users</h1>
+		<a href="/admin/user/new">
+			<button class="btn btn-default">New user</button>
+		</a>
+		<p>
+			<span class="m-error" th:if="${error}" th:text="${error}"></span>
+		</p>
+		<div class="table-responsive ">
+			<table class="table table-hover table-striped">
+				<tr>
+					<th>Username</th>
+					<th>Firstname</th>
+					<th>Lastname</th>
+					<th>Email</th>
+					<th>Faculty</th>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr th:each="user : ${users}" th:if="${#authentication.getPrincipal().getUsername() != user.username}">
+					<td><a th:href="'/admin/user/detail/' + ${user.username}"> <span th:text="${user.username}"></span>
+					</a></td>
+					<td th:text="${user.firstName}"></td>
+					<td th:text="${user.lastName}"></td>
+					<td th:text="${user.email}"></td>
+					<td th:text="${user.faculty}"></td>
+					<td><a class="btn btn-default" th:href="'/admin/user/edit/' + ${user.username}">edit</a></td>
+					<td>
+						<form method="post" th:action="'/admin/user/delete/' + ${user.username}">
+							<button class="btn btn-default" type="submit">delete now</button>
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 </body>
 </html>

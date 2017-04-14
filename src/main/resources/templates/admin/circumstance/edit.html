@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.min.css"
-          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap-theme.min.css"
-          th:href="@{/lib/bootstrap/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="../../css/core.css}" th:href="@{/css/core.css}"/>
-    <script src="../../lib/jquery/jquery.js" th:src="@{/lib/jquery/jquery.js}"></script>
-    <script src="../../lib/bootstrap/js/bootstrap.min.js" th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-    <title>Circumstance</title>
+<th:block th:replace="fragments/bundle :: bundle"></th:block>
+<title>Circumstance</title>
 </head>
-<body>
-<div th:replace="fragments/header :: header"></div>
-<div th:replace="fragments/adminbar :: adminbar"></div>
-<div class="container">
-    <h1>Edit circumstance</h1>
-    <form method="POST" action="#" th:action="@{/admin/circumstance/edit}" th:object="${circumstance}">
-        <p><input type="text" th:field="*{id}" hidden="true"/></p>
-        <p><input type="text" th:field="*{title}" placeholder="First name" required="true" minlength="5"/></p>
-        <button class="btn btn-default" type="submit">Save</button>
-        <a href="/admin/circumstance">
-            <button class="btn btn-default" type="button">Cancel</button>
-        </a>
-    </form>
-</div>
+<body class="hold-transition skin-green layout-top-nav">
+	<div th:replace="fragments/header :: header"></div>
+	<div th:replace="fragments/adminbar :: adminbar"></div>
+	<div class="container">
+		<h1>Edit circumstance</h1>
+		<form method="POST" action="#" th:action="@{/admin/circumstance/edit}" th:object="${circumstance}">
+			<p>
+				<input type="text" th:field="*{id}" hidden="true" />
+			</p>
+			<p>
+				<input type="text" th:field="*{title}" placeholder="First name" required="true" minlength="5" />
+			</p>
+			<button class="btn btn-default" type="submit">Save</button>
+			<a href="/admin/circumstance">
+				<button class="btn btn-default" type="button">Cancel</button>
+			</a>
+		</form>
+	</div>
 </body>
 </html>
