@@ -133,10 +133,12 @@ public class StudentController {
         Claim claim = claimRepo.findOne(id);
         System.out.println("claim: " + claim);
         req.setAttribute("claim", claim);
-        
-        String[] evidences = claim.getEvidence().split(";");
-        System.out.println("Evidences: " + evidences.length);
-        req.setAttribute("evidences", evidences);
+
+        if (!claim.getEvidence().equals("")) {
+            String[] evidences = claim.getEvidence().split(";");
+            System.out.println("Evidences: " + evidences.length);
+            req.setAttribute("evidences", evidences);
+        }
 
         return "claim/detail";
     }
@@ -163,44 +165,45 @@ public class StudentController {
         for (int i = 0; i < length; i++) {
             String name;
             MultipartFile file = files[i];
-            try {
-                byte[] bytes = file.getBytes();
+            if (!file.isEmpty()) {
+                try {
+                    byte[] bytes = file.getBytes();
 
-                long time = System.currentTimeMillis();
-                java.sql.Timestamp timestmp = new java.sql.Timestamp(time);
-                name = "evidence" + i + "_" + timestmp.getTime() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
+                    long time = System.currentTimeMillis();
+                    java.sql.Timestamp timestmp = new java.sql.Timestamp(time);
+                    name = "evidence" + i + "_" + timestmp.getTime() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
 
-                // Creating the directory to store file
-                String actualPath = servletContext.getRealPath("");
-                String fileLocation = actualPath + File.separator + "evidents";
+                    // Creating the directory to store file
+                    String actualPath = servletContext.getRealPath("");
+                    String fileLocation = actualPath + File.separator + "evidents";
+                    File dir = new File(fileLocation);
+                    if (!dir.exists()) {
+                        dir.mkdirs();
+                    }
 
-                File dir = new File(fileLocation);
-                if (!dir.exists()) {
-                    dir.mkdirs();
+                    // Create the file on server
+                    File serverFile = new File(dir.getAbsolutePath()
+                            + File.separator + name);
+
+                    BufferedOutputStream stream = new BufferedOutputStream(
+                            new FileOutputStream(serverFile));
+                    stream.write(bytes);
+                    stream.close();
+
+                    if (i == 0) {
+                        evidences = evidences + name;
+                    } else if (i > 0) {
+                        evidences = evidences + ";" + name;
+                    }
+
+                    logger.info("Saved to: "
+                            + serverFile.getAbsolutePath());
+
+                } catch (FileNotFoundException ex) {
+                    logger.info(ex.getMessage());
+                } catch (IOException ex) {
+                    logger.info(ex.getMessage());
                 }
-
-                // Create the file on server
-                File serverFile = new File(dir.getAbsolutePath()
-                        + File.separator + name);
-
-                BufferedOutputStream stream = new BufferedOutputStream(
-                        new FileOutputStream(serverFile));
-                stream.write(bytes);
-                stream.close();
-
-                if (i == 0) {
-                    evidences = evidences + name;
-                } else if (i > 0) {
-                    evidences = evidences + ";" + name;
-                }
-
-                logger.info("Saved to: "
-                        + serverFile.getAbsolutePath());
-
-            } catch (FileNotFoundException ex) {
-                logger.info(ex.getMessage());
-            } catch (IOException ex) {
-                logger.info(ex.getMessage());
             }
         }
         return evidences;
