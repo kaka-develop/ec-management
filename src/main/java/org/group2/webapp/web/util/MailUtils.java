@@ -15,8 +15,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.entity.User;
+import org.group2.webapp.web.mvc.ctrl.StudentController;
 
 /**
  * @author Dam Cao Son
@@ -24,7 +26,7 @@ import org.group2.webapp.entity.User;
  *
  */
 public class MailUtils {
-
+	private static final Logger logger = Logger.getLogger(MailUtils.class);
 	private static Properties config = null;
 	private static Session mailSs;
 
@@ -41,20 +43,29 @@ public class MailUtils {
 	}
 
 	public static void sendClaimNewsForCoordinators(Claim claim, List<User> users) {
+		logger.info("So luong coordinator: " + users.size());
 		StringBuilder sb = new StringBuilder();
 		sb.append("You have new EC claim from student!\n");
-		sb.append("<a href='localhost:8080'>Click here to see</a>");
+		sb.append("Claim for: ").append(claim.getItem().getTitle()).append("\n");
+		sb.append("<a href='http://localhost:8080/eccoordinator/claim/process?id=").append(claim.getId()).append("'>Click here to see</a>");
 		for (User user : users) {
-			sendMail(user.getEmail(), "New EC Claim", sb.toString());
+			if (user.getFaculty().getId() == claim.getUser().getFaculty().getId()) {
+				sendMail(user.getEmail(), "New EC Claim", sb.toString());
+				logger.debug("[Email] send email for coordinator name=" + user.getFirstName() + ", email="
+						+ user.getEmail());
+			}
 		}
 	}
 
 	public static void sendClaimNewsForStudent(Claim claim) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Your EC claim has final decision!\n");
-		sb.append("<a href='localhost:8080'>Click here to see</a>");
+		sb.append("<p>Your claim has final decision!</p>");
+		sb.append("<p>Claim for: ").append(claim.getItem().getTitle()).append("</p>");
+		sb.append("<a href='http://localhost:8080/student/claim/detail?id=").append(claim.getId()).append("'>Click here to see</a>");
 
-		sendMail(claim.getUser().getEmail(), "EC Claim", sb.toString());
+		User user = claim.getUser();
+		sendMail(user.getEmail(), "EC Claim", sb.toString());
+		logger.debug("[Email] send email for student name=" + user.getFirstName() + ", email=" + user.getEmail());
 	}
 
 	public static void sendMail(String to, String subject, String content) {
@@ -77,7 +88,7 @@ public class MailUtils {
 	}
 
 	public static void main(String[] args) {
-		MailUtils.sendMail("sondcgc00681@fpt.edu.vn", "Title", "<a href='#'>Click vao day</a>");
+		MailUtils.sendMail("sondcgc00681@fpt.edu.vn", "Title", "<a href='http://localhost:8080/student/claim/detail?id=1'>Click vao day</a>");
 	}
 
 }

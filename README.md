@@ -13,6 +13,7 @@
 - Repository URL: https://github.com/EnterpriseWebSoftwareDevelopmentSEM7-G2/ec-management 
 - Screencast URL: http://rebrand.ly/ewsd_g2_cw_kaka 
 - Project management: https://ainguyenkaka.visualstudio.com/EnterpriseWebSoftwareDevelopmentSEM7/_dashboards 
+- Site URL: http://ecmsystem.ga/
 - Username and password: {username} – {password}
 	- Student role: student – 1234
 	- Manager role: manager – 1234

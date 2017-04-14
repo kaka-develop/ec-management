@@ -77,7 +77,6 @@ public class StudentController {
 
             @Override
             public int compare(Claim o1, Claim o2) {
-
                 return o2.getCreated_time().compareTo(o1.getCreated_time());
             }
         });
@@ -88,9 +87,9 @@ public class StudentController {
 
     @GetMapping("/add")
     public String addClaim(HttpServletRequest req) {
+    	User currentUser=SessionUtils.getCurrentUserSession(userRepo).get();
         List<Assessment> suitableAssessment = assessmentRepo.findAll().stream()
-                .filter(ass -> ass.getFaculty().getId() == SessionUtils.getCurrentUserSession(userRepo).get()
-                        .getFaculty().getId())
+                .filter(ass -> ass.getFaculty().getId() == currentUser.getFaculty().getId())
                 .collect(Collectors.toList());
 
         req.setAttribute("allAssessments", suitableAssessment);
@@ -119,7 +118,6 @@ public class StudentController {
                 myClaim.setItem(item);
                 myClaim.getCircumstances().addAll(myCirumstance);
                 claimRepo.save(myClaim);
-                System.out.println("Claim chuan bi save: " + myClaim);
                 MailUtils.sendClaimNewsForCoordinators(myClaim,
                         userRepo.findAllUserByAuthority(AuthoritiesConstants.COORDINATOR));
             }
@@ -149,7 +147,7 @@ public class StudentController {
        claim.setEvidence(evidences);
        
        claimRepo.save(claim);
-       
+       req.setAttribute("updatedEvidence", true);
         return viewClaim(req);
     }
 
