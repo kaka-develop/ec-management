@@ -1,18 +1,14 @@
 package org.group2.webapp.service;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.Calendar;
+import java.util.List;
+
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.repository.ClaimRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional

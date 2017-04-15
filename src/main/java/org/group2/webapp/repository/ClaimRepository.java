@@ -1,10 +1,10 @@
 package org.group2.webapp.repository;
 
+import java.util.List;
+
 import org.group2.webapp.entity.Claim;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 
 @SuppressWarnings("unused")
 public interface ClaimRepository extends JpaRepository<Claim, Long> {

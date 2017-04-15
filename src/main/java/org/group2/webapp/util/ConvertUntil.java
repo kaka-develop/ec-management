@@ -1,11 +1,10 @@
 package org.group2.webapp.util;
 
-import org.apache.commons.lang3.StringUtils;
-import org.group2.webapp.entity.Authority;
-import org.group2.webapp.security.AuthoritiesConstants;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
+import org.group2.webapp.security.AuthoritiesConstants;
 
 public class ConvertUntil {
 

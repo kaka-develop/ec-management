@@ -1,12 +1,11 @@
 package org.group2.webapp.web.mvc.vm;
 
-import org.group2.webapp.entity.Authority;
-import org.group2.webapp.entity.User;
-import org.group2.webapp.service.dto.UserDTO;
+import java.util.Calendar;
+import java.util.HashSet;
 
 import javax.validation.constraints.Size;
-import java.time.ZonedDateTime;
-import java.util.*;
+
+import org.group2.webapp.service.dto.UserDTO;
 
 public class UserVM extends UserDTO {
 

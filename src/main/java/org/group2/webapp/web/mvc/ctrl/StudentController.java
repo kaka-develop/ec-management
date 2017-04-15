@@ -13,11 +13,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import javax.servlet.ServletContext;
-
 import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.io.FilenameUtils;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.group2.webapp.constraints.ClaimStatusContraints;
 import org.group2.webapp.entity.Assessment;
