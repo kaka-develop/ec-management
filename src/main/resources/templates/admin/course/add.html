@@ -7,10 +7,10 @@
 <div th:replace="fragments/header :: header"></div>
 <div th:replace="fragments/adminbar :: adminbar"></div>
 <div class="container">
-    <h1>Add course</h1>
+    <h1>Add item</h1>
     <form method="POST" action="#" th:action="@{/admin/course/new}" th:object="${course}">
-        <p><input type="text" th:field="*{code}" placeholder="Code" required="true" minlength="3"/>
-            <span th:if="${#fields.hasErrors('code')}" th:errors="*{code}">Code error</span></p>
+        <p><input type="text" th:field="*{crn}" placeholder="Crn" required="true" minlength="3"/>
+            <span th:if="${#fields.hasErrors('crn')}" th:errors="*{crn}">Crn error</span></p>
         <p><input type="text" th:field="*{title}" placeholder="Title" required="true" minlength="3"/>
             <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</span></p>
         <button class="btn btn-default" type="submit">Save</button>

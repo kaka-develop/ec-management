@@ -2,8 +2,9 @@ package org.group2.webapp.web.rest;
 
 import org.group2.webapp.EcManagementApplication;
 
-import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.entity.Item;
 import org.group2.webapp.repository.CourseRepository;
+import org.group2.webapp.repository.ItemRepository;
 import org.group2.webapp.service.CourseService;
 
 import org.group2.webapp.web.rest.admin.CourseAPI;
@@ -38,7 +39,7 @@ public class CourseAPITest {
     private static final String COURSE_TITLE = "AAAAAAAAAA";
 
     @Autowired
-    private CourseRepository courseRepository;
+    private ItemRepository courseRepository;
 
     @Autowired
     private CourseService courseService;
@@ -49,7 +50,7 @@ public class CourseAPITest {
 
     private MockMvc restCourseMockMvc;
 
-    private Assessment course;
+    private Item course;
 
     @Before
     public void setup() {
@@ -58,9 +59,9 @@ public class CourseAPITest {
         this.restCourseMockMvc = MockMvcBuilders.standaloneSetup(courseAPI).build();
     }
 
-    public static Assessment createEntity(EntityManager em) {
-        Assessment course = new Assessment();
-        course.setCode(COURSE_CODE);
+    public static Item createEntity(EntityManager em) {
+        Item course = new Item();
+        course.setCrn(COURSE_CODE);
         course.setTitle(COURSE_TITLE);
         return course;
     }
@@ -81,26 +82,26 @@ public class CourseAPITest {
                 .content(TestUtil.convertObjectToJsonBytes(course)))
                 .andExpect(status().isOk());
 
-        List<Assessment> courseList = courseRepository.findAll();
+        List<Item> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeCreate + 1);
-        Assessment testCourse = courseRepository.findOne(course.getCode());
+        Item testCourse = courseRepository.findOne(course.getCrn());
         assertThat(testCourse.getTitle()).isEqualTo(COURSE_TITLE);
     }
 
     @Test
     @Transactional
-    public void testShouldResponseCourseWithExistingCode() throws Exception {
+    public void testShouldResponseCourseWithExistingCrn() throws Exception {
         int databaseSizeBeforeCreate = courseRepository.findAll().size();
 
-        Assessment existingCourse = new Assessment();
-        existingCourse.setCode(COURSE_CODE);
+        Item existingCourse = new Item();
+        existingCourse.setCrn(COURSE_CODE);
 
         restCourseMockMvc.perform(post("/api/admin/courses")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(existingCourse)))
                 .andExpect(status().isBadRequest());
 
-        List<Assessment> courseList = courseRepository.findAll();
+        List<Item> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeCreate);
     }
 
@@ -115,7 +116,7 @@ public class CourseAPITest {
                 .content(TestUtil.convertObjectToJsonBytes(course)))
                 .andExpect(status().isBadRequest());
 
-        List<Assessment> courseList = courseRepository.findAll();
+        List<Item> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeTest);
     }
 
@@ -129,28 +130,28 @@ public class CourseAPITest {
         restCourseMockMvc.perform(get("/api/admin/courses"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].code").value(hasItem(course.getCode())))
+                .andExpect(jsonPath("$.[*].crn").value(hasItem(course.getCrn())))
                 .andExpect(jsonPath("$.[*].title").value(hasItem(COURSE_TITLE.toString())));
     }
 
     @Test
     @Transactional
-    public void testShouldResponseOneCourseByCode() throws Exception {
+    public void testShouldResponseOneCourseByCrn() throws Exception {
         // Initialize the database
         courseRepository.saveAndFlush(course);
 
         // Get the course
-        restCourseMockMvc.perform(get("/api/admin/courses/{code}", course.getCode()))
+        restCourseMockMvc.perform(get("/api/admin/courses/{crn}", course.getCrn()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.code").value(course.getCode()))
+                .andExpect(jsonPath("$.crn").value(course.getCrn()))
                 .andExpect(jsonPath("$.title").value(COURSE_TITLE.toString()));
     }
 
     @Test
     @Transactional
     public void testShouldResponseCourseIsNotFound() throws Exception {
-        restCourseMockMvc.perform(get("/api/admin/courses/{code}", "BBBBBBBBB"))
+        restCourseMockMvc.perform(get("/api/admin/courses/{crn}", "BBBBBBBBB"))
                 .andExpect(status().isNotFound());
     }
 
@@ -162,7 +163,7 @@ public class CourseAPITest {
         int databaseSizeBeforeUpdate = courseRepository.findAll().size();
 
         // Update the course
-        Assessment updatedCourse = courseRepository.findOne(course.getCode());
+        Item updatedCourse = courseRepository.findOne(course.getCrn());
         updatedCourse
                 .setTitle(COURSE_TITLE + COURSE_TITLE);
 
@@ -171,24 +172,24 @@ public class CourseAPITest {
                 .content(TestUtil.convertObjectToJsonBytes(updatedCourse)))
                 .andExpect(status().isOk());
 
-        List<Assessment> courseList = courseRepository.findAll();
+        List<Item> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeUpdate);
-        Assessment testCourse =courseRepository.findOne(course.getCode());
+        Item testCourse =courseRepository.findOne(course.getCrn());
         assertThat(testCourse.getTitle()).isEqualTo(COURSE_TITLE + COURSE_TITLE);
     }
 
     @Test
     @Transactional
-    public void testShouldResponseOkDeletingCourseByCode() throws Exception {
+    public void testShouldResponseOkDeletingCourseByCrn() throws Exception {
         courseService.create(course);
 
         int databaseSizeBeforeDelete = courseRepository.findAll().size();
 
-        restCourseMockMvc.perform(delete("/api/admin/courses/{code}", course.getCode())
+        restCourseMockMvc.perform(delete("/api/admin/courses/{crn}", course.getCrn())
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
-        List<Assessment> courseList = courseRepository.findAll();
+        List<Item> courseList = courseRepository.findAll();
         assertThat(courseList).hasSize(databaseSizeBeforeDelete - 1);
     }
 

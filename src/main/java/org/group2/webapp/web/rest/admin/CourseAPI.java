@@ -1,6 +1,6 @@
 package org.group2.webapp.web.rest.admin;
 
-import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.entity.Item;
 import org.group2.webapp.service.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,38 +27,38 @@ public class CourseAPI {
 
 
     @PostMapping("/courses")
-    public ResponseEntity<Assessment> createCourse(@Valid @RequestBody Assessment course) throws URISyntaxException {
+    public ResponseEntity<Item> createCourse(@Valid @RequestBody Item course) throws URISyntaxException {
         log.debug("REST request to save Course : {}", course);
-        if (course.getCode() == null || courseService.findOne(course.getCode())!= null) {
+        if (course.getCrn() == null || courseService.findOne(course.getCrn())!= null) {
             return ResponseEntity.badRequest().build();
         }
-        Assessment result = courseService.create(course);
+        Item result = courseService.create(course);
         return ResponseEntity.ok(result);
     }
 
 
     @PutMapping("/courses")
-    public ResponseEntity<Assessment> updateCourse(@Valid @RequestBody Assessment course) throws URISyntaxException {
+    public ResponseEntity<Item> updateCourse(@Valid @RequestBody Item course) throws URISyntaxException {
         log.debug("REST request to update Course : {}", course);
-        if (course.getCode() == null) {
+        if (course.getCrn() == null) {
             return createCourse(course);
         }
-        Assessment result = courseService.update(course);
+        Item result = courseService.update(course);
         return ResponseEntity.ok(result);
     }
 
 
     @GetMapping("/courses")
-    public List<Assessment> getAllCourses() {
+    public List<Item> getAllCourses() {
         log.debug("REST request to get all Courses");
         return courseService.findAll();
     }
 
 
     @GetMapping("/courses/{code}")
-    public ResponseEntity<Assessment> getCourse(@PathVariable String code) {
+    public ResponseEntity<Item> getCourse(@PathVariable String code) {
         log.debug("REST request to get Course : {}", code);
-        Assessment course = courseService.findOne(code);
+        Item course = courseService.findOne(code);
         if(course == null)
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(course);

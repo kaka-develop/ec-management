@@ -1,7 +1,8 @@
 package org.group2.webapp.web.mvc.ctrl.admin;
 
 import org.apache.commons.lang3.StringUtils;
-import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.entity.Item;
+import org.group2.webapp.entity.Item;
 import org.group2.webapp.service.CourseService;
 import org.group2.webapp.util.ConvertUntil;
 import org.slf4j.Logger;
@@ -37,7 +38,7 @@ public class CourseController {
 
     @GetMapping("/detail/{code}")
     public String detail(@PathVariable String code, Model model) {
-        Assessment course = courseService.findOne(code);
+        Item course = courseService.findOne(code);
         if (course == null)
             return REDIRECT_INDEX;
         model.addAttribute("course", course);
@@ -46,12 +47,12 @@ public class CourseController {
 
     @GetMapping("/new")
     public String newCourse(Model model) {
-        model.addAttribute("course", new Assessment());
+        model.addAttribute("course", new Item());
         return "admin/course/add";
     }
 
     @PostMapping("/new")
-    public String newCourse(@Valid @ModelAttribute Assessment course, BindingResult bindingResult) {
+    public String newCourse(@Valid @ModelAttribute Item course, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "admin/course/add";
         else
@@ -61,7 +62,7 @@ public class CourseController {
 
     @GetMapping("/edit/{code}")
     public String editCourse(@PathVariable String code, Model model) {
-        Assessment course = courseService.findOne(code);
+        Item course = courseService.findOne(code);
         if (course == null)
             return REDIRECT_INDEX;
 
@@ -70,7 +71,7 @@ public class CourseController {
     }
 
     @PostMapping("/edit")
-    public String editCourse(@Valid @ModelAttribute Assessment course, BindingResult bindingResult) {
+    public String editCourse(@Valid @ModelAttribute Item course, BindingResult bindingResult) {
         log.debug("");
         if (bindingResult.hasErrors())
             return "admin/course/edit";
