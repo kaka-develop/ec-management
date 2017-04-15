@@ -7,9 +7,9 @@
 <div th:replace="fragments/header :: header"></div>
 <div th:replace="fragments/adminbar :: adminbar"></div>
 <div class="container">
-    <h1>All courses</h1>
+    <h1>All items</h1>
     <a href="/admin/course/new">
-        <button class="btn btn-default">New course</button>
+        <button class="btn btn-default">New item</button>
     </a>
     <p>
         <span class="m-error" th:if="${error}" th:text="${error}"></span>
@@ -17,23 +17,25 @@
     <div class="table-responsive ">
         <table class="table table-hover table-striped">
             <tr>
-                <th>Code</th>
+                <th>Crn</th>
                 <th>Title</th>
-                <th>Faculty</th>
+                <th>Dateline</th>
+                <th>Overdue</th>
                 <th></th>
                 <th></th>
             </tr>
             <tr th:each="course : ${courses}">
                 <td>
-                    <a th:href="'/admin/course/detail/' + ${course.code}">
-                        <span th:text="${course.code}"></span>
+                    <a th:href="'/admin/course/detail/' + ${course.crn}">
+                        <span th:text="${course.crn}"></span>
                     </a>
                 </td>
                 <td th:text="${course.title}"></td>
-                <td th:text="${course.faculty.title}"></td>
-                <td><a class="btn btn-default" th:href="'/admin/course/edit/' + ${course.code}">edit</a></td>
+                <td th:text="${course.closedDate}"></td>
+                <td th:text="${course.isMissClosedDate() ? 'yes' : 'no'}"></td>
+                <td><a class="btn btn-default" th:href="'/admin/course/edit/' + ${course.crn}">edit</a></td>
                 <td>
-                    <form method="post" th:action="'/admin/course/delete/' + ${course.code}">
+                    <form method="post" th:action="'/admin/course/delete/' + ${course.crn}">
                         <button class="btn btn-default" type="submit">delete now</button>
                     </form>
                 </td>

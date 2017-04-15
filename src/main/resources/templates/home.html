@@ -19,7 +19,18 @@
 <script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
 <title>Title</title>
 </head>
+<style>
+.content-wrapper {
+/*  	background-image: url(https://londonvideostories.files.wordpress.com/2012/05/greenwich_views2.jpg); */
+/* 	background-color: activecaption; */
+}
+</style>
 <body class="hold-transition skin-green layout-top-nav">
+	<th:block th:if="${#authorization.expression('!isAuthenticated()')}">
+		<script>
+	window.location = "/login";
+	</script>
+	</th:block>
 	<!--/* Standard layout can be mixed with Tiles */-->
 	<div class="wrapper">
 		<div th:replace="fragments/header :: header"></div>
@@ -27,5 +38,7 @@
 		<div class="content-wrapper"></div>
 		<div th:replace="fragments/footer :: footer"></div>
 	</div>
+
+
 </body>
 </html>

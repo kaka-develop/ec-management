@@ -91,6 +91,13 @@ public class StudentController {
         List<Assessment> suitableAssessment = assessmentRepo.findAll().stream()
                 .filter(ass -> ass.getFaculty().getId() == currentUser.getFaculty().getId())
                 .collect(Collectors.toList());
+        for(Assessment ass : suitableAssessment){
+        	for(Item item : ass.getItems()){
+        		if(!item.isValid()){
+        			ass.getItems().remove(item);
+        		}
+        	}
+        }
 
         req.setAttribute("allAssessments", suitableAssessment);
         req.setAttribute("allCircumstances", circumRepo.findAll());

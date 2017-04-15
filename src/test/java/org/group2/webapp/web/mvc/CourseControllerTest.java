@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.group2.webapp.EcManagementApplication;
-import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.entity.Item;
 import org.group2.webapp.service.CourseService;
 import org.group2.webapp.web.mvc.ctrl.admin.CourseController;
 import org.junit.After;
@@ -33,7 +33,7 @@ public class CourseControllerTest {
     private final String COURSE_CODE = "AAAAAAAA";
     private final String COURSE_TITLE = "AAAAAAAA";
 
-    private Assessment course;
+    private Item course;
 
 
     @Before
@@ -44,8 +44,8 @@ public class CourseControllerTest {
 
     @Before
     public void initTest() {
-        course = new Assessment();
-        course.setCode(COURSE_CODE);
+        course = new Item();
+        course.setCrn(COURSE_CODE);
         course.setTitle(COURSE_TITLE);
     }
 
@@ -76,7 +76,7 @@ public class CourseControllerTest {
     @Transactional
     public void testShouldPostAddingOneCourse() throws Exception {
         restCourseMockMvc.perform(post("/admin/course/new")
-                .param("code",COURSE_CODE)
+                .param("crn",COURSE_CODE)
                 .param("title",COURSE_TITLE))
                 .andExpect(view().name(CourseController.REDIRECT_INDEX));
 
@@ -91,7 +91,7 @@ public class CourseControllerTest {
     public void testShouldHaveViewForCourseDetail() throws Exception {
         createCourse();
 
-        restCourseMockMvc.perform(get("/admin/course/detail/" + course.getCode()))
+        restCourseMockMvc.perform(get("/admin/course/detail/" + course.getCrn()))
                 .andExpect(model().attributeExists("course"))
                 .andExpect(view().name("admin/course/detail"))
                 .andExpect(status().isOk());
@@ -106,7 +106,7 @@ public class CourseControllerTest {
     public void testShouldHaveViewForEditingCourse() throws Exception {
         createCourse();
 
-        restCourseMockMvc.perform(get("/admin/course/edit/" + course.getCode()))
+        restCourseMockMvc.perform(get("/admin/course/edit/" + course.getCrn()))
                 .andExpect(model().attributeExists("course"))
                 .andExpect(view().name("admin/course/edit"))
                 .andExpect(status().isOk());
@@ -118,7 +118,7 @@ public class CourseControllerTest {
         createCourse();
 
         restCourseMockMvc.perform(post("/admin/course/edit")
-                .param("code",COURSE_CODE)
+                .param("crn",COURSE_CODE)
                 .param("title",COURSE_TITLE + COURSE_TITLE))
                 .andExpect(view().name(CourseController.REDIRECT_INDEX));
 
@@ -132,7 +132,7 @@ public class CourseControllerTest {
     public void testShouldPostDeletingOneCourse() throws Exception {
         createCourse();
 
-        restCourseMockMvc.perform(post("/admin/course/delete/" + course.getCode()))
+        restCourseMockMvc.perform(post("/admin/course/delete/" + course.getCrn()))
                 .andExpect(view().name("admin/course/courses"));
 
         restCourseMockMvc.perform(post("/admin/course/delete/" + "BBBBBBB"))
@@ -141,7 +141,7 @@ public class CourseControllerTest {
 
     @After
     public void after() {
-        courseService.delete(course.getCode());
+        courseService.delete(course.getCrn());
     }
 
 }

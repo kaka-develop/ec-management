@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import javax.transaction.Transactional;
 
 import org.group2.webapp.EcManagementApplication;
-import org.group2.webapp.entity.Assessment;
+import org.group2.webapp.entity.Item;
 import org.group2.webapp.repository.CourseRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -34,12 +34,12 @@ public class CourseServiceTest {
     private final String COURSE_CODE = "AAAAAAAA";
     private final String COURSE_TITLE = "AAAAAAAA";
 
-    private Assessment course;
+    private Item course;
 
     @Before
     public void before() {
-        course = new Assessment();
-        course.setCode(COURSE_CODE);
+        course = new Item();
+        course.setCrn(COURSE_CODE);
         course.setTitle(COURSE_TITLE);
         course = courseService.create(course);
         log.debug("done create course");
@@ -53,8 +53,8 @@ public class CourseServiceTest {
 
     @Test
     public void testShouldHaveOneCourseByID() {
-        assertThat(courseRepository.findOne(course.getCode())!= null);
-        assertThat(courseService.findOne(course.getCode())!= null);
+        assertThat(courseRepository.findOne(course.getCrn())!= null);
+        assertThat(courseService.findOne(course.getCrn())!= null);
 
         assertThat(courseRepository.findOne("BBBBBBB")== null);
         assertThat(courseService.findOne( "BBBBBBB")== null);
@@ -62,7 +62,7 @@ public class CourseServiceTest {
 
     @After
     public void after() {
-        courseService.delete(course.getCode());
+        courseService.delete(course.getCrn());
         log.debug("done delete course");
     }
 }
