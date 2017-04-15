@@ -72,23 +72,30 @@
 						<li class="dropdown user user-menu">
 							<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <!-- The user image in the navbar--> <img
 								src="http://wicara.co/images/user.png" class="user-image" alt="User Image"> <!-- hidden-xs hides the username on small devices so only the image appears. -->
-<!-- 								<span class="hidden-xs" sec:authentication="principal.username"></span> -->
-<span>Name</span>
+								<th:block th:if="${#authorization.expression('isAuthenticated()')}">
+									<span class="hidden-xs" sec:authentication="principal.username"></span>
+								</th:block>
+								<th:block th:if="${#authorization.expression('!isAuthenticated()')}">
+								<span class="hidden-xs">Please sign in</span>
+								</th:block>
+
 						</a>
 							<ul class="dropdown-menu">
 								<!-- The user image in the menu -->
-								<li class="user-header"><img src="http://wicara.co/images/user.png" class="img-circle" alt="User Image">
-<!-- 									<p sec:authentication="principal.username"></p> -->
-									</li>
+								<li class="user-header"><img src="http://wicara.co/images/user.png" class="img-circle" alt="User Image"> <!-- 									<p sec:authentication="principal.username"></p> -->
+								</li>
 								<!-- Menu Footer-->
 								<li class="user-footer">
-									<div class="pull-left">
-										<a href="#" class="btn btn-default btn-flat">Profile</a>
-									</div>
+									<!-- 									<div class="pull-left"> --> <!-- 										<a href="#" class="btn btn-default btn-flat">Profile</a> --> <!-- 									</div> -->
 									<div class="pull-right">
-										<form th:action="@{/logout}" method="post">
-											<input class="btn btn-default btn-block btn-flat" type="submit" value="Sign Out" />
-										</form>
+										<th:block th:if="${#authorization.expression('!isAuthenticated()')}">
+											<a href="/#" th:href="@{/login}">Sign in</a>
+										</th:block>
+										<th:block th:if="${#authorization.expression('isAuthenticated()')}">
+											<form th:action="@{/logout}" method="post">
+												<input class="btn btn-default btn-block btn-flat" type="submit" value="Sign Out" />
+											</form>
+										</th:block>
 									</div>
 								</li>
 							</ul>
