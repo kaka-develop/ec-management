@@ -67,7 +67,7 @@
                                     <textarea class="form-control ckeditor" style="resize: vertical;" th:text="${claim.content}" name="decision" rows="10" cols="80"
                                               readonly="readonly"></textarea>
                                 </div>
-                                <div th:if="${evidences != null}" class="form-group col-lg-12">
+                                <div th:if="${evidences != null}" class="form-group">
                                     <label>Evidences:</label>
 
                                     <div class="row">                                      
@@ -112,7 +112,7 @@
                                     </div>
                                 </div>
 
-                                <div th:if="${evidences == null}" class="form-group col-lg-12">
+                                <div th:if="${evidences == null}" class="form-group">
                                     <label>Evidences:</label>
                                     <span>No evidence has been uploaded yet</span>
                                 </div>
