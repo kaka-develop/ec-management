@@ -20,6 +20,11 @@
 <title>Title</title>
 </head>
 <body class="hold-transition skin-green layout-top-nav">
+	<th:block th:if="${#authorization.expression('!isAuthenticated()')}">
+		<script>
+	window.location = "/login";
+	</script>
+	</th:block>
 	<!--/* Standard layout can be mixed with Tiles */-->
 	<div class="wrapper">
 		<div th:replace="fragments/header :: header"></div>
@@ -27,5 +32,7 @@
 		<div class="content-wrapper"></div>
 		<div th:replace="fragments/footer :: footer"></div>
 	</div>
+
+
 </body>
 </html>
