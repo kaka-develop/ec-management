@@ -18,7 +18,6 @@ import javax.mail.internet.MimeMessage;
 import org.apache.log4j.Logger;
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.entity.User;
-import org.group2.webapp.web.mvc.ctrl.StudentController;
 
 /**
  * @author Dam Cao Son

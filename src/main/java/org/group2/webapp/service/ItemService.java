@@ -1,24 +1,23 @@
 package org.group2.webapp.service;
 
 import org.group2.webapp.entity.Item;
-import org.group2.webapp.repository.CourseRepository;
 import org.group2.webapp.repository.ItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @Transactional
-public class CourseService {
+public class ItemService {
 
-    private final Logger log = LoggerFactory.getLogger(CourseService.class);
+    private final Logger log = LoggerFactory.getLogger(ItemService.class);
 
     private final ItemRepository courseRepository;
 
-    public CourseService(ItemRepository courseRepository) {
+    public ItemService(ItemRepository courseRepository) {
         this.courseRepository = courseRepository;
     }
 

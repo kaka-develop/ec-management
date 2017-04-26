@@ -6,7 +6,6 @@ package org.group2.webapp.service;
 import javax.mail.MessagingException;
 
 import org.group2.webapp.entity.User;
-import org.group2.webapp.web.util.MailUtils;
 import org.junit.Test;
 
 import junit.framework.TestCase;

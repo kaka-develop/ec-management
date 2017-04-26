@@ -1,15 +1,17 @@
 package org.group2.webapp.service.dto;
 
-import org.group2.webapp.entity.Authority;
-import org.group2.webapp.entity.Faculty;
-import org.group2.webapp.entity.User;
-import org.hibernate.validator.constraints.Email;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.ZonedDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
+
+import org.group2.webapp.entity.Authority;
+import org.group2.webapp.entity.User;
+import org.hibernate.validator.constraints.Email;
 
 public class UserDTO {
 

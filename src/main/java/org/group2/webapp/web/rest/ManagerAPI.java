@@ -1,16 +1,15 @@
 package org.group2.webapp.web.rest;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.group2.webapp.entity.Claim;
-import org.group2.webapp.entity.Faculty;
 import org.group2.webapp.service.ManagerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/manager")

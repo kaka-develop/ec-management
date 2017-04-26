@@ -1,8 +1,10 @@
 package org.group2.webapp.service;
 
-import org.group2.webapp.entity.Circumstance;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.group2.webapp.entity.Claim;
-import org.group2.webapp.entity.Faculty;
 import org.group2.webapp.util.ConvertUntil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
 
 @Service
 @Transactional

@@ -8,7 +8,7 @@
 <div th:replace="fragments/adminbar :: adminbar"></div>
 <div class="container">
     <h1>All items</h1>
-    <a href="/admin/course/new">
+    <a href="/admin/item/new">
         <button class="btn btn-default">New item</button>
     </a>
     <p>
@@ -24,18 +24,18 @@
                 <th></th>
                 <th></th>
             </tr>
-            <tr th:each="course : ${courses}">
+            <tr th:each="item : ${items}">
                 <td>
-                    <a th:href="'/admin/course/detail/' + ${course.crn}">
-                        <span th:text="${course.crn}"></span>
+                    <a th:href="'/admin/item/detail/' + ${item.crn}">
+                        <span th:text="${item.crn}"></span>
                     </a>
                 </td>
-                <td th:text="${course.title}"></td>
-                <td th:text="${course.closedDate}"></td>
-                <td th:text="${course.isMissClosedDate() ? 'yes' : 'no'}"></td>
-                <td><a class="btn btn-default" th:href="'/admin/course/edit/' + ${course.crn}">edit</a></td>
+                <td th:text="${item.title}"></td>
+                <td th:text="${item.closedDate}"></td>
+                <td th:text="${item.isMissClosedDate() ? 'yes' : 'no'}"></td>
+                <td><a class="btn btn-default" th:href="'/admin/item/edit/' + ${item.crn}">edit</a></td>
                 <td>
-                    <form method="post" th:action="'/admin/course/delete/' + ${course.crn}">
+                    <form method="post" th:action="'/admin/item/delete/' + ${item.crn}">
                         <button class="btn btn-default" type="submit">delete now</button>
                     </form>
                 </td>

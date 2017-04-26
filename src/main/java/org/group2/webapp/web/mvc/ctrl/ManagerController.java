@@ -1,10 +1,5 @@
 package org.group2.webapp.web.mvc.ctrl;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import org.group2.webapp.entity.Claim;
-import org.group2.webapp.entity.Faculty;
-import org.group2.webapp.service.ClaimService;
-import org.group2.webapp.service.FacultyService;
 import org.group2.webapp.service.ManagerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/manager")

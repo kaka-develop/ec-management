@@ -5,7 +5,6 @@ package org.group2.webapp.repository;
 
 import org.group2.webapp.entity.Assessment;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  * @author Dam Cao Son

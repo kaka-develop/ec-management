@@ -1,6 +1,4 @@
-/**
- *
- */
+
 package org.group2.webapp.web.mvc.ctrl;
 
 import java.util.Collections;
@@ -85,3 +83,4 @@ public class ECCoordinatorController {
         return index(req);
     }
 }
+

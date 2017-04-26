@@ -7,13 +7,13 @@
 <div th:replace="fragments/header :: header"></div>
 <div th:replace="fragments/adminbar :: adminbar"></div>
 <div class="container">
-    <a href="/admin/course">
+    <a href="/admin/item">
         <button class="btn btn-default">Back</button>
     </a>
     <h2>Item detail</h2>
-    <p>Crn: <span th:text="${course.crn}"></span></p>
-    <p>Title: <span th:text="${course.title}"></span></p>
-    <p>Closed Date: <span th:text="${course.closedDate}"></span></p>
+    <p>Crn: <span th:text="${item.crn}"></span></p>
+    <p>Title: <span th:text="${item.title}"></span></p>
+    <p>Closed Date: <span th:text="${item.closedDate}"></span></p>
 </div>
 </body>
 </html>

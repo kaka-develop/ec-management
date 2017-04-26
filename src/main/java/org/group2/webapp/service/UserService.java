@@ -1,5 +1,13 @@
 package org.group2.webapp.service;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
 import org.group2.webapp.entity.Authority;
 import org.group2.webapp.entity.User;
 import org.group2.webapp.repository.AuthorityRepository;
@@ -11,17 +19,8 @@ import org.group2.webapp.util.RandomUtil;
 import org.group2.webapp.web.mvc.vm.UserVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

@@ -1,6 +1,4 @@
-/**
- *
- */
+
 package org.group2.webapp;
 
 import java.text.ParseException;
@@ -146,7 +144,7 @@ public class SampleData {
         Assessment ass4 = new Assessment("COMP-1661", "Application Dev for Mobile Dev", f1);
         Assessment ass5 = new Assessment("COMP-1649", "Interaction Design", f3);
         Assessment ass6 = new Assessment("COMP-1714", "Software Engineeing Mgmnt", f3);
-        Assessment ass7 = new Assessment("COMP-1648", "Dev Framework & Methods", f5);
+        Assessment ass7 = new Assessment("COMP-1648", "Dev Framework & Methods", f1);
 
         assessmentRepository.save(ass1);
         assessmentRepository.save(ass2);
@@ -266,6 +264,7 @@ public class SampleData {
 
             cl1 = new Claim("Evidence8", "Content8", new Date(), null, 1, s4, formatter.parse("2017-04-01"));
             claimRepository.save(cl1);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
