@@ -125,7 +125,7 @@ public class SampleData {
                 "email8@fpt.edu.vn", f2);
         s4.getAuthorities().add(roleStudent);
 
-        User s5 = new User("s5", passmwordEncoder.encode("1234"), "s5firstname",
+        User s5 = new User("student", passmwordEncoder.encode("1234"), "s5firstname",
                 "s5LastName",
                 "email9@fpt.edu.vn", f5);
         s5.getAuthorities().add(roleStudent);
@@ -146,7 +146,7 @@ public class SampleData {
         Assessment ass4 = new Assessment("COMP-1661", "Application Dev for Mobile Dev", f1);
         Assessment ass5 = new Assessment("COMP-1649", "Interaction Design", f3);
         Assessment ass6 = new Assessment("COMP-1714", "Software Engineeing Mgmnt", f3);
-        Assessment ass7 = new Assessment("COMP-1648", "Dev Framework & Methods", f1);
+        Assessment ass7 = new Assessment("COMP-1648", "Dev Framework & Methods", f5);
 
         assessmentRepository.save(ass1);
         assessmentRepository.save(ass2);
@@ -243,28 +243,28 @@ public class SampleData {
             cl1.setItem(item5);
             claimRepository.save(cl1);
 
-            cl1 = new Claim("Evidence5", "Content5", new Date(), null, 1, s4, formatter.parse("2017-04-30"));
+            cl1 = new Claim("Evidence5", "Content5", new Date(), null, 1, s3, formatter.parse("2017-04-30"));
             cl1.clearCircumstances();
             cl1.addCircumstance(cir7);
             cl1.addCircumstance(cir6);
             cl1.setItem(item6);
             claimRepository.save(cl1);
 
-            cl1 = new Claim("Evidence6", "Content6", formatter.parse("2015-05-05"), new Date(), 1, s3, formatter.parse("2017-04-06"));
+            cl1 = new Claim("Evidence6", "Content6", formatter.parse("2015-05-05"), new Date(), 1, s5, formatter.parse("2017-04-06"));
             cl1.clearCircumstances();
             cl1.addCircumstance(cir6);
             cl1.addCircumstance(cir8);
             cl1.setItem(item7);
             claimRepository.save(cl1);
 
-            cl1 = new Claim("Evidence7", "Content7", formatter.parse("2015-05-05"), new Date(), 1, s3, formatter.parse("2017-06-20"));
+            cl1 = new Claim("Evidence7", "Content7", formatter.parse("2015-05-05"), new Date(), 1, s5, formatter.parse("2017-06-20"));
             cl1.clearCircumstances();
             cl1.addCircumstance(cir1);
             cl1.addCircumstance(cir2);
             cl1.setItem(item8);
             claimRepository.save(cl1);
 
-            cl1 = new Claim("Evidence8", "Content8", new Date(), null, 1, s5, formatter.parse("2017-04-01"));
+            cl1 = new Claim("Evidence8", "Content8", new Date(), null, 1, s4, formatter.parse("2017-04-01"));
             claimRepository.save(cl1);
         } catch (ParseException e) {
             e.printStackTrace();
