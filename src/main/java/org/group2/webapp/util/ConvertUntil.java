@@ -1,5 +1,7 @@
 package org.group2.webapp.util;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,5 +50,12 @@ public class ConvertUntil {
         }
 
         return authorities;
+    }
+
+    public static Date increase14Day(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE,14);
+        return date;
     }
 }

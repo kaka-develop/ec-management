@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-      <th:block th:replace="fragments/bundle :: bundle"></th:block><title>Manager</title>
+    <th:block th:replace="fragments/bundle :: bundle"></th:block><title>Manager</title>
 </head>
 <body class="hold-transition skin-green layout-top-nav">
 <div th:replace="fragments/header :: header"></div>
 <div th:replace="fragments/managerbar :: managerbar"></div>
 <div class="container">
-    <h1>All claims</h1>
+    <h1>Information of all claims</h1>
     <div class="table-responsive mailbox-messages">
         <table class="table table-hover table-striped">
             <tr>
-                <th>Evident</th>
                 <th>Content</th>
                 <th>Status</th>
                 <th>Created date</th>
-                <th>Dateline</th>
-                <th>Overdue</th>
+                <th>Is processed</th>
+                <th>Processed date</th>
+                <th>Processed late</th>
             </tr>
             <tr th:each="claim : ${claims}">
-                <td th:text="${claim.evidence}"></td>
                 <td th:text="${claim.content}"></td>
                 <td th:text="${claim.status}"></td>
                 <td th:text="${claim.created_time}"></td>
-                <td th:text="${claim.closedDate}"></td>
-                <td th:text="${claim.isMissClosedDate() ? 'yes' : 'no'}"></td>
+                <td th:text="${claim.isProcessed() ? 'yes' : 'no'}"></td>
+                <td th:text="${claim.processed_time}"></td>
+                <td th:text="${claim.isLateProcessed() ? 'yes' : 'no'}"></td>
             </tr>
         </table>
     </div>

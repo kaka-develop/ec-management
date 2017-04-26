@@ -30,6 +30,12 @@ public class ManagerController {
         return "manager/claims";
     }
 
+    @GetMapping("/claims/process")
+    public String process(Model model) {
+        model.addAttribute("claims", managerService.findAllClaims());
+        return "manager/claims-process";
+    }
+
     @GetMapping("/statistics")
     public String getClaimStatistics(Model model) {
 
