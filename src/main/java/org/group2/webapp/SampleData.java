@@ -30,23 +30,23 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SampleData {
-	private static final Logger logger = Logger.getLogger(SampleData.class);
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private AuthorityRepository authorityRepository;
-	@Autowired
-	private FacultyRepository facultyRepository;
-	@Autowired
-	private ItemRepository itemRepository;
-	@Autowired
-	private AssessmentRepository assessmentRepository;
-	@Autowired
-	private CircumstanceRepository circumstanceRepository;
-	@Autowired
-	private ClaimRepository claimRepository;
-	@Autowired
-	private PasswordEncoder passmwordEncoder;
+    private static final Logger logger = Logger.getLogger(SampleData.class);
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private AuthorityRepository authorityRepository;
+    @Autowired
+    private FacultyRepository facultyRepository;
+    @Autowired
+    private ItemRepository itemRepository;
+    @Autowired
+    private AssessmentRepository assessmentRepository;
+    @Autowired
+    private CircumstanceRepository circumstanceRepository;
+    @Autowired
+    private ClaimRepository claimRepository;
+    @Autowired
+    private PasswordEncoder passmwordEncoder;
 
 	@Autowired
 
