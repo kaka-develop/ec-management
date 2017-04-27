@@ -13,7 +13,7 @@ import org.group2.webapp.entity.Claim;
 import org.group2.webapp.entity.User;
 import org.group2.webapp.repository.ClaimRepository;
 import org.group2.webapp.repository.UserRepository;
-import org.group2.webapp.web.util.MailUtils;
+import org.group2.webapp.web.util.MailSender;
 import org.group2.webapp.web.util.SessionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +78,7 @@ public class ECCoordinatorController {
         claim.setDecision(decision);
         claim.setProcessed_time(new Date());
         claimRepo.save(claim);
-        MailUtils.sendClaimNewsForStudent(claim);
+        MailSender.sendClaimNewsForStudent(claim);
         req.setAttribute("claimProcessed", true);
         return index(req);
     }

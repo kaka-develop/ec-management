@@ -31,7 +31,7 @@ import org.group2.webapp.repository.ClaimRepository;
 import org.group2.webapp.repository.ItemRepository;
 import org.group2.webapp.repository.UserRepository;
 import org.group2.webapp.security.AuthoritiesConstants;
-import org.group2.webapp.web.util.MailUtils;
+import org.group2.webapp.web.util.MailSender;
 import org.group2.webapp.web.util.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -125,7 +125,7 @@ public class StudentController {
                 myClaim.setItem(item);
                 myClaim.getCircumstances().addAll(myCirumstance);
                 claimRepo.save(myClaim);
-                MailUtils.sendClaimNewsForCoordinators(myClaim,
+                MailSender.sendClaimNewsForCoordinators(myClaim,
                         userRepo.findAllUserByAuthority(AuthoritiesConstants.COORDINATOR));
             }
             req.setAttribute("claimAdded", true);
