@@ -80,6 +80,12 @@ public class Claim implements Serializable {
 	
 	@Column(name="changed_times")
 	private Integer changedTimes;
+	
+	@Column(name="over_dateline_process")
+	private Boolean overDatelineProcess;
+	
+	@Column(name="can_upload_more_evidence")
+	private Boolean canUploadMoreEvidence;
 
 	@ManyToOne
 	private User user;
@@ -299,6 +305,26 @@ public class Claim implements Serializable {
 	}
 
 	public void setChangedTimes(int changedTimes) {
+		this.changedTimes = changedTimes;
+	}
+
+	public Boolean getOverDatelineProcess() {
+		return overDatelineProcess;
+	}
+
+	public void setOverDatelineProcess(Boolean overDatelineProcess) {
+		this.overDatelineProcess = overDatelineProcess;
+	}
+
+	public Boolean getCanUploadMoreEvidence() {
+		return canUploadMoreEvidence;
+	}
+
+	public void setCanUploadMoreEvidence(Boolean canUploadMoreEvidence) {
+		this.canUploadMoreEvidence = canUploadMoreEvidence;
+	}
+
+	public void setChangedTimes(Integer changedTimes) {
 		this.changedTimes = changedTimes;
 	}
 }

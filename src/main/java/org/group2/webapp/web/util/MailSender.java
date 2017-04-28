@@ -3,6 +3,7 @@
  */
 package org.group2.webapp.web.util;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -23,6 +24,7 @@ import org.group2.webapp.entity.Claim;
 import org.group2.webapp.entity.User;
 import org.group2.webapp.repository.UserRepository;
 import org.group2.webapp.security.AuthoritiesConstants;
+import org.hibernate.validator.internal.util.privilegedactions.GetClassLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.context.ForbiddenContextVariableRestriction;
@@ -35,24 +37,59 @@ import org.thymeleaf.context.ForbiddenContextVariableRestriction;
 @Component
 public class MailSender {
 	private static final Logger logger = Logger.getLogger(MailSender.class);
-	@Autowired
-	private UserRepository userRepo;
 
-	public static final MailSender INSTANCE = new MailSender();
+	private static EmailPattern informStudentClaimProcessed = new EmailPattern();
+	private static EmailPattern informCoordinatorNewClaim = new EmailPattern();
+	private static EmailPattern informCoordinatorNearDeadline = new EmailPattern();
+	private static EmailPattern informCoordinatorOverDeadline = new EmailPattern();
+
+	private static Boolean ready = false;
+	static {
+		if (!ready) {
+			informStudentClaimProcessed.loadFromProperties("data/informStudentClaimProcessed.properties");
+			informCoordinatorNewClaim.loadFromProperties("data/informCoordinatorNewClaim.properties");
+			informCoordinatorNearDeadline.loadFromProperties("data/informCoordinatorNearDeadline.properties");
+			informCoordinatorOverDeadline.loadFromProperties("data/informCoordinatorOverDeadline.properties");
+			ready = true;
+		}
+	}
+
+	private static String replaceVal(String str, Claim claim) {
+		LocalDateTime submitTime = LocalDateTime.ofInstant(claim.getCreated_time().toInstant(), ZoneId.systemDefault());
+		LocalDateTime now = LocalDateTime.now();
+		long soNgayQuaHan = submitTime.until(now, ChronoUnit.DAYS);
+		str = str.replaceAll("_NUMBER_DAY_FROM_SUBMIT", String.valueOf(soNgayQuaHan));
+		str = str.replaceAll("_ITEM_TITLE", claim.getItem().getTitle());
+		str = str.replaceAll("_ASSESSMENT_TITLE", claim.getItem().getAssessment().getTitle());
+		str = str.replaceAll("_CLAIM_COORDINATOR_LINK",
+				"http://localhost:8080/eccoordinator/claim/process?id=" + claim.getId());
+		str = str.replaceAll("_CLAIM_STUDENT_LINK",
+				"http://localhost:8080/student/claim/detail?id=" + claim.getId());
+		return str;
+	}
+
+	private static EmailPattern passParamSubject(EmailPattern emailPattern, Claim claim) {
+		String subject = replaceVal(emailPattern.getSubject(), claim);
+		String content = replaceVal(emailPattern.getContent(), claim);
+		return new EmailPattern(subject, content);
+	}
 
 	public static void sendClaimNewsForCoordinators(Claim claim, List<User> users) {
 		logger.info("So luong coordinator: " + users.size());
 
-		String subject = "New EC Claim";
-		StringBuilder contents = new StringBuilder();
+		// String subject = "New EC Claim";
+		// StringBuilder contents = new StringBuilder();
 
-		contents.append("You have new EC claim from student!\n");
-		contents.append("Claim for: ").append(claim.getItem().getTitle()).append("\n");
-		contents.append("<a href='http://localhost:8080/eccoordinator/claim/process?id=").append(claim.getId())
-				.append("'>Click here to see</a>");
+		// contents.append("You have new EC claim from student!\n");
+		// contents.append("Claim for:
+		// ").append(claim.getItem().getTitle()).append("\n");
+		// contents.append("<a
+		// href='http://localhost:8080/eccoordinator/claim/process?id=").append(claim.getId())
+		// .append("'>Click here to see</a>");
+		EmailPattern email = passParamSubject(informCoordinatorNewClaim, claim);
 		for (User user : users) {
 			if (user.getFaculty().getId() == claim.getUser().getFaculty().getId()) {
-				MailUtils.mail(user.getEmail(), subject, contents.toString());
+				MailUtils.mail(user.getEmail(), email.getSubject(), email.getContent());
 				logger.debug("[Email] send email for coordinator name=" + user.getFirstName() + ", email="
 						+ user.getEmail());
 			}
@@ -85,7 +122,7 @@ public class MailSender {
 		}
 	}
 
-	public static void sendClaimNewsForStudent(Claim claim) {
+	public static void informToStudentThatTheClaimProcessed(Claim claim) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<p>Your claim has final decision!</p>");
 		sb.append("<p>Claim for: ").append(claim.getItem().getTitle()).append("</p>");
@@ -95,11 +132,6 @@ public class MailSender {
 		User user = claim.getUser();
 		MailUtils.mail(user.getEmail(), "EC Claim", sb.toString());
 		logger.debug("[Email] send email for student name=" + user.getFirstName() + ", email=" + user.getEmail());
-	}
-
-	public static void main(String[] args) {
-		MailUtils.mail("sondcgc00681@fpt.edu.vn", "Title",
-				"<a href='http://localhost:8080/student/claim/detail?id=1'>Click vao day</a>");
 	}
 }
 

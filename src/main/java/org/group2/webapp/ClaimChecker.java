@@ -75,13 +75,14 @@ public class ClaimChecker extends Thread {
 	 * ${tags}
 	 */
 	private void checkForAllClaim() {
-		List<Claim> claimsNotBeProcessed = claimRepository.findAllNotBeProcessed();
 		LocalDateTime today = LocalDateTime.now();
+		
+		// Process for claim did not processed
+		List<Claim> claimsNotBeProcessed = claimRepository.findAllNotBeProcessed();
 		for (Claim claim : claimsNotBeProcessed) {
 			LocalDateTime submitDate = LocalDateTime.ofInstant(claim.getCreated_time().toInstant(),
 					ZoneId.systemDefault());
 			int code = 0;
-
 			if (today.isAfter(submitDate.plusDays(SO_NGAY_PHAI_XU_LY))) {
 				code = 1;
 			} else if (today.isAfter(submitDate.plusDays(SO_NGAY_NHAC_NHO))) {
@@ -95,6 +96,7 @@ public class ClaimChecker extends Thread {
 					.equals(LocalDateTime.ofInstant(lastTime.toInstant(),
 							ZoneId.systemDefault()).toLocalDate())) {
 				claim.setLastTimeRemind(java.sql.Date.valueOf(today.toLocalDate()));
+				claim.setOverDatelineProcess(true);
 				claimRepository.save(claim);
 
 				List<User> coordinators = userRepository.findAllUserByAuthorityAndFacultyId(
@@ -109,6 +111,9 @@ public class ClaimChecker extends Thread {
 				}
 			}
 		}
-		logger.debug("claimsNotBeProcessed:" + claimsNotBeProcessed.size());
+		
+		// Remind for claim of student
+		
+//		logger.debug("claimsNotBeProcessed:" + claimsNotBeProcessed.size());
 	}
 }
