@@ -33,4 +33,7 @@ public interface ClaimRepository extends JpaRepository<Claim, Long> {
 
     @Query("select c from Claim c where c.status=1")
     List<Claim> findAllNotBeProcessed();
+    
+    @Query("select c from Claim c where c.canUploadMoreEvidence=true and c.status=1")
+    List<Claim> findAllNotBeOverUploadEvidence();
 }

@@ -7,6 +7,7 @@ package org.group2.webapp.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -75,17 +76,28 @@ public class Claim implements Serializable {
 	@Column(name = "seen")
 	private Boolean seen;
 
-	@Column(name = "last_time_remind")
+
+
+	@Column(name = "changed_times")
+	private Integer changedTimes;
+
+	@Column(name = "over_dateline_process")
+	private Boolean overDatelineProcess = false;
+
+	@Column(name = "can_upload_more_evidence")
+	private Boolean canUploadMoreEvidence = true;
+	
+	@Column(name="deadline_upload_evidence")
+	private Date deadlineUploadEvidence;
+	
+	@Column(name="deadline_process")
+	private Date deadlineProcess;
+	
+	@Column(name = "last_remind_process")
 	private Date lastDateRemind;
 	
-	@Column(name="changed_times")
-	private Integer changedTimes;
-	
-	@Column(name="over_dateline_process")
-	private Boolean overDatelineProcess;
-	
-	@Column(name="can_upload_more_evidence")
-	private Boolean canUploadMoreEvidence;
+	@Column(name="last_remind_upload_evidence")
+	private Date lastRemindUploadDate;
 
 	@ManyToOne
 	private User user;
@@ -129,6 +141,13 @@ public class Claim implements Serializable {
 		this.status = status;
 		this.user = user;
 	}
+	
+//	public boolean isOverDeadlineUploadEvidence(){
+//		Calendar cal=Calendar.getInstance();
+//		cal.setTime(deadlineUploadEvidence);
+//		cal.add(Calendar.DAY_OF_MONTH, SO_NGAY_NHAC_NHO_UPLOAD_EVIDENCE);
+//		return 
+//	}
 
 	public void addCircumstance(Circumstance circumstance) {
 		this.circumstances.add(circumstance);
@@ -276,13 +295,6 @@ public class Claim implements Serializable {
 		this.seen = seen;
 	}
 
-	public Date getLastTimeRemind() {
-		return lastDateRemind;
-	}
-
-	public void setLastTimeRemind(Date lastTimeRemind) {
-		this.lastDateRemind = lastTimeRemind;
-	}
 
 	public Set<Evidence> getEvidences() {
 		return evidences;
@@ -326,5 +338,13 @@ public class Claim implements Serializable {
 
 	public void setChangedTimes(Integer changedTimes) {
 		this.changedTimes = changedTimes;
+	}
+
+	public Date getLastRemindUploadDate() {
+		return lastRemindUploadDate;
+	}
+
+	public void setLastRemindUploadDate(Date lastRemindUploadDate) {
+		this.lastRemindUploadDate = lastRemindUploadDate;
 	}
 }

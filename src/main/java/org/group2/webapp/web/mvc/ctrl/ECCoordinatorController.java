@@ -78,7 +78,7 @@ public class ECCoordinatorController {
 		claim.setDecision(decision);
 		claim.setProcessed_time(new Date());
 		claimRepo.save(claim);
-		MailSender.informToStudentThatTheClaimProcessed(claim);
+		MailSender.informStudentThatTheClaimProcessed(claim);
 		req.setAttribute("claimProcessed", true);
 		return index(req);
 	}

@@ -115,6 +115,7 @@ public class StudentController {
 				Item item = itemRepo.findOne(ass);
 				Claim myClaim = new Claim();
 				myClaim.setStatus(ClaimStatusContraints.PENDING);
+				myClaim.setCanUploadMoreEvidence(true);
 				myClaim.setUser(currentUser);
 				// upload evidences
 				String evidences = getEvidencesFromFileArray(files);

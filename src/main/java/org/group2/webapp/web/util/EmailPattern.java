@@ -3,7 +3,9 @@
  */
 package org.group2.webapp.web.util;
 
-import java.io.IOException;
+import java.io.File;
+import java.nio.file.Files;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -37,12 +39,22 @@ public class EmailPattern {
 	}
 
 	public void loadFromProperties(String url) {
-		Properties props = new Properties();
+//		Properties props = new Properties();
 		try {
-			props.load(getClass().getClassLoader().getResourceAsStream(url));
-			subject=props.getProperty("subject", "empty subject");
-			content=props.getProperty("content", "empty content");
-		} catch (IOException e) {
+			File file = new File(getClass().getClassLoader().getResource(url).getPath());
+			List<String> lines = Files.readAllLines(file.toPath());
+			// props.load(getClass().getClassLoader().getResourceAsStream(url));
+			// subject=props.getProperty("subject", "empty subject");
+			// content=props.getProperty("content", "empty content");
+
+			StringBuilder contentBuilder = new StringBuilder();
+			for (int i = 1; i < lines.size(); i++)
+			{
+				contentBuilder.append(lines.get(i));
+			}
+			subject = lines.get(0);
+			content = contentBuilder.toString();
+		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Cannot read email properties from: " + url);
 		}

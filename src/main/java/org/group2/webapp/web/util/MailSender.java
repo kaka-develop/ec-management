@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,6 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
+import org.group2.webapp.ClaimChecker;
 import org.group2.webapp.entity.Claim;
 import org.group2.webapp.entity.User;
 import org.group2.webapp.repository.UserRepository;
@@ -39,32 +41,60 @@ public class MailSender {
 	private static final Logger logger = Logger.getLogger(MailSender.class);
 
 	private static EmailPattern informStudentClaimProcessed = new EmailPattern();
+	private static EmailPattern informStudentNearEvidence = new EmailPattern();
+	private static EmailPattern informStudentOverEvidence = new EmailPattern();
+	
 	private static EmailPattern informCoordinatorNewClaim = new EmailPattern();
 	private static EmailPattern informCoordinatorNearDeadline = new EmailPattern();
 	private static EmailPattern informCoordinatorOverDeadline = new EmailPattern();
+	
 
 	private static Boolean ready = false;
 	static {
 		if (!ready) {
 			informStudentClaimProcessed.loadFromProperties("data/informStudentClaimProcessed.properties");
+			informStudentNearEvidence.loadFromProperties("data/informStudentNearEvidence.properties");
+			informStudentOverEvidence.loadFromProperties("data/informStudentOverEvidence.properties");
+			
 			informCoordinatorNewClaim.loadFromProperties("data/informCoordinatorNewClaim.properties");
 			informCoordinatorNearDeadline.loadFromProperties("data/informCoordinatorNearDeadline.properties");
 			informCoordinatorOverDeadline.loadFromProperties("data/informCoordinatorOverDeadline.properties");
 			ready = true;
 		}
 	}
+	
+	public static void a(){}
+	public static void main(String[] args) {
+		a();
+		System.out.println(informStudentNearEvidence);
+	}
 
 	private static String replaceVal(String str, Claim claim) {
 		LocalDateTime submitTime = LocalDateTime.ofInstant(claim.getCreated_time().toInstant(), ZoneId.systemDefault());
 		LocalDateTime now = LocalDateTime.now();
-		long soNgayQuaHan = submitTime.until(now, ChronoUnit.DAYS);
-		str = str.replaceAll("_NUMBER_DAY_FROM_SUBMIT", String.valueOf(soNgayQuaHan));
+//		long soNgayQuaHan = submitTime.plusDays(ClaimChecker).until(now, ChronoUnit.DAYS);
+//		str = str.replaceAll("_NUMBER_DAY_FROM_SUBMIT", String.valueOf(soNgayQuaHan));
+		
+		
 		str = str.replaceAll("_ITEM_TITLE", claim.getItem().getTitle());
 		str = str.replaceAll("_ASSESSMENT_TITLE", claim.getItem().getAssessment().getTitle());
+		
 		str = str.replaceAll("_CLAIM_COORDINATOR_LINK",
 				"http://localhost:8080/eccoordinator/claim/process?id=" + claim.getId());
+		LocalDateTime processDeadline=submitTime.plusDays(ClaimChecker.SO_NGAY_HET_HAN_XU_LY);
+		long processDateRemain=now.until(processDeadline, ChronoUnit.DAYS);
+		long daysOverDeadline=processDeadline.until(now, ChronoUnit.DAYS);
+		str = str.replaceAll("_PROCESS_DEADLINE", processDeadline.toString());
+		str = str.replaceAll("_PROCESS_DATE_REMAIN", String.valueOf(processDateRemain));
+		str = str.replaceAll("_DAYS_OVER_DEADLINE", String.valueOf(daysOverDeadline));
+		
 		str = str.replaceAll("_CLAIM_STUDENT_LINK",
 				"http://localhost:8080/student/claim/detail?id=" + claim.getId());
+		LocalDateTime evidenceDeadline=submitTime.plusDays(ClaimChecker.SO_NGAY_HET_HAN_UPLOAD_EVIDENCE);
+		long uploadEvidenceRemain=now.until(evidenceDeadline, ChronoUnit.DAYS);
+		str = str.replaceAll("_UPLOAD_EVIDENCE_DEADLINE", evidenceDeadline.toString());
+		str = str.replaceAll("_UPLOAD_EVIDENCE_REMAIN", String.valueOf(uploadEvidenceRemain));
+		str = str.replaceAll("_STUDENT_NAME", claim.getUser().getFirstName());
 		return str;
 	}
 
@@ -121,8 +151,14 @@ public class MailSender {
 			logger.debug("Claim chuan bi het han. Send mail cho: " + coordinator.getEmail());
 		}
 	}
+	
+	public static void informStudentNearDeadlineEvidence(Claim claim) {
+		EmailPattern email = passParamSubject(informStudentNearEvidence, claim);
+		System.out.println(email);
+		MailUtils.mail(claim.getUser().getEmail(), email.getSubject(), email.getContent());
+	}
 
-	public static void informToStudentThatTheClaimProcessed(Claim claim) {
+	public static void informStudentThatTheClaimProcessed(Claim claim) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<p>Your claim has final decision!</p>");
 		sb.append("<p>Claim for: ").append(claim.getItem().getTitle()).append("</p>");
