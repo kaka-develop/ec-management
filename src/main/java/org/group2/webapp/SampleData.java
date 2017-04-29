@@ -79,11 +79,11 @@ public class SampleData {
 		authorityRepository.save(roleCoordinator);
 		authorityRepository.save(roleStudent);
 
-		Faculty f1 = new Faculty("Faculty 1");
-		Faculty f2 = new Faculty("Faculty 2");
-		Faculty f3 = new Faculty("Faculty 3");
-		Faculty f4 = new Faculty("Faculty 4");
-		Faculty f5 = new Faculty("Faculty 5");
+		Faculty f1 = new Faculty("Application of Computer Science");
+		Faculty f2 = new Faculty("Database and Web Developement");
+		Faculty f3 = new Faculty("Human Computer Interactive");
+		Faculty f4 = new Faculty("Business Management");
+		Faculty f5 = new Faculty("Graphic Design");
 
 		facultyRepository.save(f1);
 		facultyRepository.save(f2);
@@ -91,37 +91,41 @@ public class SampleData {
 		facultyRepository.save(f4);
 		facultyRepository.save(f5);
 
-		User admin = new User("admin", passmwordEncoder.encode("1234"), "adminFirstName",
-				"adminLastName", "email1@fpt.edu.vn");
+                //admin role sample data
+		User admin = new User("admin", passmwordEncoder.encode("1234"), "Ai",
+				"Nguyen", "ainvgc00704@fpt.edu.vn");
 		admin.getAuthorities().add(roleAdmin);
 		admin.getAuthorities().add(roleManagere);
+                //manager role sample data
 		User manager = new User("manager", passmwordEncoder.encode("1234"),
-				"managerFirstName",
-				"managerLastName", "email2@fpt.edu.vn");
+				"Tung",
+				"Tien", "tungptgc00676@fpt.edu.vn");
 		manager.getAuthorities().add(roleManagere);
-		User coordinator1 = new User("coordinator1", passmwordEncoder.encode("1234"),
-				"coordinator1FirstName", "coordinator1LastName", "kunedo1104@gmail.com",
+                //coordinator role sample data
+		User coordinator1 = new User("coordinator", passmwordEncoder.encode("12345678"),
+				"Kunedo", "Caspio", "kunedo1104@gmail.com",
 				f1);
 		coordinator1.getAuthorities().add(roleCoordinator);
-		User coordinator2 = new User("coordinator2", passmwordEncoder.encode("1234"),
-				"coordinator2FirstName", "coordinator2LastName", "email4@fpt.edu.vn",
+		User coordinator2 = new User("nhocKaka", passmwordEncoder.encode("12345678"),
+				"Nhoc", "Kaka", "ainvgc00704@fpt.edu.vn",
 				f2);
 		coordinator2.getAuthorities().add(roleCoordinator);
-		User s1 = new User("student", passmwordEncoder.encode("1234"), "s1firstname",
-				"s1LastName",
+                //student role sample data
+		User s1 = new User("student", passmwordEncoder.encode("1234"), "Son",
+				"Dam",
 				"sondcgc00681@fpt.edu.vn", f1);
 		s1.getAuthorities().add(roleStudent);
-		User s2 = new User("s2", passmwordEncoder.encode("1234"), "s2firstname",
-				"s2LastName",
-				"email6@fpt.edu.vn", f1);
+		User s2 = new User("namnhgc00683", passmwordEncoder.encode("12345678"), "Nam",
+				"Nguyen",
+				"namnhgc00683@fpt.edu.vn", f1);
 		s2.getAuthorities().add(roleStudent);
-		User s3 = new User("s3", passmwordEncoder.encode("1234"), "s3firstname",
-				"s3LastName",
-				"email7@fpt.edu.vn", f4);
+		User s3 = new User("anhndgc00893", passmwordEncoder.encode("12345678"), "Anh",
+				"Duc",
+				"anhndgc00893@fpt.edu.vn", f4);
 		s3.getAuthorities().add(roleStudent);
-		User s4 = new User("s4", passmwordEncoder.encode("1234"), "s4firstname",
-				"s4LastName",
-				"email8@fpt.edu.vn", f2);
+		User s4 = new User("dfChicken", passmwordEncoder.encode("12345678"), "Nam",
+				"Hai",
+				"hainam.4795@gmail.com", f2);
 		s4.getAuthorities().add(roleStudent);
 
 		User s5 = new User("s5", passmwordEncoder.encode("1234"), "s5firstname",
@@ -137,7 +141,6 @@ public class SampleData {
 		userRepository.save(s2);
 		userRepository.save(s3);
 		userRepository.save(s4);
-		userRepository.save(s5);
 
 		Assessment ass1 = new Assessment("COMP-1108", "Project", f1);
 		Assessment ass2 = new Assessment("COMP-1639", "Database Engineering", f2);
@@ -211,7 +214,10 @@ public class SampleData {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
-			cl1 = new Claim("Evidence1", "Content1", new Date(), new Date(), 1, s2, new Date());
+			cl1 = new Claim("", ""
+                                + "What is Lorem Ipsum?\n" +
+"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                                + "", new Date(), new Date(), 1, s2, new Date());
 			cl1.clearCircumstances();
 			cl1.addCircumstance(cir1);
 			cl1.addCircumstance(cir2);
@@ -219,7 +225,10 @@ public class SampleData {
 			cl1.setItem(item1);
 			claimRepository.save(cl1);
 
-			cl1 = new Claim("Evidence2", "Content2", new Date(), null, 1, s2, formatter.parse("2017-05-05"));
+			cl1 = new Claim("", ""
+                                + "Why do we use it?\n" +
+"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
+                                + "", new Date(), null, 1, s2, formatter.parse("2017-05-05"));
 			cl1.clearCircumstances();
 			cl1.addCircumstance(cir2);
 			cl1.addCircumstance(cir3);
@@ -227,44 +236,24 @@ public class SampleData {
 			cl1.setItem(item3);
 			claimRepository.save(cl1);
 
-			cl1 = new Claim("Evidence3", "Content3", formatter.parse("2016-05-05"), null, 1, s2, new Date());
+			cl1 = new Claim("", ""
+                                + "Where does it come from?\n" +
+"Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32."
+                                + "", formatter.parse("2016-05-05"), null, 1, s2, new Date());
 			cl1.clearCircumstances();
 			cl1.addCircumstance(cir4);
 			cl1.addCircumstance(cir5);
 			cl1.setItem(item4);
 			claimRepository.save(cl1);
 
-			cl1 = new Claim("Evidence4", "Content4", new Date(), new Date(), 1, s4, formatter.parse("2017-04-28"));
+			cl1 = new Claim("", ""
+                                + "Where can I get some?\n" +
+"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
+                                + "", new Date(), new Date(), 1, s4, formatter.parse("2017-04-28"));
 			cl1.clearCircumstances();
 			cl1.addCircumstance(cir5);
 			cl1.addCircumstance(cir6);
 			cl1.setItem(item5);
-			claimRepository.save(cl1);
-
-			cl1 = new Claim("Evidence5", "Content5", new Date(), null, 1, s3, formatter.parse("2017-04-30"));
-			cl1.clearCircumstances();
-			cl1.addCircumstance(cir7);
-			cl1.addCircumstance(cir6);
-			cl1.setItem(item6);
-			claimRepository.save(cl1);
-
-			cl1 = new Claim("Evidence6", "Content6", formatter.parse("2015-05-05"), new Date(), 1, s5,
-					formatter.parse("2017-04-06"));
-			cl1.clearCircumstances();
-			cl1.addCircumstance(cir6);
-			cl1.addCircumstance(cir8);
-			cl1.setItem(item7);
-			claimRepository.save(cl1);
-
-			cl1 = new Claim("Evidence7", "Content7", formatter.parse("2015-05-05"), new Date(), 1, s5,
-					formatter.parse("2017-06-20"));
-			cl1.clearCircumstances();
-			cl1.addCircumstance(cir1);
-			cl1.addCircumstance(cir2);
-			cl1.setItem(item8);
-			claimRepository.save(cl1);
-
-			cl1 = new Claim("Evidence8", "Content8", new Date(), null, 1, s4, formatter.parse("2017-04-01"));
 			claimRepository.save(cl1);
 
 		} catch (ParseException e) {
