@@ -46,6 +46,15 @@
                         </div>
                         <div class="box-body">
                             <form th:action="@{/student/claim/update}" id="update-form" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                 <div class="form-group col-lg-12">
+                                    <label>Student name:</label> <span th:text="${claim.user.firstName}"></span> <span th:text="${claim.user.lastName}"></span>
+                                </div>
+                                 <div class="form-group col-lg-12">
+                                    <label>Faculty:</label> <span th:text="${claim.user.faculty.title}">1111</span>
+                                </div>
+                                 <div class="form-group col-lg-12">
+                                    <label>Email:</label> <span th:text="${claim.user.email}">1111</span>
+                                </div>
                                 <div class="form-group col-lg-12">
                                     <label>Claim ID#:</label> <span th:text="${claim.id}">1111</span>
                                 </div>
@@ -145,8 +154,6 @@
                 radioClass: 'iradio_square-blue',
             });
             CKEDITOR.replace("ckeditor");
-
-
         </script>
     </body>
 

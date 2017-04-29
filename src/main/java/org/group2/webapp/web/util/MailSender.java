@@ -117,12 +117,6 @@ public class MailSender {
 	}
 
 	public static void informCoordinatorClaimDeadline(Claim claim, List<User> coordinators) {
-//		LocalDateTime submitTime = LocalDateTime.ofInstant(claim.getCreated_time().toInstant(), ZoneId.systemDefault());
-//		LocalDateTime now = LocalDateTime.now();
-//		long soNgayQuaHan = submitTime.until(now, ChronoUnit.DAYS);
-
-//		String subject = "Claim da bi qua han";
-//		StringBuilder content = new StringBuilder();
 		EmailPattern email = passParamSubject(informCoordinatorOverDeadline, claim);
 		for (User coordinator : coordinators) {
 			MailUtils.mail(coordinator.getEmail(), email.getSubject(), email.getContent());
@@ -131,12 +125,6 @@ public class MailSender {
 	}
 
 	public static void informCoordinatorClaimNearDeadline(Claim claim, List<User> coordinators) {
-//		LocalDateTime submitTime = LocalDateTime.ofInstant(claim.getCreated_time().toInstant(), ZoneId.systemDefault());
-//		LocalDateTime now = LocalDateTime.now();
-//		long soNgayQuaHan = submitTime.until(now, ChronoUnit.DAYS);
-//
-//		String subject = "Claim chuan bi het han";
-//		StringBuilder content = new StringBuilder();
 		EmailPattern email = passParamSubject(informCoordinatorNearDeadline, claim);
 		for (User coordinator : coordinators) {
 			MailUtils.mail(coordinator.getEmail(), email.getSubject(), email.getContent());
@@ -157,16 +145,9 @@ public class MailSender {
 	}
 
 	public static void informStudentThatTheClaimProcessed(Claim claim) {
-//		StringBuilder sb = new StringBuilder();
-//		sb.append("<p>Your claim has final decision!</p>");
-//		sb.append("<p>Claim for: ").append(claim.getItem().getTitle()).append("</p>");
-//		sb.append("<a href='http://localhost:8080/student/claim/detail?id=").append(claim.getId())
-//				.append("'>Click here to see</a>");
-
 		User user = claim.getUser();
 		EmailPattern email = passParamSubject(informStudentClaimProcessed, claim);
 		MailUtils.mail(user.getEmail(), email.getSubject(), email.getContent());
-//		logger.debug("[Email] send email for student name=" + user.getFirstName() + ", email=" + user.getEmail());
 	}
 }
 
@@ -207,8 +188,8 @@ class MailUtils {
 }
 
 class OurAuthentication extends Authenticator {
-	private static final String USERNAME = "kunedo1104@gmail.com";//"systemec2017@gmail.com";
-	private static final String PASSWORD = "damcaoson123";
+	private static final String USERNAME = "systemec2017@gmail.com";
+	private static final String PASSWORD = "-ec12356789";
 
 	@Override
 	protected PasswordAuthentication getPasswordAuthentication() {
