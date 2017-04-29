@@ -104,10 +104,10 @@ public class ClaimChecker extends Thread {
 
 				if (code == 1) {
 					claim.setOverDatelineProcess(true);
-					MailSender.sendMailForClaimNotProcessedOverDeadline(claim, coordinators);
+					MailSender.informCoordinatorClaimDeadline(claim, coordinators);
 					logger.debug("het han xu ly claim: " + claim.getId());
 				} else if (code == 2) {
-					MailSender.sendMailForClaimNotProcessedNearDeadline(claim, coordinators);
+					MailSender.informCoordinatorClaimNearDeadline(claim, coordinators);
 					logger.debug("Nhac nho mail sap het han: " + claim.getId());
 				}
 				

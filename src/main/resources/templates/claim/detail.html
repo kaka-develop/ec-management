@@ -40,8 +40,8 @@
 									
 										<span th:case="2" class="label label-danger">Disabled</span>
 								</th:block>
-									<span th:if="${claim.overDatelineProcess}" class="label label-danger">Over Deadline</span>
-									<span th:if="${claim.overDatelineProcess}" class="label label-danger">Cannot upload more evidences</span>
+<!-- 									<span th:if="${claim.overDatelineProcess}" class="label label-danger">Over Deadline</span> -->
+									<span th:if="${!claim.canUploadMoreEvidence}" class="label label-danger">Cannot upload more evidences</span>
                             </div>
                         </div>
                         <div class="box-body">
@@ -110,7 +110,7 @@
                                     <span>No evidence has been uploaded yet</span>
                                 </div>
                                 
-                                <th:block th:if="${claim.decision==null}">
+                                <th:block th:if="${claim.decision==null&&claim.canUploadMoreEvidence}">
 	                                <div class="form-group col-lg-12">
 	                                    <label>Upload more evidents: </label> <input type="hidden" name="id" th:value="${claim.id}" /> <input type="file" name="evidenceFiles"
 	                                                                                                                                          multiple="true" />

@@ -126,7 +126,7 @@ public class StudentController {
 				myClaim.setItem(item);
 				myClaim.getCircumstances().addAll(myCirumstance);
 				claimRepo.save(myClaim);
-				MailSender.sendClaimNewsForCoordinators(myClaim,
+				MailSender.informCoordinatorNewClaim(myClaim,
 						userRepo.findAllUserByAuthority(AuthoritiesConstants.COORDINATOR));
 			}
 			req.setAttribute("claimAdded", true);

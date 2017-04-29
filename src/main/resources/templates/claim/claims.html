@@ -65,21 +65,18 @@
 								</thead>
 								<tbody>
 									<tr style="cursor: pointer;" th:each="cl : ${claims}" class="claimRow">
-
+						
 										<input type="hidden" class="claimId" value="Submit" th:value="${cl.id}" />
 										<!-- 								<td><input type="checkbox"></td> -->
 
 										<td class="mailbox-date"><th:block th:switch="${cl.status}">
-												<div th:case="0">
-													<span class="label label-success">Done</span>
-												</div>
-												<div th:case="1">
-													<span class="label label-warning">Pending</span>
-												</div>
-												<div th:case="2">
-													<span class="label label-danger">Disabled</span>
-												</div>
-											</th:block></td>
+													<span th:case="0" class="label label-success">Done</span>
+													<span th:case="1" class="label label-warning">Pending</span>
+													<span th:case="2" class="label label-danger">Disabled</span>
+											</th:block>
+											<span sec:authorize="hasRole('ROLE_COORDINATOR')" th:if="${cl.overDatelineProcess}" class="label label-danger">Over Process Deadline</span>
+											<span sec:authorize="hasRole('ROLE_STUDENT')" th:if="${!cl.canUploadMoreEvidence}" class="label label-danger">Cannot upload more evidences</span>
+											</td>
 
 										<td></th:block> <span th:text="${#dates.format(cl.created_time, 'MM-dd-yyyy HH:mm')}"></span></td>
 										<td class="mailbox-name" th:text="${cl.item.assessment.title}"></td>
