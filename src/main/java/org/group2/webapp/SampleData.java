@@ -98,7 +98,7 @@ public class SampleData {
                 "managerFirstName",
                 "managerLastName", "email2@fpt.edu.vn");
         manager.getAuthorities().add(roleManagere);
-        User coordinator1 = new User("coordinator1", passmwordEncoder.encode("1234"),
+        User coordinator1 = new User("coordinator", passmwordEncoder.encode("1234"),
                 "coordinator1FirstName", "coordinator1LastName", "email3@fpt.edu.vn",
                 f1);
         coordinator1.getAuthorities().add(roleCoordinator);
