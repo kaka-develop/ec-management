@@ -92,17 +92,17 @@ public class SampleData {
 		facultyRepository.save(f5);
 
                 //admin role sample data
-		User admin = new User("ainvgc00704", passmwordEncoder.encode("12345678"), "Ai",
+		User admin = new User("admin", passmwordEncoder.encode("1234"), "Ai",
 				"Nguyen", "ainvgc00704@fpt.edu.vn");
 		admin.getAuthorities().add(roleAdmin);
 		admin.getAuthorities().add(roleManagere);
                 //manager role sample data
-		User manager = new User("tungptgc00676", passmwordEncoder.encode("12345678"),
+		User manager = new User("manager", passmwordEncoder.encode("1234"),
 				"Tung",
 				"Tien", "tungptgc00676@fpt.edu.vn");
 		manager.getAuthorities().add(roleManagere);
                 //coordinator role sample data
-		User coordinator1 = new User("kunedo1104", passmwordEncoder.encode("12345678"),
+		User coordinator1 = new User("coordinator", passmwordEncoder.encode("12345678"),
 				"Kunedo", "Caspio", "kunedo1104@gmail.com",
 				f1);
 		coordinator1.getAuthorities().add(roleCoordinator);
@@ -110,9 +110,8 @@ public class SampleData {
 				"Nhoc", "Kaka", "ainvgc00704@fpt.edu.vn",
 				f2);
 		coordinator2.getAuthorities().add(roleCoordinator);
-                
                 //student role sample data
-		User s1 = new User("sondcgc00681", passmwordEncoder.encode("12345678"), "Son",
+		User s1 = new User("student", passmwordEncoder.encode("1234"), "Son",
 				"Dam",
 				"sondcgc00681@fpt.edu.vn", f1);
 		s1.getAuthorities().add(roleStudent);
@@ -128,6 +127,11 @@ public class SampleData {
 				"Hai",
 				"hainam.4795@gmail.com", f2);
 		s4.getAuthorities().add(roleStudent);
+
+		User s5 = new User("s5", passmwordEncoder.encode("1234"), "s5firstname",
+				"s5LastName",
+				"email9@fpt.edu.vn", f5);
+		s5.getAuthorities().add(roleStudent);
 
 		userRepository.save(admin);
 		userRepository.save(manager);
