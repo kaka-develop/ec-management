@@ -189,7 +189,7 @@ class MailUtils {
 
 class OurAuthentication extends Authenticator {
 	private static final String USERNAME = "systemec2017@gmail.com";
-	private static final String PASSWORD = "-ec12356789";
+	private static final String PASSWORD = "ec123456789";
 
 	@Override
 	protected PasswordAuthentication getPasswordAuthentication() {
