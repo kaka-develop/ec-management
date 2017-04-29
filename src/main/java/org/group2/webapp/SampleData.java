@@ -107,7 +107,7 @@ public class SampleData {
 				f1);
 		coordinator1.getAuthorities().add(roleCoordinator);
 		User coordinator2 = new User("nhocKaka", passmwordEncoder.encode("12345678"),
-				"Nhoc", "Kaka", "ainvgc00704@fpt.edu.vn",
+				"Nhoc", "Kaka", "caubenuoc1995@gmail.com",
 				f2);
 		coordinator2.getAuthorities().add(roleCoordinator);
                 //student role sample data
