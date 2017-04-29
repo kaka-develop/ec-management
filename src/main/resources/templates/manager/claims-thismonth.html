@@ -12,7 +12,6 @@
         <table class="table table-hover table-striped">
             <tr>
                 <th>Evident</th>
-                <th>Content</th>
                 <th>Status</th>
                 <th>Dateline</th>
                 <th>Overdue</th>
@@ -21,7 +20,6 @@
             </tr>
             <tr th:each="claim : ${claims}">
                 <td th:text="${claim.evidence}"></td>
-                <td th:text="${claim.content}"></td>
                 <td th:text="${claim.status}"></td>
                 <td th:text="${claim.closedDate}"></td>
                 <td th:text="${claim.isMissClosedDate() ? 'yes' : 'no'}"></td>

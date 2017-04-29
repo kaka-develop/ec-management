@@ -102,7 +102,7 @@ public class SampleData {
 				"Tien", "tungptgc00676@fpt.edu.vn");
 		manager.getAuthorities().add(roleManagere);
                 //coordinator role sample data
-		User coordinator1 = new User("coordinator", passmwordEncoder.encode("12345678"),
+		User coordinator1 = new User("coordinator", passmwordEncoder.encode("1234"),
 				"Kunedo", "Caspio", "kunedo1104@gmail.com",
 				f1);
 		coordinator1.getAuthorities().add(roleCoordinator);
