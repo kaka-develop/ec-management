@@ -21,7 +21,7 @@
   	- Admin role: admin - 1234
 
 ## Project UML
-![alt tag](https://firebasestorage.googleapis.com/v0/b/socialapp-cc534.appspot.com/o/images%2Ffinal_uml.png?alt=media&token=6f79fb90-0cb9-4027-9ed7-0a2b00476e9b)
+![alt tag](https://firebasestorage.googleapis.com/v0/b/socialapp-cc534.appspot.com/o/images%2Ffinal_uml.png?alt=media&token=d86cd4f5-b270-477f-b476-623ba6434904)
 
 ## Project ERD
 ![alt tag](https://firebasestorage.googleapis.com/v0/b/socialapp-cc534.appspot.com/o/images%2Ffinal_erd.png?alt=media&token=c2fa3e2e-14a0-4b81-9d4a-d3a5f51142c2)
