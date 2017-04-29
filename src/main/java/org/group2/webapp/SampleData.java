@@ -107,7 +107,7 @@ public class SampleData {
 				"coordinator2FirstName", "coordinator2LastName", "email4@fpt.edu.vn",
 				f2);
 		coordinator2.getAuthorities().add(roleCoordinator);
-		User s1 = new User("s1", passmwordEncoder.encode("1234"), "s1firstname",
+		User s1 = new User("student", passmwordEncoder.encode("1234"), "s1firstname",
 				"s1LastName",
 				"sondcgc00681@fpt.edu.vn", f1);
 		s1.getAuthorities().add(roleStudent);
@@ -124,7 +124,7 @@ public class SampleData {
 				"email8@fpt.edu.vn", f2);
 		s4.getAuthorities().add(roleStudent);
 
-		User s5 = new User("student", passmwordEncoder.encode("1234"), "s5firstname",
+		User s5 = new User("s5", passmwordEncoder.encode("1234"), "s5firstname",
 				"s5LastName",
 				"email9@fpt.edu.vn", f5);
 		s5.getAuthorities().add(roleStudent);
