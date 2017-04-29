@@ -71,31 +71,33 @@ public class Claim implements Serializable {
 	private Date closedDate;
 
 	@Column(name = "status")
-	private int status;
+	private int status = 0;
 
 	@Column(name = "seen")
-	private Boolean seen;
-
-
+	private Boolean seen =false;
 
 	@Column(name = "changed_times")
-	private Integer changedTimes;
+	private Integer changedTimes = 0;
 
 	@Column(name = "over_dateline_process")
 	private Boolean overDatelineProcess = false;
 
 	@Column(name = "can_upload_more_evidence")
 	private Boolean canUploadMoreEvidence = true;
-	
+
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="deadline_upload_evidence")
 	private Date deadlineUploadEvidence;
-	
+
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="deadline_process")
 	private Date deadlineProcess;
-	
+
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "last_remind_process")
 	private Date lastDateRemind;
-	
+
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="last_remind_upload_evidence")
 	private Date lastRemindUploadDate;
 
@@ -148,6 +150,23 @@ public class Claim implements Serializable {
 //		cal.add(Calendar.DAY_OF_MONTH, SO_NGAY_NHAC_NHO_UPLOAD_EVIDENCE);
 //		return 
 //	}
+
+
+	public Date getDeadlineUploadEvidence() {
+		return deadlineUploadEvidence;
+	}
+
+	public void setDeadlineUploadEvidence(Date deadlineUploadEvidence) {
+		this.deadlineUploadEvidence = deadlineUploadEvidence;
+	}
+
+	public Date getDeadlineProcess() {
+		return deadlineProcess;
+	}
+
+	public void setDeadlineProcess(Date deadlineProcess) {
+		this.deadlineProcess = deadlineProcess;
+	}
 
 	public void addCircumstance(Circumstance circumstance) {
 		this.circumstances.add(circumstance);

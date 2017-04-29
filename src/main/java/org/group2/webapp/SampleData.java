@@ -94,6 +94,7 @@ public class SampleData {
 		User admin = new User("admin", passmwordEncoder.encode("1234"), "adminFirstName",
 				"adminLastName", "email1@fpt.edu.vn");
 		admin.getAuthorities().add(roleAdmin);
+		admin.getAuthorities().add(roleManagere);
 		User manager = new User("manager", passmwordEncoder.encode("1234"),
 				"managerFirstName",
 				"managerLastName", "email2@fpt.edu.vn");
